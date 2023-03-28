@@ -46,8 +46,6 @@ else()
         add_executable(AutoFirewall
             ${PROJECT_SOURCES}
         )
-        set_target_properties(AutoFirewall PROPERTIES LINK_FLAGS
-        "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS")
     endif()
 endif()
 

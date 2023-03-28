@@ -111,9 +111,9 @@ void FirewallUtil::init()
         return;
 
     hrComInit = S_OK;
-    bstrRuleName = SysAllocString(L"GTA5Firewall");
+    bstrRuleName = SysAllocString(L"AutoFirewall");
     bstrRuleLPorts = SysAllocString(L"80");
-    bstrRuleGroup = SysAllocString(L"GTA5Firewall");
+    bstrRuleGroup = SysAllocString(L"AutoFirewall");
 
     HRESULT hr = S_OK;
 
