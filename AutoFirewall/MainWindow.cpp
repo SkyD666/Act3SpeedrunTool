@@ -49,10 +49,8 @@ MainWindow::MainWindow(QWidget* parent)
                 palette.setColor(QPalette::Window, Qt::green);
                 labState->setPalette(palette);
                 if (GlobalData::playSound) {
-                    wchar_t* path = new wchar_t[GlobalData::startSound.size()];
-                    GlobalData::startSound.toWCharArray(path);
-                    PlaySound(path, nullptr, SND_FILENAME | SND_ASYNC);
-                    delete[] path;
+                    PlaySound(GlobalData::startSound.toStdWString().c_str(),
+                        nullptr, SND_FILENAME | SND_ASYNC);
                 }
             } else {
                 ui.btnEnable->setText(tr("已关闭"));
@@ -60,10 +58,8 @@ MainWindow::MainWindow(QWidget* parent)
                 palette.setColor(QPalette::Window, Qt::red);
                 labState->setPalette(palette);
                 if (GlobalData::playSound) {
-                    wchar_t* path = new wchar_t[GlobalData::stopSound.size()];
-                    GlobalData::stopSound.toWCharArray(path);
-                    PlaySound(path, nullptr, SND_FILENAME | SND_ASYNC);
-                    delete[] path;
+                    PlaySound(GlobalData::stopSound.toStdWString().c_str(),
+                        nullptr, SND_FILENAME | SND_ASYNC);
                 }
             }
         } else {

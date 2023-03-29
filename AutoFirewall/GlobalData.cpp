@@ -36,8 +36,8 @@ void GlobalData::readSettings()
     settings.endGroup();
 
     settings.beginGroup("Sound");
-    startSound = settings.value("StartSound", "").toString();
-    stopSound = settings.value("StopSound", true).toString();
+    startSound = settings.value("StartSound", "./sound/chimes.wav").toString();
+    stopSound = settings.value("StopSound", "./sound/ding.wav").toString();
     playSound = settings.value("PlaySound", true).toBool();
     settings.endGroup();
 }
