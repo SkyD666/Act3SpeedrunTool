@@ -19,4 +19,7 @@ public:
     static bool playSound;
 
     static QString license;
+
+    static QString startSound;
+    static QString stopSound;
 };

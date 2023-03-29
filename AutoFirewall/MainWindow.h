@@ -2,6 +2,7 @@
 
 #include "ui_MainWindow.h"
 #include <QHotkey>
+#include <QLabel>
 #include <QMainWindow>
 
 class MainWindow : public QMainWindow {
@@ -20,4 +21,8 @@ private:
     Ui::MainWindow ui;
 
     QHotkey* hotkey;
+
+    QLabel* labCurrentHotkey;
+
+    QLabel* labState;
 };

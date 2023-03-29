@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     QApplication a(argc, argv);
     QApplication::setOrganizationName("SkyD666");
     QApplication::setApplicationName("AutoFirewall");
-    QApplication::setApplicationVersion("1.1");
+    QApplication::setApplicationVersion("1.2");
     GlobalData::init();
     MainWindow w;
     w.show();

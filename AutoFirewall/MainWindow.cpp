@@ -1,48 +1,35 @@
 #include "MainWindow.h"
 #include "FirewallUtil.h"
 #include "GlobalData.h"
+#include "SettingDialog.h"
 #include <MMSystem.h>
 #include <QDesktopServices>
 #include <QHotkey>
 #include <QMessageBox>
+#include <QPalette>
 #include <QUrl>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , hotkey(nullptr)
+    , labCurrentHotkey(new QLabel(this))
+    , labState(new QLabel(this))
 {
     ui.setupUi(this);
 
     FirewallUtil::init();
 
     setHotkey(GlobalData::hotkey);
-    ui.keySeq->setKeySequence(QKeySequence(GlobalData::hotkey));
 
-    connect(ui.keySeq, &QKeySequenceEdit::editingFinished, this, [=]() {
-        if (ui.keySeq->keySequence().count() > 1) {
-            QKeyCombination value = ui.keySeq->keySequence()[0];
-            QKeySequence shortcut(value);
-            ui.keySeq->setKeySequence(shortcut);
-        }
-    });
+    labCurrentHotkey->setText(GlobalData::hotkey);
+    ui.statusbar->addPermanentWidget(labCurrentHotkey);
 
-    connect(ui.tbHotkeyEditFinished, &QAbstractButton::clicked, this, [=]() {
-        auto newHotkey = ui.keySeq->keySequence().toString();
-        if (newHotkey == GlobalData::hotkey) {
-            return;
-        }
-        GlobalData::hotkey = newHotkey;
-        removeHotkey();
-        setHotkey(GlobalData::hotkey);
-        ui.btnEnable->setFocus();
-    });
-
-    connect(ui.tbClearHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
-        ui.keySeq->clear();
-        GlobalData::hotkey = "";
-        removeHotkey();
-        ui.btnEnable->setFocus();
-    });
+    labState->setAutoFillBackground(true);
+    labState->setMinimumWidth(16);
+    QPalette palette = labState->palette();
+    palette.setColor(QPalette::Window, Qt::red);
+    labState->setPalette(palette);
+    ui.statusbar->addPermanentWidget(labState);
 
     ui.cbSound->setChecked(GlobalData::playSound);
     connect(ui.cbSound, &QCheckBox::stateChanged, this, [=](int state) {
@@ -56,17 +43,39 @@ MainWindow::MainWindow(QWidget* parent)
         }
         bool succeed = FirewallUtil::setNetFwRuleEnabled(checked);
         if (succeed) {
-            if (GlobalData::playSound) {
-                PlaySound(L"./sound/sound.wav", nullptr, SND_FILENAME | SND_ASYNC);
-            }
             if (checked) {
                 ui.btnEnable->setText(tr("已开启"));
+                QPalette palette = labState->palette();
+                palette.setColor(QPalette::Window, Qt::green);
+                labState->setPalette(palette);
+                if (GlobalData::playSound) {
+                    wchar_t* path = new wchar_t[GlobalData::startSound.size()];
+                    GlobalData::startSound.toWCharArray(path);
+                    PlaySound(path, nullptr, SND_FILENAME | SND_ASYNC);
+                    delete[] path;
+                }
             } else {
                 ui.btnEnable->setText(tr("已关闭"));
+                QPalette palette = labState->palette();
+                palette.setColor(QPalette::Window, Qt::red);
+                labState->setPalette(palette);
+                if (GlobalData::playSound) {
+                    wchar_t* path = new wchar_t[GlobalData::stopSound.size()];
+                    GlobalData::stopSound.toWCharArray(path);
+                    PlaySound(path, nullptr, SND_FILENAME | SND_ASYNC);
+                    delete[] path;
+                }
             }
         } else {
             ui.btnEnable->setChecked(!checked);
         }
+    });
+
+    connect(ui.actionSetting, &QAction::triggered, this, [=]() {
+        auto dialog = new SettingDialog(this);
+        removeHotkey();
+        dialog->exec();
+        setHotkey(GlobalData::hotkey);
     });
 
     connect(ui.actionGitHub, &QAction::triggered, this, [=]() {
@@ -100,6 +109,7 @@ void MainWindow::removeHotkey()
 
 void MainWindow::setHotkey(const QString hotkeyStr)
 {
+    labCurrentHotkey->setText(hotkeyStr);
     if (hotkeyStr.isEmpty()) {
         return;
     }

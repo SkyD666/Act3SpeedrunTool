@@ -3,6 +3,8 @@
 #include <QSettings>
 
 QString GlobalData::hotkey = "F9";
+QString GlobalData::startSound = "";
+QString GlobalData::stopSound = "";
 bool GlobalData::playSound = true;
 
 GlobalData::GlobalData()
@@ -31,6 +33,11 @@ void GlobalData::readSettings()
 
     settings.beginGroup("General");
     hotkey = settings.value("Hotkey", "F9").toString();
+    settings.endGroup();
+
+    settings.beginGroup("Sound");
+    startSound = settings.value("StartSound", "").toString();
+    stopSound = settings.value("StopSound", true).toString();
     playSound = settings.value("PlaySound", true).toBool();
     settings.endGroup();
 }
@@ -41,6 +48,11 @@ void GlobalData::writeSettings()
 
     settings.beginGroup("General");
     settings.setValue("Hotkey", hotkey);
+    settings.endGroup();
+
+    settings.beginGroup("Sound");
+    settings.setValue("StartSound", startSound);
+    settings.setValue("StopSound", stopSound);
     settings.setValue("PlaySound", playSound);
     settings.endGroup();
 }
