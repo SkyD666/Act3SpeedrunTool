@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "FirewallUtil.h"
 #include "GlobalData.h"
+#include "LogUtil.h"
 #include "SettingDialog.h"
 #include <MMSystem.h>
 #include <QDesktopServices>
@@ -44,6 +45,7 @@ MainWindow::MainWindow(QWidget* parent)
         bool succeed = FirewallUtil::setNetFwRuleEnabled(checked);
         if (succeed) {
             if (checked) {
+                LogUtil::addLog("Firewall successfully enabled!");
                 ui.btnEnable->setText(tr("已开启"));
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::green);
@@ -53,6 +55,7 @@ MainWindow::MainWindow(QWidget* parent)
                         nullptr, SND_FILENAME | SND_ASYNC);
                 }
             } else {
+                LogUtil::addLog("Firewall successfully disabled!");
                 ui.btnEnable->setText(tr("已关闭"));
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::red);
@@ -63,6 +66,7 @@ MainWindow::MainWindow(QWidget* parent)
                 }
             }
         } else {
+            LogUtil::addLog("Firewall operate failed!");
             if (GlobalData::playSound) {
                 PlaySound(GlobalData::errorSound.toStdWString().c_str(),
                     nullptr, SND_FILENAME | SND_ASYNC);
@@ -76,6 +80,14 @@ MainWindow::MainWindow(QWidget* parent)
         removeHotkey();
         dialog->exec();
         setHotkey(GlobalData::hotkey);
+    });
+
+    connect(ui.actionLogDir, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogDir()));
+    });
+
+    connect(ui.actionLog, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogFilePath()));
     });
 
     connect(ui.actionGitHub, &QAction::triggered, this, [=]() {

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>228</width>
-    <height>185</height>
+    <height>183</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -83,6 +83,9 @@
     <property name="title">
      <string>帮助(&amp;H)</string>
     </property>
+    <addaction name="actionLogDir"/>
+    <addaction name="actionLog"/>
+    <addaction name="separator"/>
     <addaction name="actionGitHub"/>
     <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
@@ -105,7 +108,7 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>关于 AutoFirewall...</string>
+    <string>关于本软件...</string>
    </property>
   </action>
   <action name="actionGitHub">
@@ -119,6 +122,16 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionLog">
+   <property name="text">
+    <string>查看日志...</string>
+   </property>
+  </action>
+  <action name="actionLogDir">
+   <property name="text">
+    <string>打开日志文件夹...</string>
    </property>
   </action>
  </widget>

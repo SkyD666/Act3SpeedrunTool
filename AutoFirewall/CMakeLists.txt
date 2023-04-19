@@ -20,6 +20,7 @@ set(PROJECT_SOURCES
         FirewallUtil.h FirewallUtil.cpp
         GlobalData.h GlobalData.cpp
         SettingDialog.h SettingDialog.cpp SettingDialog.ui
+        LogUtil.h LogUtil.cpp
         resource.qrc
 )
 
