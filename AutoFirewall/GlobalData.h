@@ -22,4 +22,5 @@ public:
 
     static QString startSound;
     static QString stopSound;
+    static QString errorSound;
 };

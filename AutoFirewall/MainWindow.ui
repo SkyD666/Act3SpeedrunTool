@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>197</width>
-    <height>161</height>
+    <width>228</width>
+    <height>185</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>快速应用防火墙</string>
+   <string>星神断网</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resource.qrc">
@@ -61,6 +61,13 @@
       </property>
      </spacer>
     </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>星神断网，好用没烦恼！</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -68,7 +75,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>197</width>
+     <width>228</width>
      <height>21</height>
     </rect>
    </property>

@@ -63,6 +63,10 @@ MainWindow::MainWindow(QWidget* parent)
                 }
             }
         } else {
+            if (GlobalData::playSound) {
+                PlaySound(GlobalData::errorSound.toStdWString().c_str(),
+                    nullptr, SND_FILENAME | SND_ASYNC);
+            }
             ui.btnEnable->setChecked(!checked);
         }
     });

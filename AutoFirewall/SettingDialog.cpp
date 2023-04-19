@@ -57,6 +57,15 @@ SettingDialog::SettingDialog(QWidget* parent)
             GlobalData::stopSound = fileName;
         }
     });
+
+    ui.leErrorSoundPath->setText(GlobalData::errorSound);
+    connect(ui.tbSelectErrorSound, &QAbstractButton::clicked, this, [=]() {
+        QString fileName = getSoundFile();
+        if (!fileName.isEmpty()) {
+            ui.leErrorSoundPath->setText(fileName);
+            GlobalData::errorSound = fileName;
+        }
+    });
 }
 
 SettingDialog::~SettingDialog()

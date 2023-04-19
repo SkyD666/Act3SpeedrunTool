@@ -100,7 +100,9 @@ bool FirewallUtil::setNetFwRuleEnabled(bool enabled)
     if (!fwRule) {
         return false;
     }
-    fwRule->put_Enabled(enabled ? VARIANT_TRUE : VARIANT_FALSE);
+    if (FAILED(fwRule->put_Enabled(enabled ? VARIANT_TRUE : VARIANT_FALSE))) {
+        return false;
+    }
     isEnabled = enabled;
     return true;
 }

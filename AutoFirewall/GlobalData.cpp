@@ -5,6 +5,7 @@
 QString GlobalData::hotkey = "F9";
 QString GlobalData::startSound = "";
 QString GlobalData::stopSound = "";
+QString GlobalData::errorSound = "";
 bool GlobalData::playSound = true;
 
 GlobalData::GlobalData()
@@ -38,6 +39,7 @@ void GlobalData::readSettings()
     settings.beginGroup("Sound");
     startSound = settings.value("StartSound", "./sound/chimes.wav").toString();
     stopSound = settings.value("StopSound", "./sound/ding.wav").toString();
+    errorSound = settings.value("ErrorSound", "./sound/error.wav").toString();
     playSound = settings.value("PlaySound", true).toBool();
     settings.endGroup();
 }
@@ -53,6 +55,7 @@ void GlobalData::writeSettings()
     settings.beginGroup("Sound");
     settings.setValue("StartSound", startSound);
     settings.setValue("StopSound", stopSound);
+    settings.setValue("ErrorSound", errorSound);
     settings.setValue("PlaySound", playSound);
     settings.endGroup();
 }
