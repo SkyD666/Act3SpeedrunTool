@@ -13,5 +13,6 @@ public:
     static void addLog(const QString newLog);
 
 private:
+    static bool firstTime;
     static QString logFileName;
 };

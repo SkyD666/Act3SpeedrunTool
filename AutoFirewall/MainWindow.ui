@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>228</width>
-    <height>183</height>
+    <width>244</width>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,7 +64,8 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>星神断网，好用没烦恼！</string>
+       <string>代言人：⭐神
+⭐神断网，好用没烦恼！</string>
       </property>
      </widget>
     </item>
@@ -75,7 +76,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>228</width>
+     <width>244</width>
      <height>21</height>
     </rect>
    </property>

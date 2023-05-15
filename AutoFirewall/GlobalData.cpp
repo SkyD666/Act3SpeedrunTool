@@ -61,6 +61,7 @@ void GlobalData::writeSettings()
 }
 
 QString GlobalData::license = "<h3>%1 v%2</h3>" + QObject::tr("<p>一个快速启用/停用防火墙规则的工具</p>")
+    + QString("<p>作者：SkyD666</p>")
     + QString("<a href='https://discord.gg/pEWEjeJTa3'>加入 Discord 一起划水~</a>")
     + QString("<p>Copyright<font>&#169;</font> 2023 SkyD666</p>"
               R"(<p>This program is free software: you can redistribute it and/or modify

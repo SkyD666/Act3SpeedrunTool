@@ -74,7 +74,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
     //    pFwRule->put_LocalPorts(bstrRuleLPorts);
     pFwRule->put_Grouping(bstrRuleGroup);
     pFwRule->put_Direction(NET_FW_RULE_DIR_OUT);
-    pFwRule->put_Profiles(CurrentProfilesBitMask);
+    //    pFwRule->put_Profiles(CurrentProfilesBitMask);
     pFwRule->put_Action(NET_FW_ACTION_BLOCK);
     pFwRule->put_Enabled(VARIANT_TRUE);
 
@@ -94,7 +94,7 @@ Cleanup:
         pFwRule->Release();
     }
 
-    return 0;
+    return nullptr;
 }
 
 bool FirewallUtil::setNetFwRuleEnabled(bool enabled)
@@ -123,7 +123,7 @@ void FirewallUtil::init()
     LogUtil::addLog("Initializing the firewall...");
     hrComInit = S_OK;
     bstrRuleName = SysAllocString(L"AutoFirewall");
-    bstrRuleLPorts = SysAllocString(L"80");
+    //    bstrRuleLPorts = SysAllocString(L"80");
     bstrRuleGroup = SysAllocString(L"AutoFirewall");
 
     HRESULT hr = S_OK;
