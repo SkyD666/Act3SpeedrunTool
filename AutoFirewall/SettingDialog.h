@@ -10,7 +10,7 @@ public:
     explicit SettingDialog(QWidget* parent = nullptr);
     ~SettingDialog();
 
-    const static QString pageName[];
+    QString pageName[3] = { tr("全局热键"), tr("提示音"), tr("语言") };
     const static QString pageIcon[];
 
 protected:

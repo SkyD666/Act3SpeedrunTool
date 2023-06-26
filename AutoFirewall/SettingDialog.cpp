@@ -1,8 +1,8 @@
 #include "SettingDialog.h"
 #include "GlobalData.h"
+#include "LanguageUtil.h"
 #include <QFileDialog>
 
-const QString SettingDialog::pageName[] = { tr("全局热键"), tr("提示音") };
 const QString SettingDialog::pageIcon[] = { ":/ic_settings.svg", ":/ic_search.svg", ":/ic_key_f.svg" };
 
 SettingDialog::SettingDialog(QWidget* parent)
@@ -65,6 +65,17 @@ SettingDialog::SettingDialog(QWidget* parent)
             ui.leErrorSoundPath->setText(fileName);
             GlobalData::errorSound = fileName;
         }
+    });
+
+    for (auto l : LanguageUtil::getInstance()->languages) {
+        ui.cbLanguage->addItem(LanguageUtil::getDisplayName(l.name), l.name);
+        if (l.name == GlobalData::language) {
+            ui.cbLanguage->setCurrentIndex(ui.cbLanguage->count() - 1);
+        }
+    }
+    connect(ui.cbLanguage, &QComboBox::activated, this, [=]() {
+        GlobalData::language = ui.cbLanguage->currentData().toString();
+        LanguageUtil::applyLanguage();
     });
 }
 

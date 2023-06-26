@@ -16,9 +16,8 @@ public:
     static void writeSettings();
 
     static QString hotkey;
+    static QString language;
     static bool playSound;
-
-    static QString license;
 
     static QString startSound;
     static QString stopSound;

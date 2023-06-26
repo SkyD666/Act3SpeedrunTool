@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -21,6 +22,7 @@ set(PROJECT_SOURCES
         GlobalData.h GlobalData.cpp
         SettingDialog.h SettingDialog.cpp SettingDialog.ui
         LogUtil.h LogUtil.cpp
+        LanguageUtil.h LanguageUtil.cpp
         resource.qrc
 )
 
@@ -50,6 +52,13 @@ else()
         )
     endif()
 endif()
+
+file(GLOB TS_FILES "${PROJECT_SOURCE_DIR}/*.ts")
+
+qt6_add_translations(AutoFirewall
+    TS_FILES en.ts
+    QM_FILES_OUTPUT_VARIABLE qm_files)
+install(FILES ${qm_files} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
 
 
 target_link_libraries(AutoFirewall PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

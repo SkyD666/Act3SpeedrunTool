@@ -97,7 +97,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui.actionAboutQt, &QAction::triggered, this, [=]() { qApp->aboutQt(); });
 
     connect(ui.actionAbout, &QAction::triggered, this, [=]() {
-        QMessageBox::about(this, QString(), GlobalData::license);
+        QMessageBox::about(this, QString(), license);
     });
 
     ui.btnEnable->setFocus();
