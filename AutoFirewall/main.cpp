@@ -16,11 +16,9 @@ int main(int argc, char* argv[])
     QApplication::setWindowIcon(QIcon(":/icon.png"));
     QApplication::setOrganizationName("SkyD666");
     QApplication::setApplicationName(QObject::tr("星神断网"));
-    QApplication::setApplicationVersion("2.0");
+    QApplication::setApplicationVersion("2.1");
 
     MainWindow w;
     w.show();
-    bool result = a.exec();
-    GlobalData::destory();
-    return result;
+    return a.exec();
 }

@@ -4,6 +4,7 @@
 #include "LogUtil.h"
 #include "SettingDialog.h"
 #include <MMSystem.h>
+#include <QCoreApplication>
 #include <QDesktopServices>
 #include <QHotkey>
 #include <QMessageBox>
@@ -17,6 +18,10 @@ MainWindow::MainWindow(QWidget* parent)
     , labState(new QLabel(this))
 {
     ui.setupUi(this);
+
+    connect(qApp, &QCoreApplication::aboutToQuit, this, [=]() {
+        GlobalData::destory();
+    });
 
     FirewallUtil::init();
 
