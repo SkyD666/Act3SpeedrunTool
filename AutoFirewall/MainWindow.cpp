@@ -25,9 +25,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     FirewallUtil::init();
 
-    setHotkey(GlobalData::hotkey, GlobalData::hotkeyStop);
+    setHotkey(GlobalData::hotkey, GlobalData::stopHotkey);
 
-    labCurrentHotkey->setText(GlobalData::hotkey + ", " + GlobalData::hotkeyStop);
+    labCurrentHotkey->setText(GlobalData::hotkey + ", " + GlobalData::stopHotkey);
     ui.statusbar->addPermanentWidget(labCurrentHotkey);
 
     labState->setAutoFillBackground(true);
@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget* parent)
         auto dialog = new SettingDialog(this);
         removeHotkey();
         dialog->exec();
-        setHotkey(GlobalData::hotkey, GlobalData::hotkeyStop);
+        setHotkey(GlobalData::hotkey, GlobalData::stopHotkey);
     });
 
     connect(ui.actionLogDir, &QAction::triggered, this, [=]() {

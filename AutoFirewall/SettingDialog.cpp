@@ -40,21 +40,21 @@ SettingDialog::SettingDialog(QWidget* parent)
         GlobalData::hotkey = "";
     });
 
-    ui.keySeqStop->setKeySequence(QKeySequence(GlobalData::hotkeyStop));
+    ui.keySeqStop->setKeySequence(QKeySequence(GlobalData::stopHotkey));
     connect(ui.keySeqStop, &QKeySequenceEdit::editingFinished, this, [=]() {
         if (ui.keySeqStop->keySequence().count() > 1) {
             QKeyCombination value = ui.keySeqStop->keySequence()[0];
             QKeySequence shortcut(value);
             ui.keySeqStop->setKeySequence(shortcut);
-            GlobalData::hotkeyStop = shortcut.toString();
+            GlobalData::stopHotkey = shortcut.toString();
         } else {
-            GlobalData::hotkeyStop = ui.keySeqStop->keySequence().toString();
+            GlobalData::stopHotkey = ui.keySeqStop->keySequence().toString();
         }
     });
 
     connect(ui.tbClearStopHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
         ui.keySeqStop->clear();
-        GlobalData::hotkeyStop = "";
+        GlobalData::stopHotkey = "";
     });
 
     ui.leStartSoundPath->setText(GlobalData::startSound);
