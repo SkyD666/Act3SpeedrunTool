@@ -25,9 +25,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     FirewallUtil::init();
 
-    setHotkey(GlobalData::hotkey);
+    setHotkey(GlobalData::hotkey, GlobalData::hotkeyStop);
 
-    labCurrentHotkey->setText(GlobalData::hotkey);
+    labCurrentHotkey->setText(GlobalData::hotkey + ", " + GlobalData::hotkeyStop);
     ui.statusbar->addPermanentWidget(labCurrentHotkey);
 
     labState->setAutoFillBackground(true);
@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget* parent)
         auto dialog = new SettingDialog(this);
         removeHotkey();
         dialog->exec();
-        setHotkey(GlobalData::hotkey);
+        setHotkey(GlobalData::hotkey, GlobalData::hotkeyStop);
     });
 
     connect(ui.actionLogDir, &QAction::triggered, this, [=]() {
@@ -124,18 +124,34 @@ void MainWindow::removeHotkey()
     hotkey = nullptr;
 }
 
-void MainWindow::setHotkey(const QString hotkeyStr)
+void MainWindow::setHotkey(const QString hotkeyStr, const QString hotkeyStopStr)
 {
-    labCurrentHotkey->setText(hotkeyStr);
-    if (hotkeyStr.isEmpty()) {
+    labCurrentHotkey->setText(hotkeyStr + ", " + hotkeyStopStr);
+    if (hotkeyStr.isEmpty() || hotkeyStopStr.isEmpty()) {
         return;
     }
+    bool sameHotkey = hotkeyStr == hotkeyStopStr;
     hotkey = new QHotkey(QKeySequence(hotkeyStr), true, qApp);
     if (hotkey->isRegistered()) {
         connect(hotkey, &QHotkey::activated, qApp, [=]() {
-            ui.btnEnable->toggle();
+            if (sameHotkey) {
+                ui.btnEnable->toggle();
+            } else {
+                ui.btnEnable->setChecked(true);
+            }
         });
     } else {
         QMessageBox::critical(nullptr, QString(), tr("热键注册失败！"));
+    }
+
+    if (!sameHotkey) {
+        hotkeyStop = new QHotkey(QKeySequence(hotkeyStopStr), true, qApp);
+        if (hotkeyStop->isRegistered()) {
+            connect(hotkeyStop, &QHotkey::activated, qApp, [=]() {
+                ui.btnEnable->setChecked(false);
+            });
+        } else {
+            QMessageBox::critical(nullptr, QString(), tr("热键注册失败！"));
+        }
     }
 }

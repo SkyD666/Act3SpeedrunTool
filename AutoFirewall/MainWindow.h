@@ -15,12 +15,14 @@ public:
 protected:
     void removeHotkey();
 
-    void setHotkey(const QString hotkeyStr);
+    void setHotkey(const QString hotkeyStr, const QString hotkeyStopStr);
 
 private:
     Ui::MainWindow ui;
 
     QHotkey* hotkey;
+
+    QHotkey* hotkeyStop;
 
     QLabel* labCurrentHotkey;
 

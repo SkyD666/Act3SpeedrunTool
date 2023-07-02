@@ -3,6 +3,7 @@
 #include <QSettings>
 
 QString GlobalData::hotkey = "F9";
+QString GlobalData::hotkeyStop = "F9";
 QString GlobalData::language = "";
 QString GlobalData::startSound = "";
 QString GlobalData::stopSound = "";
@@ -34,6 +35,7 @@ void GlobalData::readSettings()
 
     settings.beginGroup("General");
     hotkey = settings.value("Hotkey", "F9").toString();
+    hotkey = settings.value("HotkeyStop", "F9").toString();
     language = settings.value("Language", "").toString();
     settings.endGroup();
 
@@ -51,6 +53,7 @@ void GlobalData::writeSettings()
 
     settings.beginGroup("General");
     settings.setValue("Hotkey", hotkey);
+    settings.setValue("HotkeyStop", hotkeyStop);
     settings.setValue("Language", language);
     settings.endGroup();
 

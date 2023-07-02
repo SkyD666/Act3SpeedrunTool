@@ -39,21 +39,40 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageHotkey">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>快捷键</string>
+          <string>启动热键</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QKeySequenceEdit" name="keySeq"/>
+           <widget class="QKeySequenceEdit" name="keySeqStart"/>
           </item>
           <item>
-           <widget class="QToolButton" name="tbClearHotkeyEdit">
+           <widget class="QToolButton" name="tbClearStartHotkeyEdit">
+            <property name="text">
+             <string>Del</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>停止热键</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QKeySequenceEdit" name="keySeqStop"/>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tbClearStopHotkeyEdit">
             <property name="text">
              <string>Del</string>
             </property>

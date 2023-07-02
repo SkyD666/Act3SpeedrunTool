@@ -23,21 +23,38 @@ SettingDialog::SettingDialog(QWidget* parent)
     }
     connect(ui.lwPage, &QListWidget::currentRowChanged, ui.stackedWidget, &QStackedWidget::setCurrentIndex);
 
-    ui.keySeq->setKeySequence(QKeySequence(GlobalData::hotkey));
-    connect(ui.keySeq, &QKeySequenceEdit::editingFinished, this, [=]() {
-        if (ui.keySeq->keySequence().count() > 1) {
-            QKeyCombination value = ui.keySeq->keySequence()[0];
+    ui.keySeqStart->setKeySequence(QKeySequence(GlobalData::hotkey));
+    connect(ui.keySeqStart, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqStart->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqStart->keySequence()[0];
             QKeySequence shortcut(value);
-            ui.keySeq->setKeySequence(shortcut);
+            ui.keySeqStart->setKeySequence(shortcut);
             GlobalData::hotkey = shortcut.toString();
         } else {
-            GlobalData::hotkey = ui.keySeq->keySequence().toString();
+            GlobalData::hotkey = ui.keySeqStart->keySequence().toString();
         }
     });
 
-    connect(ui.tbClearHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
-        ui.keySeq->clear();
+    connect(ui.tbClearStartHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqStart->clear();
         GlobalData::hotkey = "";
+    });
+
+    ui.keySeqStop->setKeySequence(QKeySequence(GlobalData::hotkeyStop));
+    connect(ui.keySeqStop, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqStop->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqStop->keySequence()[0];
+            QKeySequence shortcut(value);
+            ui.keySeqStop->setKeySequence(shortcut);
+            GlobalData::hotkeyStop = shortcut.toString();
+        } else {
+            GlobalData::hotkeyStop = ui.keySeqStop->keySequence().toString();
+        }
+    });
+
+    connect(ui.tbClearStopHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqStop->clear();
+        GlobalData::hotkeyStop = "";
     });
 
     ui.leStartSoundPath->setText(GlobalData::startSound);
