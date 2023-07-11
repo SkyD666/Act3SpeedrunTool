@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
         SettingDialog.h SettingDialog.cpp SettingDialog.ui
         LogUtil.h LogUtil.cpp
         LanguageUtil.h LanguageUtil.cpp
+        MemoryUtil.h MemoryUtil.cpp
         resource.qrc
 )
 
@@ -56,7 +57,7 @@ endif()
 file(GLOB TS_FILES "${PROJECT_SOURCE_DIR}/*.ts")
 
 qt6_add_translations(AutoFirewall
-    TS_FILES en.ts
+    TS_FILES en.ts jp.ts
     QM_FILES_OUTPUT_VARIABLE qm_files)
 install(FILES ${qm_files} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
 

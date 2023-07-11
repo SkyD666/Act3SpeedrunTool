@@ -2,6 +2,7 @@
 #include "FirewallUtil.h"
 #include "GlobalData.h"
 #include "LogUtil.h"
+#include "MemoryUtil.h"
 #include "SettingDialog.h"
 #include <MMSystem.h>
 #include <QCoreApplication>
@@ -99,6 +100,10 @@ MainWindow::MainWindow(QWidget* parent)
         QDesktopServices::openUrl(QUrl("https://github.com/SkyD666/AutoFirewall"));
     });
 
+    connect(ui.actionSponsor, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("https://afdian.net/a/SkyD666"));
+    });
+
     connect(ui.actionAboutQt, &QAction::triggered, this, [=]() { qApp->aboutQt(); });
 
     connect(ui.actionAbout, &QAction::triggered, this, [=]() {
@@ -106,6 +111,16 @@ MainWindow::MainWindow(QWidget* parent)
     });
 
     ui.btnEnable->setFocus();
+
+    connect(ui.btnStartHeadShot, &QAbstractButton::toggled, this, [=](bool checked) {
+        if (checked) {
+            startReadHeadShot();
+            ui.btnStartHeadShot->setText(tr("点击关闭"));
+        } else {
+            stopReadHeadShot();
+            ui.btnStartHeadShot->setText(tr("点击启动"));
+        }
+    });
 }
 
 MainWindow::~MainWindow()
@@ -154,4 +169,47 @@ void MainWindow::setHotkey(const QString hotkeyStr, const QString hotkeyStopStr)
             QMessageBox::critical(nullptr, QString(), tr("热键注册失败！"));
         }
     }
+}
+
+void MainWindow::startReadHeadShot()
+{
+    if (!timer) {
+        timer = new QTimer(this);
+        gtaHandle = MemoryUtil::getProcessHandle(&pid);
+        if (!gtaHandle) {
+            QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败！"));
+        }
+    }
+    connect(timer, &QTimer::timeout, this, [=]() {
+        int count = 0;
+        DWORD64 ptrs[10];
+        qDebug() << (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x294E098);
+        ReadProcessMemory(gtaHandle, (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x294E098),
+            &ptrs[0], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[0] + 0x30), &ptrs[1], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[1] + 0x8), &ptrs[2], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[2] + 0x10), &ptrs[3], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[3] + 0x10), &ptrs[4], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[4] + 0x10), &ptrs[5], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[5] + 0x10), &ptrs[6], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[6] + 0x10), &ptrs[7], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[7] + 0x10), &ptrs[8], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[8] + 0x108), &ptrs[9], sizeof(DWORD64), 0);
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[9] + 0x3668), &count, 2, 0);
+        ui.labHeadShotCount->setText(QString::number(count));
+    });
+    timer->start(200);
+}
+
+void MainWindow::stopReadHeadShot()
+{
+    if (timer) {
+        timer->stop();
+        delete timer;
+        timer = nullptr;
+    }
+    if (gtaHandle) {
+        gtaHandle = NULL;
+    }
+    ui.labHeadShotCount->setText(tr("已停止记录"));
 }
