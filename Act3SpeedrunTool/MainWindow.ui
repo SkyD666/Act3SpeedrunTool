@@ -10,9 +10,6 @@
     <height>270</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>星神断网</string>
-  </property>
   <property name="windowIcon">
    <iconset resource="resource.qrc">
     <normaloff>:/ico.png</normaloff>:/ico.png</iconset>
@@ -161,7 +158,21 @@
     </property>
     <addaction name="actionSetting"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>视图(&amp;V)</string>
+    </property>
+    <widget class="QMenu" name="menuDisplayInfo">
+     <property name="title">
+      <string>信息展示</string>
+     </property>
+     <addaction name="actionDisplayInfo"/>
+     <addaction name="actionDisplayInfoTouchable"/>
+    </widget>
+    <addaction name="menuDisplayInfo"/>
+   </widget>
    <addaction name="menuTool"/>
+   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -201,6 +212,30 @@
   <action name="actionSponsor">
    <property name="text">
     <string>赞助作者...</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>顶层显示</string>
+   </property>
+  </action>
+  <action name="actionDisplayInfo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>显示...</string>
+   </property>
+  </action>
+  <action name="actionDisplayInfoTouchable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>可拖动</string>
    </property>
   </action>
  </widget>

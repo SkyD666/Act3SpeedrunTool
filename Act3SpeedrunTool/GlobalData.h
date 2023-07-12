@@ -1,3 +1,6 @@
+#include <QColor>
+#include <QPoint>
+#include <QSize>
 #include <QString>
 
 #pragma once
@@ -19,6 +22,14 @@ public:
     static QString stopHotkey;
     static QString language;
     static bool playSound;
+    static bool displayInfoShow;
+    static bool displayInfoTouchable;
+    static QPoint displayInfoPos;
+    static QSize displayInfoSize;
+    static int displayInfoTextSize;
+    static QColor displayInfoTextColor;
+    static QString displayInfoFontFamily;
+    static QColor displayInfoBackground;
 
     static QString startSound;
     static QString stopSound;

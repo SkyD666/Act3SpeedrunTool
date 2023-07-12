@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     setHotkey(GlobalData::hotkey, GlobalData::stopHotkey);
 
+    initMenu();
+
     labCurrentHotkey->setText(GlobalData::hotkey + ", " + GlobalData::stopHotkey);
     ui.statusbar->addPermanentWidget(labCurrentHotkey);
 
@@ -81,35 +83,6 @@ MainWindow::MainWindow(QWidget* parent)
         }
     });
 
-    connect(ui.actionSetting, &QAction::triggered, this, [=]() {
-        auto dialog = new SettingDialog(this);
-        removeHotkey();
-        dialog->exec();
-        setHotkey(GlobalData::hotkey, GlobalData::stopHotkey);
-    });
-
-    connect(ui.actionLogDir, &QAction::triggered, this, [=]() {
-        QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogDir()));
-    });
-
-    connect(ui.actionLog, &QAction::triggered, this, [=]() {
-        QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogFilePath()));
-    });
-
-    connect(ui.actionGitHub, &QAction::triggered, this, [=]() {
-        QDesktopServices::openUrl(QUrl("https://github.com/SkyD666/AutoFirewall"));
-    });
-
-    connect(ui.actionSponsor, &QAction::triggered, this, [=]() {
-        QDesktopServices::openUrl(QUrl("https://afdian.net/a/SkyD666"));
-    });
-
-    connect(ui.actionAboutQt, &QAction::triggered, this, [=]() { qApp->aboutQt(); });
-
-    connect(ui.actionAbout, &QAction::triggered, this, [=]() {
-        QMessageBox::about(this, QString(), license);
-    });
-
     ui.btnEnable->setFocus();
 
     connect(ui.btnStartHeadShot, &QAbstractButton::toggled, this, [=](bool checked) {
@@ -126,6 +99,13 @@ MainWindow::MainWindow(QWidget* parent)
 MainWindow::~MainWindow()
 {
     FirewallUtil::release();
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if (displayInfoDialog) {
+        displayInfoDialog->done(-1);
+    }
 }
 
 void MainWindow::removeHotkey()
@@ -171,6 +151,82 @@ void MainWindow::setHotkey(const QString hotkeyStr, const QString hotkeyStopStr)
     }
 }
 
+void MainWindow::initMenu()
+{
+    connect(ui.actionDisplayInfo, &QAction::toggled, this, [=](bool checked) {
+        static bool firstTime = true;
+        if (!firstTime && GlobalData::displayInfoShow == checked) {
+            return;
+        }
+        if (firstTime) {
+            firstTime = false;
+        }
+        GlobalData::displayInfoShow = checked;
+        if (checked) {
+            displayInfoDialog = new DisplayInfoDialog();
+            auto closeLambda = [=](int result) {
+                disconnect(this, nullptr, displayInfoDialog, nullptr);
+                displayInfoDialogIsShowing = false;
+                // Qt::WA_DeleteOnClose
+                // delete displayInfoDialog;
+                displayInfoDialog = nullptr;
+                // -1表示不需要设置GlobalData::displayInfo = false也不需要setChecked(false)的情况
+                if (result != -1) {
+                    ui.actionDisplayInfo->setChecked(false);
+                }
+            };
+            connect(displayInfoDialog, &DisplayInfoDialog::finished, this, closeLambda);
+            displayInfoDialog->show();
+            // TODO：加锁？
+            displayInfoDialogIsShowing = true;
+        } else {
+            if (displayInfoDialog) {
+                displayInfoDialog->close();
+            }
+        }
+    });
+    ui.actionDisplayInfo->setChecked(GlobalData::displayInfoShow);
+
+    connect(ui.actionDisplayInfoTouchable, &QAction::toggled, this, [=](bool checked) {
+        GlobalData::displayInfoTouchable = checked;
+        // 重启页面
+        if (ui.actionDisplayInfo->isChecked()) {
+            ui.actionDisplayInfo->setChecked(false);
+            ui.actionDisplayInfo->setChecked(true);
+        }
+    });
+    ui.actionDisplayInfoTouchable->setChecked(GlobalData::displayInfoTouchable);
+
+    connect(ui.actionSetting, &QAction::triggered, this, [=]() {
+        auto dialog = new SettingDialog(this, displayInfoDialog);
+        removeHotkey();
+        dialog->exec();
+        setHotkey(GlobalData::hotkey, GlobalData::stopHotkey);
+    });
+
+    connect(ui.actionLogDir, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogDir()));
+    });
+
+    connect(ui.actionLog, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogFilePath()));
+    });
+
+    connect(ui.actionGitHub, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("https://github.com/SkyD666/AutoFirewall"));
+    });
+
+    connect(ui.actionSponsor, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("https://afdian.net/a/SkyD666"));
+    });
+
+    connect(ui.actionAboutQt, &QAction::triggered, this, [=]() { qApp->aboutQt(); });
+
+    connect(ui.actionAbout, &QAction::triggered, this, [=]() {
+        QMessageBox::about(this, QString(), license);
+    });
+}
+
 void MainWindow::startReadHeadShot()
 {
     if (!timer) {
@@ -180,23 +236,29 @@ void MainWindow::startReadHeadShot()
             QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败！"));
         }
     }
+    int offsets[10] = { 0x28, 0x8, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x108, 0x3668 };
     connect(timer, &QTimer::timeout, this, [=]() {
-        int count = 0;
-        DWORD64 ptrs[10];
-        qDebug() << (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x294E098);
-        ReadProcessMemory(gtaHandle, (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x294E098),
-            &ptrs[0], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[0] + 0x30), &ptrs[1], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[1] + 0x8), &ptrs[2], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[2] + 0x10), &ptrs[3], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[3] + 0x10), &ptrs[4], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[4] + 0x10), &ptrs[5], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[5] + 0x10), &ptrs[6], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[6] + 0x10), &ptrs[7], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[7] + 0x10), &ptrs[8], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[8] + 0x108), &ptrs[9], sizeof(DWORD64), 0);
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptrs[9] + 0x3668), &count, 2, 0);
+        short count = 0;
+        DWORD64 ptr;
+        ReadProcessMemory(gtaHandle,
+            (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x29A0278),
+            &ptr, sizeof(DWORD64), 0);
+        for (int i = 0; i < sizeof(offsets) / sizeof(offsets[0]) - 1; i++) {
+            ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[i]), &ptr, sizeof(DWORD64), 0);
+        }
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[9]), &count, 2, 0);
         ui.labHeadShotCount->setText(QString::number(count));
+        if (displayInfoDialogIsShowing) {
+            displayInfoDialog->setHeadShotCount(count);
+            RECT rect;
+            HWND hwnd = (HWND)displayInfoDialog->winId();
+            if (GetWindowRect(hwnd, &rect)) {
+                SetWindowPos(hwnd, HWND_TOPMOST,
+                    rect.left, rect.top,
+                    rect.right - rect.left, rect.bottom - rect.top,
+                    SWP_SHOWWINDOW);
+            }
+        }
     });
     timer->start(200);
 }
@@ -212,4 +274,7 @@ void MainWindow::stopReadHeadShot()
         gtaHandle = NULL;
     }
     ui.labHeadShotCount->setText(tr("已停止记录"));
+    if (displayInfoDialogIsShowing) {
+        displayInfoDialog->setHeadShotCount(0);
+    }
 }
