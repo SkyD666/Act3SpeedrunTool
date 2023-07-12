@@ -2,7 +2,7 @@
     <div>
         <img src="image/ico.png" style="height: 160px"/>
     </div>
-    <h1>🌐 AutoFirewall</h1>
+    <h1>🌐 Act3 Speedrun Tool</h1>
     <p>
         <a href="https://github.com/SkyD666/AutoFirewall/releases/latest" style="text-decoration:none">
             <img src="https://img.shields.io/github/v/release/SkyD666/AutoFirewall?display_name=release&style=for-the-badge" alt="GitHub release (latest by date)"/>
@@ -21,16 +21,19 @@
         </a>
     </p>
     <p>
-        A tool to easily enable/disable firewall rules.
+        A <b>GTAOL doomsday scenario speedrun tool</b> that supports quick <b>startup of the firewall</b> and <b>automatic counting of headshots</b>. This tool only reads the memory and does not write the memory.
     </p>
     <p>
         <b><a href="doc/README/README-zh-rCN.md">中文</a></b>
     </p>
 </div>
 
+
+
 ## 🤩 Screenshots
 
-![ic_main_window](image/en/ic_main_window.png) ![ic_setting_dialog_hotkey](image/en/ic_setting_dialog_hotkey.png)
+![ic_main_window_firewall](image/en/ic_main_window_firewall.png) ![ic_main_window_headshot](image/en/ic_main_window_headshot.png)
+![ic_setting_dialog_hotkey](image/en/ic_setting_dialog_hotkey.png) ![ic_setting_dialog_headshot](image/en/ic_setting_dialog_headshot.png)
 ![ic_setting_dialog_sound](image/en/ic_setting_dialog_sound.png) ![ic_setting_dialog_language](image/en/ic_setting_dialog_language.png)
 
 ## ✨ Other works

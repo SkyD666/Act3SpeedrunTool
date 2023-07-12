@@ -2,7 +2,7 @@
     <div>
         <img src="../../image/ico.png" style="height: 160px"/>
     </div>
-    <h1>🌐 AutoFirewall</h1>
+    <h1>🌐 Act3 Speedrun Tool</h1>
     <p>
         <a href="https://github.com/SkyD666/AutoFirewall/releases/latest" style="text-decoration:none">
             <img src="https://img.shields.io/github/v/release/SkyD666/AutoFirewall?display_name=release&style=for-the-badge" alt="GitHub release (latest by date)"/>
@@ -21,16 +21,19 @@
         </a>
     </p>
     <p>
-        一个针对 GTA OL 的小工具，支持快速启用 / 停用防火墙规则。
+        一个 <b>GTAOL 末日三速通工具</b>，支持<b>快速启动防火墙、自动统计爆头数</b>。本软件仅读取内存，不会修改任何内存。
     </p>
     <p>
         <b><a href="../../README.md">English</a></b>
     </p>
 </div>
 
+
+
 ## 🤩 应用截图
 
-![ic_main_window](../../image/zh-rCN/ic_main_window.png) ![ic_setting_dialog_hotkey](../../image/zh-rCN/ic_setting_dialog_hotkey.png)
+![ic_main_window_firewall](../../image/zh-rCN/ic_main_window_firewall.png) ![ic_main_window_headshot](../../image/zh-rCN/ic_main_window_headshot.png)
+![ic_setting_dialog_hotkey](../../image/zh-rCN/ic_setting_dialog_hotkey.png) ![ic_setting_dialog_headshot](../../image/zh-rCN/ic_setting_dialog_headshot.png)
 ![ic_setting_dialog_sound](../../image/zh-rCN/ic_setting_dialog_sound.png) ![ic_setting_dialog_language](../../image/zh-rCN/ic_setting_dialog_language.png)
 
 ## ✨ 其他作品
