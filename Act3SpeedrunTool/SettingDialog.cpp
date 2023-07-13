@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QFont>
 #include <QFontComboBox>
+#include <QPair>
 #include <QScreen>
 #include <windows.h>
 
@@ -29,39 +30,7 @@ SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDial
     }
     connect(ui.lwPage, &QListWidget::currentRowChanged, ui.stackedWidget, &QStackedWidget::setCurrentIndex);
 
-    ui.keySeqStart->setKeySequence(QKeySequence(GlobalData::hotkey));
-    connect(ui.keySeqStart, &QKeySequenceEdit::editingFinished, this, [=]() {
-        if (ui.keySeqStart->keySequence().count() > 1) {
-            QKeyCombination value = ui.keySeqStart->keySequence()[0];
-            QKeySequence shortcut(value);
-            ui.keySeqStart->setKeySequence(shortcut);
-            GlobalData::hotkey = shortcut.toString();
-        } else {
-            GlobalData::hotkey = ui.keySeqStart->keySequence().toString();
-        }
-    });
-
-    connect(ui.tbClearStartHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
-        ui.keySeqStart->clear();
-        GlobalData::hotkey = "";
-    });
-
-    ui.keySeqStop->setKeySequence(QKeySequence(GlobalData::stopHotkey));
-    connect(ui.keySeqStop, &QKeySequenceEdit::editingFinished, this, [=]() {
-        if (ui.keySeqStop->keySequence().count() > 1) {
-            QKeyCombination value = ui.keySeqStop->keySequence()[0];
-            QKeySequence shortcut(value);
-            ui.keySeqStop->setKeySequence(shortcut);
-            GlobalData::stopHotkey = shortcut.toString();
-        } else {
-            GlobalData::stopHotkey = ui.keySeqStop->keySequence().toString();
-        }
-    });
-
-    connect(ui.tbClearStopHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
-        ui.keySeqStop->clear();
-        GlobalData::stopHotkey = "";
-    });
+    initHotkeySettings();
 
     ui.leStartSoundPath->setText(GlobalData::startSound);
     connect(ui.tbSelectStartSound, &QAbstractButton::clicked, this, [=]() {
@@ -114,6 +83,96 @@ QString SettingDialog::getSoundFile()
         QString(), tr("WAV 文件 (*.wav)"));
 }
 
+void SettingDialog::initHotkeySettings()
+{
+    // 防火墙
+    ui.keySeqStartFirewall->setKeySequence(QKeySequence(GlobalData::startFirewallHotkey));
+    connect(ui.keySeqStartFirewall, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqStartFirewall->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqStartFirewall->keySequence()[0];
+            QKeySequence shortcut(value);
+            ui.keySeqStartFirewall->setKeySequence(shortcut);
+            GlobalData::startFirewallHotkey = shortcut.toString();
+        } else {
+            GlobalData::startFirewallHotkey = ui.keySeqStartFirewall->keySequence().toString();
+        }
+    });
+
+    connect(ui.tbClearStartFirewallHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqStartFirewall->clear();
+        GlobalData::startFirewallHotkey = "";
+    });
+
+    ui.keySeqStopFirewall->setKeySequence(QKeySequence(GlobalData::stopFirewallHotkey));
+    connect(ui.keySeqStopFirewall, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqStopFirewall->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqStopFirewall->keySequence()[0];
+            QKeySequence shortcut(value);
+            ui.keySeqStopFirewall->setKeySequence(shortcut);
+            GlobalData::stopFirewallHotkey = shortcut.toString();
+        } else {
+            GlobalData::stopFirewallHotkey = ui.keySeqStopFirewall->keySequence().toString();
+        }
+    });
+
+    connect(ui.tbClearStopFirewallHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqStopFirewall->clear();
+        GlobalData::stopFirewallHotkey = "";
+    });
+
+    // 计时器
+    ui.keySeqStartTimer->setKeySequence(QKeySequence(GlobalData::startTimerHotkey));
+    connect(ui.keySeqStartTimer, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqStartTimer->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqStartTimer->keySequence()[0];
+            QKeySequence shortcut(value);
+            ui.keySeqStartTimer->setKeySequence(shortcut);
+            GlobalData::startTimerHotkey = shortcut.toString();
+        } else {
+            GlobalData::startTimerHotkey = ui.keySeqStartTimer->keySequence().toString();
+        }
+    });
+
+    connect(ui.tbClearStartTimerHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqStartTimer->clear();
+        GlobalData::startTimerHotkey = "";
+    });
+
+    ui.keySeqPauseTimer->setKeySequence(QKeySequence(GlobalData::pauseTimerHotkey));
+    connect(ui.keySeqPauseTimer, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqPauseTimer->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqPauseTimer->keySequence()[0];
+            QKeySequence shortcut(value);
+            ui.keySeqPauseTimer->setKeySequence(shortcut);
+            GlobalData::pauseTimerHotkey = shortcut.toString();
+        } else {
+            GlobalData::pauseTimerHotkey = ui.keySeqPauseTimer->keySequence().toString();
+        }
+    });
+
+    connect(ui.tbClearPauseTimerHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqPauseTimer->clear();
+        GlobalData::pauseTimerHotkey = "";
+    });
+
+    ui.keySeqStopTimer->setKeySequence(QKeySequence(GlobalData::stopTimerHotkey));
+    connect(ui.keySeqStopTimer, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqStopTimer->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqStopTimer->keySequence()[0];
+            QKeySequence shortcut(value);
+            ui.keySeqStopTimer->setKeySequence(shortcut);
+            GlobalData::stopTimerHotkey = shortcut.toString();
+        } else {
+            GlobalData::stopTimerHotkey = ui.keySeqStopTimer->keySequence().toString();
+        }
+    });
+
+    connect(ui.tbClearStopTimerHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqStopTimer->clear();
+        GlobalData::stopTimerHotkey = "";
+    });
+}
+
 void SettingDialog::initDisplayInfoSettings()
 {
     RECT rect;
@@ -121,6 +180,33 @@ void SettingDialog::initDisplayInfoSettings()
     rect.top = GetSystemMetrics(SM_YVIRTUALSCREEN);
     rect.right = GetSystemMetrics(SM_CXVIRTUALSCREEN) + rect.left;
     rect.bottom = GetSystemMetrics(SM_CYVIRTUALSCREEN) + rect.top;
+    // XY
+    ui.hsDisplayInfoX->setRange(0, qMax(rect.right - rect.left, GlobalData::displayInfoPos.x()));
+    ui.hsDisplayInfoX->setValue(GlobalData::displayInfoPos.x());
+    ui.hsDisplayInfoY->setRange(0, qMax(rect.bottom - rect.top, GlobalData::displayInfoPos.y()));
+    ui.hsDisplayInfoY->setValue(GlobalData::displayInfoPos.y());
+    ui.labDisplayInfoPos->setText(QString("%1, %2")
+                                      .arg(GlobalData::displayInfoPos.x())
+                                      .arg(GlobalData::displayInfoPos.y()));
+    connect(ui.hsDisplayInfoX, &QAbstractSlider::valueChanged, this, [=](int value) {
+        GlobalData::displayInfoPos.rx() = value;
+        ui.labDisplayInfoPos->setText(QString("%1, %2")
+                                          .arg(value)
+                                          .arg(GlobalData::displayInfoPos.x()));
+        if (displayInfoDialog) {
+            displayInfoDialog->move(GlobalData::displayInfoPos);
+        }
+    });
+    connect(ui.hsDisplayInfoY, &QAbstractSlider::valueChanged, this, [=](int value) {
+        GlobalData::displayInfoPos.ry() = value;
+        ui.labDisplayInfoPos->setText(QString("%1, %2")
+                                          .arg(GlobalData::displayInfoPos.y())
+                                          .arg(value));
+        if (displayInfoDialog) {
+            displayInfoDialog->move(GlobalData::displayInfoPos);
+        }
+    });
+    // 宽高
     ui.hsDisplayInfoWidth->setRange(10, qMax(rect.right - rect.left, GlobalData::displayInfoSize.width()));
     ui.hsDisplayInfoWidth->setValue(GlobalData::displayInfoSize.width());
     ui.hsDisplayInfoHeight->setRange(10, qMax(rect.bottom - rect.top, GlobalData::displayInfoSize.height()));
@@ -134,7 +220,7 @@ void SettingDialog::initDisplayInfoSettings()
                                            .arg(value)
                                            .arg(GlobalData::displayInfoSize.height()));
         if (displayInfoDialog) {
-            displayInfoDialog->setFixedWidth(value);
+            displayInfoDialog->setGeometry(QRect(GlobalData::displayInfoPos, GlobalData::displayInfoSize));
         }
     });
     connect(ui.hsDisplayInfoHeight, &QAbstractSlider::valueChanged, this, [=](int value) {
@@ -143,7 +229,7 @@ void SettingDialog::initDisplayInfoSettings()
                                            .arg(GlobalData::displayInfoSize.width())
                                            .arg(value));
         if (displayInfoDialog) {
-            displayInfoDialog->setFixedHeight(value);
+            displayInfoDialog->setGeometry(QRect(GlobalData::displayInfoPos, GlobalData::displayInfoSize));
         }
     });
 
@@ -212,4 +298,43 @@ void SettingDialog::initDisplayInfoSettings()
             }
         }
     });
+
+    // 内容对齐
+    QList<QPair<int, QString>> horiAlign = {
+        std::pair(Qt::AlignLeft, tr("左对齐")),
+        std::pair(Qt::AlignHCenter, tr("居中")),
+        std::pair(Qt::AlignRight, tr("右对齐"))
+    };
+    for (int i = 0; i < horiAlign.count(); i++) {
+        ui.cbDisplayInfoTextHAlign->addItem(horiAlign[i].second, horiAlign[i].first);
+        if (horiAlign[i].first == (GlobalData::displayInfoTextAlignment & Qt::AlignHorizontal_Mask).toInt()) {
+            ui.cbDisplayInfoTextHAlign->setCurrentIndex(i);
+        }
+    }
+    connect(ui.cbDisplayInfoTextHAlign, QOverload<int>::of(&QComboBox::currentIndexChanged),
+        this, [=](int index) {
+            GlobalData::displayInfoTextAlignment = Qt::Alignment(
+                ui.cbDisplayInfoTextHAlign->itemData(index).toInt()
+                | GlobalData::displayInfoTextAlignment & Qt::AlignVertical_Mask);
+            displayInfoDialog->setTextAlignment(GlobalData::displayInfoTextAlignment);
+        });
+
+    QList<QPair<int, QString>> vertAlign = {
+        std::pair(Qt::AlignTop, tr("上对齐")),
+        std::pair(Qt::AlignVCenter, tr("居中")),
+        std::pair(Qt::AlignBottom, tr("下对齐"))
+    };
+    for (int i = 0; i < vertAlign.count(); i++) {
+        ui.cbDisplayInfoTextVAlign->addItem(vertAlign[i].second, vertAlign[i].first);
+        if (vertAlign[i].first == (GlobalData::displayInfoTextAlignment & Qt::AlignVertical_Mask).toInt()) {
+            ui.cbDisplayInfoTextVAlign->setCurrentIndex(i);
+        }
+    }
+    connect(ui.cbDisplayInfoTextVAlign, QOverload<int>::of(&QComboBox::currentIndexChanged),
+        this, [=](int index) {
+            GlobalData::displayInfoTextAlignment = Qt::Alignment(
+                ui.cbDisplayInfoTextVAlign->itemData(index).toInt()
+                | GlobalData::displayInfoTextAlignment & Qt::AlignHorizontal_Mask);
+            displayInfoDialog->setTextAlignment(GlobalData::displayInfoTextAlignment);
+        });
 }

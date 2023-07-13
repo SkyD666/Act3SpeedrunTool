@@ -18,31 +18,53 @@ public:
 protected:
     void closeEvent(QCloseEvent* event) override;
 
-    void removeHotkey();
+    void removeAllHotkeys();
 
-    void setHotkey(const QString hotkeyStr, const QString hotkeyStopStr);
+    void removeHotkey(QHotkey*& h);
+
+    void setHotkey();
 
     void initMenu();
 
-    void startReadHeadShot();
+    void showDisplayInfo();
+
+    void hideDisplayInfo();
+
+    bool startReadHeadShot();
 
     void stopReadHeadShot();
+
+    void startTimer(bool isContinue = false);
+
+    void pauseTimer();
+
+    void stopTimer();
 
 private:
     Ui::MainWindow ui;
 
+    static const QString hotkeyStatePattern;
+
     bool displayInfoDialogIsShowing = false;
     DisplayInfoDialog* displayInfoDialog = nullptr;
 
-    QHotkey* hotkey;
+    QHotkey* startFirewallHotkey = nullptr;
+    QHotkey* stopFirewallHotkey = nullptr;
 
-    QHotkey* hotkeyStop;
+    QHotkey* startTimerHotkey = nullptr;
+    QHotkey* pauseTimerHotkey = nullptr;
+    QHotkey* stopTimerHotkey = nullptr;
 
     QLabel* labCurrentHotkey;
 
     QLabel* labState;
 
+    QTimer* readMemTimer = nullptr;
+    QTimer* topMostTimer = nullptr;
+
     QTimer* timer = nullptr;
+    long stoppedTime = 0L; // 上次暂停的时间
+    long timerTime = 0L; // 计时器开始的时间
 
     DWORD pid = 0;
 
@@ -50,7 +72,7 @@ private:
 
     QString license = "<h3>" + QApplication::applicationDisplayName()
         + " v" + QApplication::applicationVersion() + "</h3>"
-        + tr("<p>一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数。本软件仅读取内存，不会修改任何内存。</p>")
+        + tr("<p>一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本软件仅读取内存，不会修改任何内存。</p>")
         + "<p>" + tr("作者：") + QApplication::organizationName() + "</p>"
         + "<p><a href='https://discord.gg/pEWEjeJTa3'>" + tr("加入 Discord 一起划水~") + "</a></p>"
         + "<p><a href='https://afdian.net/a/SkyD666'>" + tr("赞助作者") + "</a></p>"

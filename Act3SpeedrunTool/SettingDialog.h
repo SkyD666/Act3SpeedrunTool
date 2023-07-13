@@ -17,6 +17,8 @@ public:
 protected:
     QString getSoundFile();
 
+    void initHotkeySettings();
+
     void initDisplayInfoSettings();
 
 private:

@@ -17,14 +17,22 @@ public:
 
     void setDialogBackground(QColor color);
 
+    void setTextAlignment(Qt::Alignment alignment);
+
     void setFont(QString family, int size);
 
     void setTextColor(QColor color);
 
     void setHeadShotCount(short count);
 
+    void setTime(int m, int s, int ms);
+
+    static const QString timePattern;
+
 private:
     void setTouchable(bool touchable);
+
+    void setChildrenTransparentForMouseEvents(bool transparent = true);
 
     Ui::DisplayInfoDialog* ui;
 

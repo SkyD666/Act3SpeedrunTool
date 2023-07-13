@@ -19,7 +19,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabFirewall">
        <attribute name="title">
@@ -43,7 +43,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnEnable">
+         <widget class="QPushButton" name="btnStartFirewall">
           <property name="checkable">
            <bool>true</bool>
           </property>
@@ -83,7 +83,7 @@
       </widget>
       <widget class="QWidget" name="tabHeadShot">
        <attribute name="title">
-        <string>爆头数（Beta 测试）</string>
+        <string>爆头数（测试）</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
@@ -105,6 +105,43 @@
          <widget class="QPushButton" name="btnStartHeadShot">
           <property name="text">
            <string>点击启动</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>计时器</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="labTimer">
+          <property name="text">
+           <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;00:00&lt;/span&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStartTimer">
+          <property name="text">
+           <string>点击启动</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnPauseTimer">
+          <property name="text">
+           <string>点击暂停</string>
           </property>
           <property name="checkable">
            <bool>true</bool>

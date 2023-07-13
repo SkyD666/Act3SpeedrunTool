@@ -6,15 +6,17 @@
 #include "SettingDialog.h"
 #include <MMSystem.h>
 #include <QCoreApplication>
+#include <QDateTime>
 #include <QDesktopServices>
 #include <QHotkey>
 #include <QMessageBox>
 #include <QPalette>
 #include <QUrl>
 
+const QString MainWindow::hotkeyStatePattern = "F: %1, %2  T: %3, %4, %5";
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , hotkey(nullptr)
     , labCurrentHotkey(new QLabel(this))
     , labState(new QLabel(this))
 {
@@ -26,11 +28,10 @@ MainWindow::MainWindow(QWidget* parent)
 
     FirewallUtil::init();
 
-    setHotkey(GlobalData::hotkey, GlobalData::stopHotkey);
+    setHotkey();
 
     initMenu();
 
-    labCurrentHotkey->setText(GlobalData::hotkey + ", " + GlobalData::stopHotkey);
     ui.statusbar->addPermanentWidget(labCurrentHotkey);
 
     labState->setAutoFillBackground(true);
@@ -45,8 +46,8 @@ MainWindow::MainWindow(QWidget* parent)
         GlobalData::playSound = state;
     });
 
-    ui.btnEnable->setText(tr("已关闭"));
-    connect(ui.btnEnable, &QAbstractButton::toggled, this, [=](bool checked) {
+    ui.btnStartFirewall->setText(tr("已关闭"));
+    connect(ui.btnStartFirewall, &QAbstractButton::toggled, this, [=](bool checked) {
         if (checked == FirewallUtil::getIsEnabled()) {
             return;
         }
@@ -54,7 +55,7 @@ MainWindow::MainWindow(QWidget* parent)
         if (succeed) {
             if (checked) {
                 LogUtil::addLog("Firewall successfully enabled!");
-                ui.btnEnable->setText(tr("已开启"));
+                ui.btnStartFirewall->setText(tr("已开启"));
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::green);
                 labState->setPalette(palette);
@@ -64,7 +65,7 @@ MainWindow::MainWindow(QWidget* parent)
                 }
             } else {
                 LogUtil::addLog("Firewall successfully disabled!");
-                ui.btnEnable->setText(tr("已关闭"));
+                ui.btnStartFirewall->setText(tr("已关闭"));
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::red);
                 labState->setPalette(palette);
@@ -79,19 +80,46 @@ MainWindow::MainWindow(QWidget* parent)
                 PlaySound(GlobalData::errorSound.toStdWString().c_str(),
                     nullptr, SND_FILENAME | SND_ASYNC);
             }
-            ui.btnEnable->setChecked(!checked);
+            ui.btnStartFirewall->setChecked(!checked);
         }
     });
 
-    ui.btnEnable->setFocus();
+    ui.btnStartFirewall->setFocus();
 
     connect(ui.btnStartHeadShot, &QAbstractButton::toggled, this, [=](bool checked) {
         if (checked) {
-            startReadHeadShot();
-            ui.btnStartHeadShot->setText(tr("点击关闭"));
+            if (startReadHeadShot()) {
+                ui.btnStartHeadShot->setText(tr("点击关闭"));
+            } else {
+                ui.btnStartHeadShot->setChecked(false);
+            }
         } else {
             stopReadHeadShot();
             ui.btnStartHeadShot->setText(tr("点击启动"));
+        }
+    });
+
+    connect(ui.btnStartTimer, &QAbstractButton::toggled, this, [=](bool checked) {
+        if (checked) {
+            startTimer();
+            ui.btnStartTimer->setText(tr("点击关闭"));
+            ui.btnPauseTimer->setEnabled(true);
+        } else {
+            ui.btnPauseTimer->setChecked(false);
+            stopTimer();
+            ui.btnStartTimer->setText(tr("点击启动"));
+            ui.btnPauseTimer->setEnabled(false);
+        }
+    });
+
+    ui.btnPauseTimer->setEnabled(false);
+    connect(ui.btnPauseTimer, &QAbstractButton::toggled, this, [=](bool checked) {
+        if (checked) {
+            pauseTimer();
+            ui.btnPauseTimer->setText(tr("点击恢复"));
+        } else {
+            startTimer(true);
+            ui.btnPauseTimer->setText(tr("点击暂停"));
         }
     });
 }
@@ -108,45 +136,100 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 }
 
-void MainWindow::removeHotkey()
+void MainWindow::removeAllHotkeys()
 {
-    if (!hotkey) {
-        return;
-    }
-    hotkey->setRegistered(false);
-    hotkey->disconnect();
-    delete hotkey;
-    hotkey = nullptr;
+    removeHotkey(startFirewallHotkey);
+    removeHotkey(stopFirewallHotkey);
+    removeHotkey(startTimerHotkey);
+    removeHotkey(pauseTimerHotkey);
+    removeHotkey(stopTimerHotkey);
 }
 
-void MainWindow::setHotkey(const QString hotkeyStr, const QString hotkeyStopStr)
+void MainWindow::removeHotkey(QHotkey*& h)
 {
-    labCurrentHotkey->setText(hotkeyStr + ", " + hotkeyStopStr);
-    if (hotkeyStr.isEmpty() || hotkeyStopStr.isEmpty()) {
-        return;
+    if (h) {
+        h->setRegistered(false);
+        h->disconnect();
+        delete h;
+        h = nullptr;
     }
-    bool sameHotkey = hotkeyStr == hotkeyStopStr;
-    hotkey = new QHotkey(QKeySequence(hotkeyStr), true, qApp);
-    if (hotkey->isRegistered()) {
-        connect(hotkey, &QHotkey::activated, qApp, [=]() {
-            if (sameHotkey) {
-                ui.btnEnable->toggle();
-            } else {
-                ui.btnEnable->setChecked(true);
-            }
-        });
-    } else {
-        QMessageBox::critical(nullptr, QString(), tr("热键注册失败！"));
-    }
+}
 
-    if (!sameHotkey) {
-        hotkeyStop = new QHotkey(QKeySequence(hotkeyStopStr), true, qApp);
-        if (hotkeyStop->isRegistered()) {
-            connect(hotkeyStop, &QHotkey::activated, qApp, [=]() {
-                ui.btnEnable->setChecked(false);
+void MainWindow::setHotkey()
+{
+    labCurrentHotkey->setText(hotkeyStatePattern.arg(
+        GlobalData::startFirewallHotkey,
+        GlobalData::stopFirewallHotkey,
+        GlobalData::startTimerHotkey,
+        GlobalData::pauseTimerHotkey,
+        GlobalData::stopTimerHotkey));
+
+    // 防火墙
+    if (!GlobalData::startFirewallHotkey.isEmpty() && !GlobalData::stopFirewallHotkey.isEmpty()) {
+        bool sameFirewallHotkey = GlobalData::startFirewallHotkey == GlobalData::stopFirewallHotkey;
+        startFirewallHotkey = new QHotkey(QKeySequence(GlobalData::startFirewallHotkey), true, qApp);
+        if (startFirewallHotkey->isRegistered()) {
+            connect(startFirewallHotkey, &QHotkey::activated, qApp, [=]() {
+                if (sameFirewallHotkey) {
+                    ui.btnStartFirewall->toggle();
+                } else {
+                    ui.btnStartFirewall->setChecked(true);
+                }
             });
         } else {
-            QMessageBox::critical(nullptr, QString(), tr("热键注册失败！"));
+            QMessageBox::critical(nullptr, QString(), tr("注册启用防火墙热键失败！"));
+        }
+        if (!sameFirewallHotkey) {
+            stopFirewallHotkey = new QHotkey(QKeySequence(GlobalData::stopFirewallHotkey), true, qApp);
+            if (stopFirewallHotkey->isRegistered()) {
+                connect(stopFirewallHotkey, &QHotkey::activated, qApp, [=]() {
+                    ui.btnStartFirewall->setChecked(false);
+                });
+            } else {
+                QMessageBox::critical(nullptr, QString(), tr("注册关闭防火墙热键失败！"));
+            }
+        }
+    }
+
+    // 计时器
+    if (!GlobalData::startTimerHotkey.isEmpty() && !GlobalData::stopTimerHotkey.isEmpty()) {
+        bool sameTimerHotkey = GlobalData::startTimerHotkey == GlobalData::stopTimerHotkey;
+        startTimerHotkey = new QHotkey(QKeySequence(GlobalData::startTimerHotkey), true, qApp);
+        if (startTimerHotkey->isRegistered()) {
+            connect(startTimerHotkey, &QHotkey::activated, qApp, [=]() {
+                if (sameTimerHotkey) {
+                    ui.btnStartTimer->toggle();
+                } else {
+                    ui.btnStartTimer->setChecked(true);
+                }
+            });
+        } else {
+            QMessageBox::critical(nullptr, QString(), tr("注册启动计时器热键失败！"));
+        }
+        if (!sameTimerHotkey) {
+            stopTimerHotkey = new QHotkey(QKeySequence(GlobalData::stopTimerHotkey), true, qApp);
+            if (stopTimerHotkey->isRegistered()) {
+                connect(stopTimerHotkey, &QHotkey::activated, qApp, [=]() {
+                    ui.btnStartTimer->setChecked(false);
+                });
+            } else {
+                QMessageBox::critical(nullptr, QString(), tr("注册停止计时器热键失败！"));
+            }
+        }
+        if (GlobalData::pauseTimerHotkey == GlobalData::startTimerHotkey
+            || GlobalData::pauseTimerHotkey == GlobalData::stopTimerHotkey) {
+            QMessageBox::critical(nullptr, QString(), tr("暂停计时器热键与启动/停止计时器热键相同，暂停计时器热键将会无效！"));
+        } else {
+            pauseTimerHotkey = new QHotkey(QKeySequence(GlobalData::pauseTimerHotkey), true, qApp);
+            if (pauseTimerHotkey->isRegistered()) {
+                connect(pauseTimerHotkey, &QHotkey::activated, qApp, [=]() {
+                    if (ui.btnPauseTimer->isEnabled()) {
+                        ui.btnPauseTimer->toggle();
+                    }
+                });
+            } else {
+                QMessageBox::critical(nullptr, QString(), tr("注册暂停计时器热键失败！"));
+            }
         }
     }
 }
@@ -179,9 +262,11 @@ void MainWindow::initMenu()
             displayInfoDialog->show();
             // TODO：加锁？
             displayInfoDialogIsShowing = true;
+            showDisplayInfo();
         } else {
             if (displayInfoDialog) {
                 displayInfoDialog->close();
+                hideDisplayInfo();
             }
         }
     });
@@ -199,9 +284,9 @@ void MainWindow::initMenu()
 
     connect(ui.actionSetting, &QAction::triggered, this, [=]() {
         auto dialog = new SettingDialog(this, displayInfoDialog);
-        removeHotkey();
+        removeAllHotkeys();
         dialog->exec();
-        setHotkey(GlobalData::hotkey, GlobalData::stopHotkey);
+        setHotkey();
     });
 
     connect(ui.actionLogDir, &QAction::triggered, this, [=]() {
@@ -227,30 +312,14 @@ void MainWindow::initMenu()
     });
 }
 
-void MainWindow::startReadHeadShot()
+void MainWindow::showDisplayInfo()
 {
-    if (!timer) {
-        timer = new QTimer(this);
-        gtaHandle = MemoryUtil::getProcessHandle(&pid);
-        if (!gtaHandle) {
-            QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败！"));
-        }
+    if (!topMostTimer) {
+        topMostTimer = new QTimer(this);
     }
-    int offsets[10] = { 0x28, 0x8, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x108, 0x3668 };
-    connect(timer, &QTimer::timeout, this, [=]() {
-        short count = 0;
-        DWORD64 ptr;
-        ReadProcessMemory(gtaHandle,
-            (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x29A0278),
-            &ptr, sizeof(DWORD64), 0);
-        for (int i = 0; i < sizeof(offsets) / sizeof(offsets[0]) - 1; i++) {
-            ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[i]), &ptr, sizeof(DWORD64), 0);
-        }
-        ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[9]), &count, 2, 0);
-        ui.labHeadShotCount->setText(QString::number(count));
-        if (displayInfoDialogIsShowing) {
-            displayInfoDialog->setHeadShotCount(count);
-            RECT rect;
+    connect(topMostTimer, &QTimer::timeout, this, [=]() {
+        if (displayInfoDialogIsShowing && displayInfoDialog) {
+            static RECT rect;
             HWND hwnd = (HWND)displayInfoDialog->winId();
             if (GetWindowRect(hwnd, &rect)) {
                 SetWindowPos(hwnd, HWND_TOPMOST,
@@ -260,15 +329,56 @@ void MainWindow::startReadHeadShot()
             }
         }
     });
-    timer->start(200);
+    topMostTimer->start(2000);
+}
+
+void MainWindow::hideDisplayInfo()
+{
+    if (topMostTimer) {
+        topMostTimer->stop();
+        delete topMostTimer;
+        topMostTimer = nullptr;
+    }
+}
+
+bool MainWindow::startReadHeadShot()
+{
+    if (!readMemTimer) {
+        readMemTimer = new QTimer(this);
+        gtaHandle = MemoryUtil::getProcessHandle(&pid);
+        if (!gtaHandle) {
+            QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败！"));
+            return false;
+        }
+    }
+    int offsets[10] = { 0x30, 0x8, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x108, 0x3668 };
+    connect(readMemTimer, &QTimer::timeout, this, [=]() {
+        gtaHandle = MemoryUtil::getProcessHandle(&pid); // ?
+        static short count = 0;
+        static DWORD64 ptr;
+        ReadProcessMemory(gtaHandle,
+            (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x294E098),
+            &ptr, sizeof(DWORD64), 0);
+        for (int i = 0; i < sizeof(offsets) / sizeof(offsets[0]) - 1; i++) {
+            ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[i]), &ptr, sizeof(DWORD64), 0);
+        }
+        ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[9]), &count, 2, 0);
+        ui.labHeadShotCount->setText(QString::number(count));
+        if (displayInfoDialogIsShowing && displayInfoDialog) {
+            displayInfoDialog->setHeadShotCount(count);
+        }
+    });
+    readMemTimer->start(200);
+
+    return true;
 }
 
 void MainWindow::stopReadHeadShot()
 {
-    if (timer) {
-        timer->stop();
-        delete timer;
-        timer = nullptr;
+    if (readMemTimer) {
+        readMemTimer->stop();
+        delete readMemTimer;
+        readMemTimer = nullptr;
     }
     if (gtaHandle) {
         gtaHandle = NULL;
@@ -276,5 +386,53 @@ void MainWindow::stopReadHeadShot()
     ui.labHeadShotCount->setText(tr("已停止记录"));
     if (displayInfoDialogIsShowing) {
         displayInfoDialog->setHeadShotCount(0);
+    }
+}
+
+void MainWindow::startTimer(bool isContinue)
+{
+    if (!isContinue) {
+        timerTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+    } else {
+        timerTime += (QDateTime::currentDateTime().toMSecsSinceEpoch() - stoppedTime);
+        stoppedTime = 0L;
+    }
+    if (!timer) {
+        timer = new QTimer(this);
+    }
+    connect(timer, &QTimer::timeout, this, [=]() {
+        long deltaTime = QDateTime::currentDateTime().toMSecsSinceEpoch() - timerTime;
+        int m = deltaTime / 1000 / 60;
+        int s = (deltaTime / 1000) % 60;
+        int ms = (deltaTime % 1000) / 10;
+        QString t = DisplayInfoDialog::timePattern
+                        .arg("26")
+                        .arg(m, 2, 10, QLatin1Char('0'))
+                        .arg(s, 2, 10, QLatin1Char('0'))
+                        .arg("16")
+                        .arg(ms, 2, 10, QLatin1Char('0'));
+        ui.labTimer->setText(t);
+        if (displayInfoDialogIsShowing && displayInfoDialog) {
+            displayInfoDialog->setTime(m, s, ms);
+        }
+    });
+    timer->setTimerType(Qt::PreciseTimer);
+    timer->start(50);
+}
+
+void MainWindow::pauseTimer()
+{
+    if (timer) {
+        timer->stop();
+        stoppedTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+    }
+}
+
+void MainWindow::stopTimer()
+{
+    if (timer) {
+        timer->stop();
+        timerTime = 0L;
+        stoppedTime = 0L;
     }
 }
