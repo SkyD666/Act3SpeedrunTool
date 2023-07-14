@@ -25,6 +25,7 @@ set(PROJECT_SOURCES
         LogUtil.h LogUtil.cpp
         LanguageUtil.h LanguageUtil.cpp
         MemoryUtil.h MemoryUtil.cpp
+        SubFunction.h SubFunction.cpp
         resource.qrc
 )
 

@@ -1,8 +1,8 @@
 #ifndef SCREENSHOTDISPLAYDIALOG_H
 #define SCREENSHOTDISPLAYDIALOG_H
 
+#include "GlobalData.h"
 #include <QDialog>
-#include <QGraphicsScene>
 
 namespace Ui {
 class DisplayInfoDialog;
@@ -15,13 +15,15 @@ public:
     explicit DisplayInfoDialog(QWidget* parent = nullptr);
     ~DisplayInfoDialog();
 
-    void setDialogBackground(QColor color);
+    void setDialogBackground(QColor color = GlobalData::displayInfoBackground);
 
-    void setTextAlignment(Qt::Alignment alignment);
+    void setDisplay();
 
-    void setFont(QString family, int size);
+    void setTextAlignment();
 
-    void setTextColor(QColor color);
+    void setFont();
+
+    void setTextStyle();
 
     void setHeadShotCount(short count);
 
@@ -29,8 +31,10 @@ public:
 
     static const QString timePattern;
 
+    static const QString textQssPattern;
+
 private:
-    void setTouchable(bool touchable);
+    void setTouchable(bool touchable = GlobalData::displayInfoTouchable);
 
     void setChildrenTransparentForMouseEvents(bool transparent = true);
 

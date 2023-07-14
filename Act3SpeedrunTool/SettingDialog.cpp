@@ -175,6 +175,7 @@ void SettingDialog::initHotkeySettings()
 
 void SettingDialog::initDisplayInfoSettings()
 {
+    // 窗体 ============================================================
     RECT rect;
     rect.left = GetSystemMetrics(SM_XVIRTUALSCREEN);
     rect.top = GetSystemMetrics(SM_YVIRTUALSCREEN);
@@ -239,7 +240,7 @@ void SettingDialog::initDisplayInfoSettings()
     paletteBackground.setColor(QPalette::Window, GlobalData::displayInfoBackground.rgb());
     ui.labDisplayInfoBackground->setPalette(paletteBackground);
     connect(ui.tbSelectDisplayInfoBackground, &QAbstractButton::clicked, this, [=]() {
-        QColorDialog dialog(GlobalData::displayInfoTextColor);
+        QColorDialog dialog(GlobalData::displayInfoBackground);
         if (dialog.exec() == QDialog::Accepted) {
             auto c = QColor::fromRgb(dialog.selectedColor().rgb());
             c.setAlpha(GlobalData::displayInfoBackground.alpha());
@@ -249,7 +250,7 @@ void SettingDialog::initDisplayInfoSettings()
             ui.labDisplayInfoBackground->setPalette(paletteBackground);
 
             if (displayInfoDialog) {
-                displayInfoDialog->setDialogBackground(GlobalData::displayInfoBackground);
+                displayInfoDialog->setDialogBackground();
             }
         }
     });
@@ -260,81 +261,145 @@ void SettingDialog::initDisplayInfoSettings()
         GlobalData::displayInfoBackground.setAlpha(value);
         ui.labDisplayInfoAlpha->setText(QString::number(value));
         if (displayInfoDialog) {
-            displayInfoDialog->setDialogBackground(GlobalData::displayInfoBackground);
+            displayInfoDialog->setDialogBackground();
         }
     });
 
+    // 内容 ================================================================================
     // 字体family
-    ui.fcbDisplayInfoFont->setCurrentFont(QFont(GlobalData::displayInfoFontFamily));
     connect(ui.fcbDisplayInfoFont, &QFontComboBox::currentFontChanged, this, [=](const QFont& font) {
-        GlobalData::displayInfoFontFamily = font.family();
+        GlobalData::subFunctionSettings[currentSubFunction].fontFamily = font.family();
         if (displayInfoDialog) {
-            displayInfoDialog->setFont(GlobalData::displayInfoFontFamily, GlobalData::displayInfoTextSize);
+            displayInfoDialog->setFont();
         }
     });
 
-    ui.sbDisplayInfoTextSize->setValue(GlobalData::displayInfoTextSize);
     connect(ui.sbDisplayInfoTextSize, &QSpinBox::valueChanged, this, [=](int value) {
-        GlobalData::displayInfoTextSize = value;
+        GlobalData::subFunctionSettings[currentSubFunction].textSize = value;
         if (displayInfoDialog) {
-            displayInfoDialog->setFont(GlobalData::displayInfoFontFamily, GlobalData::displayInfoTextSize);
+            displayInfoDialog->setFont();
         }
     });
 
-    ui.labDisplayInfoTextColor->setAutoFillBackground(true);
-    QPalette palette = ui.labDisplayInfoTextColor->palette();
-    palette.setColor(QPalette::Window, GlobalData::displayInfoTextColor);
-    ui.labDisplayInfoTextColor->setPalette(palette);
     connect(ui.tbSelectDisplayInfoTextColor, &QAbstractButton::clicked, this, [=]() {
-        QColorDialog dialog(GlobalData::displayInfoTextColor);
+        QColorDialog dialog(GlobalData::subFunctionSettings[currentSubFunction].textColor);
         if (dialog.exec() == QDialog::Accepted) {
-            GlobalData::displayInfoTextColor = dialog.selectedColor();
-            QPalette palette = ui.labDisplayInfoTextColor->palette();
-            palette.setColor(QPalette::Window, GlobalData::displayInfoTextColor);
-            ui.labDisplayInfoTextColor->setPalette(palette);
+            auto color = dialog.selectedColor();
+            GlobalData::subFunctionSettings[currentSubFunction].textColor = color;
+            ui.labDisplayInfoTextColor->setStyleSheet(QString("background-color: %1;").arg(color.name()));
 
             if (displayInfoDialog) {
-                displayInfoDialog->setTextColor(GlobalData::displayInfoTextColor);
+                displayInfoDialog->setTextStyle();
+            }
+        }
+    });
+
+    // 阴影
+    connect(ui.sbDisplayInfoTextShadowBlurRadius, &QSpinBox::valueChanged, this, [=](int value) {
+        GlobalData::subFunctionSettings[currentSubFunction].textShadowBlurRadius = value;
+        if (displayInfoDialog) {
+            displayInfoDialog->setTextStyle();
+        }
+    });
+    connect(ui.sbDisplayInfoTextShadowOffsetX, &QSpinBox::valueChanged, this, [=](int value) {
+        GlobalData::subFunctionSettings[currentSubFunction].textShadowOffset.rx() = value;
+        if (displayInfoDialog) {
+            displayInfoDialog->setTextStyle();
+        }
+    });
+    connect(ui.sbDisplayInfoTextShadowOffsetY, &QSpinBox::valueChanged, this, [=](int value) {
+        GlobalData::subFunctionSettings[currentSubFunction].textShadowOffset.ry() = value;
+        if (displayInfoDialog) {
+            displayInfoDialog->setTextStyle();
+        }
+    });
+    connect(ui.tbSelectDisplayInfoTextShadowColor, &QAbstractButton::clicked, this, [=]() {
+        QColorDialog dialog(GlobalData::subFunctionSettings[currentSubFunction].textShadowColor);
+        if (dialog.exec() == QDialog::Accepted) {
+            auto color = dialog.selectedColor();
+            GlobalData::subFunctionSettings[currentSubFunction].textShadowColor = color;
+            ui.labDisplayInfoTextShadowColor->setStyleSheet(
+                QString("background-color: %1;").arg(color.name()));
+
+            if (displayInfoDialog) {
+                displayInfoDialog->setTextStyle();
             }
         }
     });
 
     // 内容对齐
-    QList<QPair<int, QString>> horiAlign = {
-        std::pair(Qt::AlignLeft, tr("左对齐")),
-        std::pair(Qt::AlignHCenter, tr("居中")),
-        std::pair(Qt::AlignRight, tr("右对齐"))
-    };
     for (int i = 0; i < horiAlign.count(); i++) {
         ui.cbDisplayInfoTextHAlign->addItem(horiAlign[i].second, horiAlign[i].first);
-        if (horiAlign[i].first == (GlobalData::displayInfoTextAlignment & Qt::AlignHorizontal_Mask).toInt()) {
-            ui.cbDisplayInfoTextHAlign->setCurrentIndex(i);
-        }
     }
     connect(ui.cbDisplayInfoTextHAlign, QOverload<int>::of(&QComboBox::currentIndexChanged),
         this, [=](int index) {
-            GlobalData::displayInfoTextAlignment = Qt::Alignment(
+            auto& currentSetting = GlobalData::subFunctionSettings[currentSubFunction];
+            currentSetting.textAlignment = Qt::Alignment(
                 ui.cbDisplayInfoTextHAlign->itemData(index).toInt()
-                | GlobalData::displayInfoTextAlignment & Qt::AlignVertical_Mask);
-            displayInfoDialog->setTextAlignment(GlobalData::displayInfoTextAlignment);
+                | currentSetting.textAlignment & Qt::AlignVertical_Mask);
+            if (displayInfoDialog) {
+                displayInfoDialog->setTextAlignment();
+            }
         });
 
-    QList<QPair<int, QString>> vertAlign = {
-        std::pair(Qt::AlignTop, tr("上对齐")),
-        std::pair(Qt::AlignVCenter, tr("居中")),
-        std::pair(Qt::AlignBottom, tr("下对齐"))
-    };
     for (int i = 0; i < vertAlign.count(); i++) {
         ui.cbDisplayInfoTextVAlign->addItem(vertAlign[i].second, vertAlign[i].first);
-        if (vertAlign[i].first == (GlobalData::displayInfoTextAlignment & Qt::AlignVertical_Mask).toInt()) {
-            ui.cbDisplayInfoTextVAlign->setCurrentIndex(i);
-        }
     }
     connect(ui.cbDisplayInfoTextVAlign, QOverload<int>::of(&QComboBox::currentIndexChanged),
         this, [=](int index) {
-            GlobalData::displayInfoTextAlignment = Qt::Alignment(
+            auto& currentSetting = GlobalData::subFunctionSettings[currentSubFunction];
+            currentSetting.textAlignment = Qt::Alignment(
                 ui.cbDisplayInfoTextVAlign->itemData(index).toInt()
-                | GlobalData::displayInfoTextAlignment & Qt::AlignHorizontal_Mask);
-            displayInfoDialog->setTextAlignment(GlobalData::displayInfoTextAlignment);
+                | currentSetting.textAlignment & Qt::AlignHorizontal_Mask);
+            if (displayInfoDialog) {
+                displayInfoDialog->setTextAlignment();
+            }
         });
+
+    // 在窗口展示
+    connect(ui.cbDisplayInfoFuncEnable, &QCheckBox::stateChanged, this, [=](int state) {
+        GlobalData::subFunctionSettings[currentSubFunction].display = state == Qt::Checked;
+        if (displayInfoDialog) {
+            displayInfoDialog->setDisplay();
+        }
+    });
+
+    // 设置分类
+    for (auto f : GlobalData::funcs) {
+        ui.cbDisplayInfoFunction->addItem(SubFunctionUtil::toDisplayString(f), f);
+    }
+    ui.cbDisplayInfoFunction->removeItem(0); // 暂时不显示防火墙
+    connect(ui.cbDisplayInfoFunction, QOverload<int>::of(&QComboBox::currentIndexChanged),
+        this, [=](int index) {
+            currentSubFunctionIndex = index;
+            currentSubFunction = ui.cbDisplayInfoFunction->itemData(index).value<SubFunction>();
+            setDisplayInfoCententSettings(currentSubFunction);
+        });
+    setDisplayInfoCententSettings(currentSubFunction);
+    ui.cbDisplayInfoFunction->setCurrentIndex(currentSubFunctionIndex);
+}
+
+void SettingDialog::setDisplayInfoCententSettings(SubFunction f)
+{
+    auto& currentSetting = GlobalData::subFunctionSettings[f];
+    ui.cbDisplayInfoFuncEnable->setChecked(currentSetting.display);
+    ui.fcbDisplayInfoFont->setCurrentFont(QFont(currentSetting.fontFamily));
+    ui.sbDisplayInfoTextSize->setValue(currentSetting.textSize);
+    ui.labDisplayInfoTextColor->setStyleSheet(
+        QString("background-color: %1;").arg(currentSetting.textColor.name()));
+    ui.sbDisplayInfoTextShadowBlurRadius->setValue(currentSetting.textShadowBlurRadius);
+    ui.sbDisplayInfoTextShadowOffsetX->setValue(currentSetting.textShadowOffset.x());
+    ui.sbDisplayInfoTextShadowOffsetY->setValue(currentSetting.textShadowOffset.y());
+    ui.labDisplayInfoTextShadowColor->setStyleSheet(
+        QString("background-color: %1;").arg(currentSetting.textShadowColor.name()));
+    for (int i = 0; i < horiAlign.count(); i++) {
+        if (horiAlign[i].first == (currentSetting.textAlignment & Qt::AlignHorizontal_Mask).toInt()) {
+            ui.cbDisplayInfoTextHAlign->setCurrentIndex(i);
+        }
+    }
+    for (int i = 0; i < vertAlign.count(); i++) {
+        if (vertAlign[i].first == (currentSetting.textAlignment & Qt::AlignVertical_Mask).toInt()) {
+            ui.cbDisplayInfoTextVAlign->setCurrentIndex(i);
+        }
+    }
 }

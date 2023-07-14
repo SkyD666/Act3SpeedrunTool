@@ -305,6 +305,10 @@ void MainWindow::initMenu()
         QDesktopServices::openUrl(QUrl("https://afdian.net/a/SkyD666"));
     });
 
+    connect(ui.actionHelpTranslate, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("https://discord.gg/pEWEjeJTa3"));
+    });
+
     connect(ui.actionAboutQt, &QAction::triggered, this, [=]() { qApp->aboutQt(); });
 
     connect(ui.actionAbout, &QAction::triggered, this, [=]() {

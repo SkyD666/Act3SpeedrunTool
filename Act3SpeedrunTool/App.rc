@@ -8,8 +8,8 @@ IDI_ICON1 ICON "icon.ico"
 #endif
 
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION 3,2,0,0
-    PRODUCTVERSION 3,2,0,0
+    FILEVERSION 3,3,0,0
+    PRODUCTVERSION 3,3,0,0
     FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
     FILEFLAGS VS_FF_DEBUG
@@ -26,8 +26,8 @@ VS_VERSION_INFO VERSIONINFO
             BEGIN
                 VALUE "CompanyName", "SkyD666\0"
                 VALUE "FileDescription", "Act3 Speedrun Tool\0"
-                VALUE "FileVersion", "3.2.0.0\0"
-                VALUE "ProductVersion", "3.2.0.0\0"
+                VALUE "FileVersion", "3.3.0.0\0"
+                VALUE "ProductVersion", "3.3.0.0\0"
                 VALUE "LegalCopyright", "\0"
                 VALUE "LegalTrademarks", "\0"
                 VALUE "OriginalFilename", "Act3 Speedrun Tool.exe\0"

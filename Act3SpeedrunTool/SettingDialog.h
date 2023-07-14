@@ -17,12 +17,30 @@ public:
 protected:
     QString getSoundFile();
 
+    int currentSubFunctionIndex = 0;
+    SubFunction currentSubFunction = SubFunction::Headshot;
+
     void initHotkeySettings();
 
     void initDisplayInfoSettings();
+
+    void setDisplayInfoCententSettings(SubFunction f);
 
 private:
     Ui::SettingDialog ui;
 
     DisplayInfoDialog* displayInfoDialog = nullptr;
+
+    // 内容对齐
+    QList<QPair<int, QString>> horiAlign = {
+        std::pair(Qt::AlignLeft, tr("左对齐")),
+        std::pair(Qt::AlignHCenter, tr("居中")),
+        std::pair(Qt::AlignRight, tr("右对齐"))
+    };
+
+    QList<QPair<int, QString>> vertAlign = {
+        std::pair(Qt::AlignTop, tr("上对齐")),
+        std::pair(Qt::AlignVCenter, tr("居中")),
+        std::pair(Qt::AlignBottom, tr("下对齐"))
+    };
 };

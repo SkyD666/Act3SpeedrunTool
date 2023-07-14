@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>275</width>
-    <height>270</height>
+    <height>254</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -56,28 +56,25 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="labHelpTranslate">
-          <property name="text">
-           <string>&lt;a href=&quot;https://discord.gg/pEWEjeJTa3&quot;&gt;帮助我们进行翻译&lt;/a&gt;</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::RichText</enum>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
-          <property name="openExternalLinks">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLabel" name="label">
           <property name="text">
            <string>代言人：⭐神
 ⭐神断网，好用没烦恼！</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -152,19 +149,6 @@
       </widget>
      </widget>
     </item>
-    <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -184,8 +168,10 @@
     <addaction name="actionLog"/>
     <addaction name="separator"/>
     <addaction name="actionGitHub"/>
+    <addaction name="actionHelpTranslate"/>
     <addaction name="separator"/>
     <addaction name="actionSponsor"/>
+    <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
     <addaction name="actionAbout"/>
    </widget>
@@ -273,6 +259,11 @@
    </property>
    <property name="text">
     <string>可拖动</string>
+   </property>
+  </action>
+  <action name="actionHelpTranslate">
+   <property name="text">
+    <string>帮助我们进行翻译...</string>
    </property>
   </action>
  </widget>
