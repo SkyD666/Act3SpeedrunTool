@@ -28,7 +28,7 @@ set(PROJECT_SOURCES
         LanguageUtil.h LanguageUtil.cpp
         MemoryUtil.h MemoryUtil.cpp
         HttpServerUtil.h HttpServerUtil.cpp
-        SubFunction.h SubFunction.cpp
+        DisplayInfoSubFunction.h DisplayInfoSubFunction.cpp
         resource.qrc
 )
 

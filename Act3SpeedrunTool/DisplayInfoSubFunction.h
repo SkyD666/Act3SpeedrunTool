@@ -5,22 +5,21 @@
 
 #pragma once
 
-enum SubFunction {
+enum DisplayInfoSubFunction {
     Firewall = 1,
     Headshot = 2,
     Timer = 3
 };
 
-namespace SubFunctionUtil {
-QString toDisplayString(SubFunction f);
-QString toString(SubFunction f);
+namespace DisplayInfoSubFunctionUtil {
+QString toDisplayString(DisplayInfoSubFunction f);
+QString toString(DisplayInfoSubFunction f);
 }
 
-struct SubFunctionSettingItem {
-    SubFunctionSettingItem()
+struct DisplayInfoSubFunctionItem {
+    DisplayInfoSubFunctionItem()
     {
         display = true;
-        updateIntervalMs = 50;
         textAlignment = Qt::AlignLeft | Qt::AlignVCenter;
         textSize = 26;
         textColor = Qt::yellow;
@@ -29,12 +28,11 @@ struct SubFunctionSettingItem {
         textShadowOffset = { 0, 0 };
         fontFamily = QFont().family();
     };
-    SubFunctionSettingItem(bool display, int updateIntervalMs, Qt::Alignment textAlignment,
-        int textSize, QColor textColor, QColor textShadowColor, int textShadowBlurRadius,
+    DisplayInfoSubFunctionItem(bool display, Qt::Alignment textAlignment, int textSize,
+        QColor textColor, QColor textShadowColor, int textShadowBlurRadius,
         QPointF textShadowOffset, QString fontFamily)
     {
         this->display = display;
-        this->updateIntervalMs = updateIntervalMs;
         this->textAlignment = textAlignment;
         this->textAlignment = textAlignment;
         this->textSize = textSize;
@@ -45,7 +43,6 @@ struct SubFunctionSettingItem {
         this->fontFamily = fontFamily;
     }
     bool display;
-    int updateIntervalMs;
     Qt::Alignment textAlignment;
     int textSize;
     QColor textColor;

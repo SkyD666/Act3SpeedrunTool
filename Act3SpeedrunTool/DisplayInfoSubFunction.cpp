@@ -1,12 +1,12 @@
-#include "SubFunction.h"
+#include "DisplayInfoSubFunction.h"
 #include <QColor>
 #include <QFont>
 #include <QObject>
 #include <QPointF>
 
-namespace SubFunctionUtil {
+namespace DisplayInfoSubFunctionUtil {
 
-QString toDisplayString(SubFunction f)
+QString toDisplayString(DisplayInfoSubFunction f)
 {
     switch (f) {
     case Firewall:
@@ -23,7 +23,7 @@ QString toDisplayString(SubFunction f)
     }
 };
 
-QString toString(SubFunction f)
+QString toString(DisplayInfoSubFunction f)
 {
     switch (f) {
     case Firewall:

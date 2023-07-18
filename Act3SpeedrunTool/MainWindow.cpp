@@ -161,9 +161,9 @@ void MainWindow::setHotkey()
     labCurrentHotkey->setText(hotkeyStatePattern.arg(
         GlobalData::firewallStartHotkey,
         GlobalData::firewallStopHotkey,
-        GlobalData::startTimerHotkey,
-        GlobalData::pauseTimerHotkey,
-        GlobalData::stopTimerHotkey));
+        GlobalData::timerStartHotkey,
+        GlobalData::timerPauseHotkey,
+        GlobalData::timerStopHotkey));
 
     // 防火墙
     if (!GlobalData::firewallStartHotkey.isEmpty() && !GlobalData::firewallStopHotkey.isEmpty()) {
@@ -193,9 +193,9 @@ void MainWindow::setHotkey()
     }
 
     // 计时器
-    if (!GlobalData::startTimerHotkey.isEmpty() && !GlobalData::stopTimerHotkey.isEmpty()) {
-        bool sameTimerHotkey = GlobalData::startTimerHotkey == GlobalData::stopTimerHotkey;
-        startTimerHotkey = new QHotkey(QKeySequence(GlobalData::startTimerHotkey), true, qApp);
+    if (!GlobalData::timerStartHotkey.isEmpty() && !GlobalData::timerStopHotkey.isEmpty()) {
+        bool sameTimerHotkey = GlobalData::timerStartHotkey == GlobalData::timerStopHotkey;
+        startTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerStartHotkey), true, qApp);
         if (startTimerHotkey->isRegistered()) {
             connect(startTimerHotkey, &QHotkey::activated, qApp, [=]() {
                 if (sameTimerHotkey) {
@@ -208,7 +208,7 @@ void MainWindow::setHotkey()
             QMessageBox::critical(nullptr, QString(), tr("注册启动计时器热键失败！"));
         }
         if (!sameTimerHotkey) {
-            stopTimerHotkey = new QHotkey(QKeySequence(GlobalData::stopTimerHotkey), true, qApp);
+            stopTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerStopHotkey), true, qApp);
             if (stopTimerHotkey->isRegistered()) {
                 connect(stopTimerHotkey, &QHotkey::activated, qApp, [=]() {
                     ui.btnStartTimer->setChecked(false);
@@ -217,11 +217,11 @@ void MainWindow::setHotkey()
                 QMessageBox::critical(nullptr, QString(), tr("注册停止计时器热键失败！"));
             }
         }
-        if (GlobalData::pauseTimerHotkey == GlobalData::startTimerHotkey
-            || GlobalData::pauseTimerHotkey == GlobalData::stopTimerHotkey) {
+        if (GlobalData::timerPauseHotkey == GlobalData::timerStartHotkey
+            || GlobalData::timerPauseHotkey == GlobalData::timerStopHotkey) {
             QMessageBox::critical(nullptr, QString(), tr("暂停计时器热键与启动/停止计时器热键相同，暂停计时器热键将会无效！"));
         } else {
-            pauseTimerHotkey = new QHotkey(QKeySequence(GlobalData::pauseTimerHotkey), true, qApp);
+            pauseTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerPauseHotkey), true, qApp);
             if (pauseTimerHotkey->isRegistered()) {
                 connect(pauseTimerHotkey, &QHotkey::activated, qApp, [=]() {
                     if (ui.btnPauseTimer->isEnabled()) {
@@ -238,10 +238,10 @@ void MainWindow::setHotkey()
 void MainWindow::updateTimerInterval()
 {
     if (headShotTimer) {
-        headShotTimer->setInterval(GlobalData::subFunctionSettings[SubFunction::Headshot].updateIntervalMs);
+        headShotTimer->setInterval(GlobalData::headshotUpdateInterval);
     }
     if (timer) {
-        timer->setInterval(GlobalData::subFunctionSettings[SubFunction::Timer].updateIntervalMs);
+        timer->setInterval(GlobalData::timerUpdateInterval);
     }
 }
 
@@ -403,7 +403,7 @@ bool MainWindow::startReadHeadShot()
         firstTime = false;
     });
     firstTime = true;
-    headShotTimer->start(GlobalData::subFunctionSettings[SubFunction::Headshot].updateIntervalMs);
+    headShotTimer->start(GlobalData::headshotUpdateInterval);
 
     return true;
 }
@@ -452,7 +452,7 @@ void MainWindow::startTimer(bool isContinue)
         }
     });
     timer->setTimerType(Qt::PreciseTimer);
-    timer->start(GlobalData::subFunctionSettings[SubFunction::Timer].updateIntervalMs);
+    timer->start(GlobalData::timerUpdateInterval);
 }
 
 void MainWindow::pauseTimer()

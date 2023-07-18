@@ -46,44 +46,44 @@ void DisplayInfoDialog::setDialogBackground(QColor color)
 
 void DisplayInfoDialog::setDisplay()
 {
-    ui->labHeadShotCount->setVisible(GlobalData::subFunctionSettings[SubFunction::Headshot].display);
-    ui->labTimer->setVisible(GlobalData::subFunctionSettings[SubFunction::Timer].display);
+    ui->labHeadShotCount->setVisible(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].display);
+    ui->labTimer->setVisible(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].display);
 }
 
 void DisplayInfoDialog::setTextAlignment()
 {
-    ui->labHeadShotCount->setAlignment(GlobalData::subFunctionSettings[SubFunction::Headshot].textAlignment);
-    ui->labTimer->setAlignment(GlobalData::subFunctionSettings[SubFunction::Timer].textAlignment);
+    ui->labHeadShotCount->setAlignment(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].textAlignment);
+    ui->labTimer->setAlignment(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].textAlignment);
 }
 
 void DisplayInfoDialog::setFont()
 {
     ui->labHeadShotCount->setFont(
-        QFont(GlobalData::subFunctionSettings[SubFunction::Headshot].fontFamily,
-            GlobalData::subFunctionSettings[SubFunction::Headshot].textSize));
+        QFont(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].fontFamily,
+            GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].textSize));
     ui->labTimer->setFont(
-        QFont(GlobalData::subFunctionSettings[SubFunction::Timer].fontFamily,
-            GlobalData::subFunctionSettings[SubFunction::Timer].textSize));
+        QFont(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].fontFamily,
+            GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].textSize));
     setTime(0, 0, 0); // 更新字体大小
 }
 
 void DisplayInfoDialog::setTextStyle()
 {
     ui->labHeadShotCount->setStyleSheet(
-        textQssPattern.arg(GlobalData::subFunctionSettings[SubFunction::Headshot].textColor.name()));
+        textQssPattern.arg(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].textColor.name()));
     ui->labTimer->setStyleSheet(
-        textQssPattern.arg(GlobalData::subFunctionSettings[SubFunction::Timer].textColor.name()));
+        textQssPattern.arg(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].textColor.name()));
 
     QGraphicsDropShadowEffect* headshotEffect = new QGraphicsDropShadowEffect(this);
-    headshotEffect->setColor(GlobalData::subFunctionSettings[SubFunction::Headshot].textShadowColor);
-    headshotEffect->setBlurRadius(GlobalData::subFunctionSettings[SubFunction::Headshot].textShadowBlurRadius);
-    headshotEffect->setOffset(GlobalData::subFunctionSettings[SubFunction::Headshot].textShadowOffset);
+    headshotEffect->setColor(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].textShadowColor);
+    headshotEffect->setBlurRadius(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].textShadowBlurRadius);
+    headshotEffect->setOffset(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Headshot].textShadowOffset);
     ui->labHeadShotCount->setGraphicsEffect(headshotEffect);
 
     QGraphicsDropShadowEffect* timerEffect = new QGraphicsDropShadowEffect(this);
-    timerEffect->setColor(GlobalData::subFunctionSettings[SubFunction::Timer].textShadowColor);
-    timerEffect->setBlurRadius(GlobalData::subFunctionSettings[SubFunction::Timer].textShadowBlurRadius);
-    timerEffect->setOffset(GlobalData::subFunctionSettings[SubFunction::Timer].textShadowOffset);
+    timerEffect->setColor(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].textShadowColor);
+    timerEffect->setBlurRadius(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].textShadowBlurRadius);
+    timerEffect->setOffset(GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].textShadowOffset);
     ui->labTimer->setGraphicsEffect(timerEffect);
 }
 
@@ -106,7 +106,7 @@ void DisplayInfoDialog::setHeadShotCount(short count)
 
 void DisplayInfoDialog::setTime(int m, int s, int ms)
 {
-    auto textSize = GlobalData::subFunctionSettings[SubFunction::Timer].textSize;
+    auto textSize = GlobalData::displayInfoSubFunctions[DisplayInfoSubFunction::Timer].textSize;
     ui->labTimer->setText(timePattern
                               .arg(QString::number(textSize))
                               .arg(m, 2, 10, QLatin1Char('0'))

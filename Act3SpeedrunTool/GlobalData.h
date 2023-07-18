@@ -1,4 +1,4 @@
-#include "SubFunction.h"
+#include "DisplayInfoSubFunction.h"
 #include <QColor>
 #include <QMetaType>
 #include <QPoint>
@@ -8,13 +8,11 @@
 
 #pragma once
 
-typedef QMap<SubFunction, SubFunctionSettingItem> QSubFuncSettingsMap;
+typedef QMap<DisplayInfoSubFunction, DisplayInfoSubFunctionItem> QDisplayInfoSubFuncsMap;
 
 class GlobalData {
 public:
     GlobalData();
-
-    static QList<SubFunction> funcs;
 
     static inline QString getSettingsFilePath();
 
@@ -25,30 +23,40 @@ public:
 
     static void writeSettings();
 
-    static QString firewallStartHotkey;
-    static QString firewallStopHotkey;
-    static QString language;
-    static bool firewallPlaySound;
-
-    static QString firewallAppPath;
-
-    static QSubFuncSettingsMap subFunctionSettings;
+    // 信息展示
+    static QList<DisplayInfoSubFunction> funcs;
+    static QDisplayInfoSubFuncsMap displayInfoSubFunctions;
     static bool displayInfoShow;
     static bool displayInfoTouchable;
     static bool displayInfoServer;
     static QPoint displayInfoPos;
     static QSize displayInfoSize;
     static QColor displayInfoBackground;
-    static QString startTimerHotkey;
-    static QString pauseTimerHotkey;
-    static QString stopTimerHotkey;
-    static bool timerZeroAfterStop;
 
+    // 防火墙
+    static QString firewallStartHotkey;
+    static QString firewallStopHotkey;
     static QString firewallStartSound;
     static QString firewallStopSound;
     static QString firewallErrorSound;
+    static bool firewallPlaySound;
+    static QString firewallAppPath;
+
+    // 爆头
+    static int headshotUpdateInterval;
+
+    // 计时器
+    static QString timerStartHotkey;
+    static QString timerPauseHotkey;
+    static QString timerStopHotkey;
+    static bool timerZeroAfterStop;
+    static int timerUpdateInterval;
+
+    // 语言
+    static QString language;
 
 private:
+    // 读取/写入信息展示设置
     static void readSubFuncSettingsMap(QSettings& settings);
     static void writeSubFuncSettingsMap(QSettings& settings);
 };

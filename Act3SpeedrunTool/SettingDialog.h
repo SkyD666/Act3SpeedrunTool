@@ -11,22 +11,24 @@ public:
     explicit SettingDialog(QWidget* parent = nullptr, DisplayInfoDialog* displayInfoDialog = nullptr);
     ~SettingDialog();
 
-    QString pageName[4] = { tr("信息展示"), tr("断网"), tr("计时器"), tr("语言") };
+    QString pageName[5] = { tr("信息展示"), tr("断网"), tr("爆头"), tr("计时器"), tr("语言") };
     const static QString pageIcon[];
 
 protected:
     QString getSoundFile();
 
     int currentSubFunctionIndex = 0;
-    SubFunction currentSubFunction = SubFunction::Headshot;
+    DisplayInfoSubFunction currentSubFunction = DisplayInfoSubFunction::Headshot;
 
     void initFirewallSettings();
+
+    void initHeadshotSettings();
 
     void initTimerSettings();
 
     void initDisplayInfoSettings();
 
-    void setDisplayInfoCententSettings(SubFunction f);
+    void setDisplayInfoCententSettings(DisplayInfoSubFunction f);
 
 private:
     Ui::SettingDialog ui;

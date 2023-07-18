@@ -31,6 +31,7 @@ SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDial
     connect(ui.lwPage, &QListWidget::currentRowChanged, ui.stackedWidget, &QStackedWidget::setCurrentIndex);
 
     initFirewallSettings();
+    initHeadshotSettings();
     initTimerSettings();
 
     for (auto l : LanguageUtil::getInstance()->languages) {
@@ -137,58 +138,80 @@ void SettingDialog::initFirewallSettings()
     });
 }
 
+// 爆头设置
+void SettingDialog::initHeadshotSettings()
+{
+    // 刷新间隔
+    ui.sbHeadshotUpdateInterval->setValue(GlobalData::headshotUpdateInterval);
+    connect(ui.sbHeadshotUpdateInterval, &QSpinBox::valueChanged, this, [=](int value) {
+        GlobalData::headshotUpdateInterval = value;
+        if (displayInfoDialog) {
+            displayInfoDialog->setTextStyle();
+        }
+    });
+}
+
+// 计时器设置
 void SettingDialog::initTimerSettings()
 {
-    // 计时器
-    ui.keySeqStartTimer->setKeySequence(QKeySequence(GlobalData::startTimerHotkey));
+    ui.keySeqStartTimer->setKeySequence(QKeySequence(GlobalData::timerStartHotkey));
     connect(ui.keySeqStartTimer, &QKeySequenceEdit::editingFinished, this, [=]() {
         if (ui.keySeqStartTimer->keySequence().count() > 1) {
             QKeyCombination value = ui.keySeqStartTimer->keySequence()[0];
             QKeySequence shortcut(value);
             ui.keySeqStartTimer->setKeySequence(shortcut);
-            GlobalData::startTimerHotkey = shortcut.toString();
+            GlobalData::timerStartHotkey = shortcut.toString();
         } else {
-            GlobalData::startTimerHotkey = ui.keySeqStartTimer->keySequence().toString();
+            GlobalData::timerStartHotkey = ui.keySeqStartTimer->keySequence().toString();
         }
     });
 
     connect(ui.tbClearStartTimerHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
         ui.keySeqStartTimer->clear();
-        GlobalData::startTimerHotkey = "";
+        GlobalData::timerStartHotkey = "";
     });
 
-    ui.keySeqPauseTimer->setKeySequence(QKeySequence(GlobalData::pauseTimerHotkey));
+    ui.keySeqPauseTimer->setKeySequence(QKeySequence(GlobalData::timerPauseHotkey));
     connect(ui.keySeqPauseTimer, &QKeySequenceEdit::editingFinished, this, [=]() {
         if (ui.keySeqPauseTimer->keySequence().count() > 1) {
             QKeyCombination value = ui.keySeqPauseTimer->keySequence()[0];
             QKeySequence shortcut(value);
             ui.keySeqPauseTimer->setKeySequence(shortcut);
-            GlobalData::pauseTimerHotkey = shortcut.toString();
+            GlobalData::timerPauseHotkey = shortcut.toString();
         } else {
-            GlobalData::pauseTimerHotkey = ui.keySeqPauseTimer->keySequence().toString();
+            GlobalData::timerPauseHotkey = ui.keySeqPauseTimer->keySequence().toString();
         }
     });
 
     connect(ui.tbClearPauseTimerHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
         ui.keySeqPauseTimer->clear();
-        GlobalData::pauseTimerHotkey = "";
+        GlobalData::timerPauseHotkey = "";
     });
 
-    ui.keySeqStopTimer->setKeySequence(QKeySequence(GlobalData::stopTimerHotkey));
+    ui.keySeqStopTimer->setKeySequence(QKeySequence(GlobalData::timerStopHotkey));
     connect(ui.keySeqStopTimer, &QKeySequenceEdit::editingFinished, this, [=]() {
         if (ui.keySeqStopTimer->keySequence().count() > 1) {
             QKeyCombination value = ui.keySeqStopTimer->keySequence()[0];
             QKeySequence shortcut(value);
             ui.keySeqStopTimer->setKeySequence(shortcut);
-            GlobalData::stopTimerHotkey = shortcut.toString();
+            GlobalData::timerStopHotkey = shortcut.toString();
         } else {
-            GlobalData::stopTimerHotkey = ui.keySeqStopTimer->keySequence().toString();
+            GlobalData::timerStopHotkey = ui.keySeqStopTimer->keySequence().toString();
         }
     });
 
     connect(ui.tbClearStopTimerHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
         ui.keySeqStopTimer->clear();
-        GlobalData::stopTimerHotkey = "";
+        GlobalData::timerStopHotkey = "";
+    });
+
+    // 刷新间隔
+    ui.sbTimerUpdateInterval->setValue(GlobalData::timerUpdateInterval);
+    connect(ui.sbTimerUpdateInterval, &QSpinBox::valueChanged, this, [=](int value) {
+        GlobalData::timerUpdateInterval = value;
+        if (displayInfoDialog) {
+            displayInfoDialog->setTextStyle();
+        }
     });
 
     // 停止后归零
@@ -293,24 +316,24 @@ void SettingDialog::initDisplayInfoSettings()
     // 内容 ================================================================================
     // 字体family
     connect(ui.fcbDisplayInfoFont, &QFontComboBox::currentFontChanged, this, [=](const QFont& font) {
-        GlobalData::subFunctionSettings[currentSubFunction].fontFamily = font.family();
+        GlobalData::displayInfoSubFunctions[currentSubFunction].fontFamily = font.family();
         if (displayInfoDialog) {
             displayInfoDialog->setFont();
         }
     });
 
     connect(ui.sbDisplayInfoTextSize, &QSpinBox::valueChanged, this, [=](int value) {
-        GlobalData::subFunctionSettings[currentSubFunction].textSize = value;
+        GlobalData::displayInfoSubFunctions[currentSubFunction].textSize = value;
         if (displayInfoDialog) {
             displayInfoDialog->setFont();
         }
     });
 
     connect(ui.tbSelectDisplayInfoTextColor, &QAbstractButton::clicked, this, [=]() {
-        QColorDialog dialog(GlobalData::subFunctionSettings[currentSubFunction].textColor);
+        QColorDialog dialog(GlobalData::displayInfoSubFunctions[currentSubFunction].textColor);
         if (dialog.exec() == QDialog::Accepted) {
             auto color = dialog.selectedColor();
-            GlobalData::subFunctionSettings[currentSubFunction].textColor = color;
+            GlobalData::displayInfoSubFunctions[currentSubFunction].textColor = color;
             ui.labDisplayInfoTextColor->setStyleSheet(QString("background-color: %1;").arg(color.name()));
 
             if (displayInfoDialog) {
@@ -321,28 +344,28 @@ void SettingDialog::initDisplayInfoSettings()
 
     // 阴影
     connect(ui.sbDisplayInfoTextShadowBlurRadius, &QSpinBox::valueChanged, this, [=](int value) {
-        GlobalData::subFunctionSettings[currentSubFunction].textShadowBlurRadius = value;
+        GlobalData::displayInfoSubFunctions[currentSubFunction].textShadowBlurRadius = value;
         if (displayInfoDialog) {
             displayInfoDialog->setTextStyle();
         }
     });
     connect(ui.sbDisplayInfoTextShadowOffsetX, &QSpinBox::valueChanged, this, [=](int value) {
-        GlobalData::subFunctionSettings[currentSubFunction].textShadowOffset.rx() = value;
+        GlobalData::displayInfoSubFunctions[currentSubFunction].textShadowOffset.rx() = value;
         if (displayInfoDialog) {
             displayInfoDialog->setTextStyle();
         }
     });
     connect(ui.sbDisplayInfoTextShadowOffsetY, &QSpinBox::valueChanged, this, [=](int value) {
-        GlobalData::subFunctionSettings[currentSubFunction].textShadowOffset.ry() = value;
+        GlobalData::displayInfoSubFunctions[currentSubFunction].textShadowOffset.ry() = value;
         if (displayInfoDialog) {
             displayInfoDialog->setTextStyle();
         }
     });
     connect(ui.tbSelectDisplayInfoTextShadowColor, &QAbstractButton::clicked, this, [=]() {
-        QColorDialog dialog(GlobalData::subFunctionSettings[currentSubFunction].textShadowColor);
+        QColorDialog dialog(GlobalData::displayInfoSubFunctions[currentSubFunction].textShadowColor);
         if (dialog.exec() == QDialog::Accepted) {
             auto color = dialog.selectedColor();
-            GlobalData::subFunctionSettings[currentSubFunction].textShadowColor = color;
+            GlobalData::displayInfoSubFunctions[currentSubFunction].textShadowColor = color;
             ui.labDisplayInfoTextShadowColor->setStyleSheet(
                 QString("background-color: %1;").arg(color.name()));
 
@@ -358,7 +381,7 @@ void SettingDialog::initDisplayInfoSettings()
     }
     connect(ui.cbDisplayInfoTextHAlign, QOverload<int>::of(&QComboBox::currentIndexChanged),
         this, [=](int index) {
-            auto& currentSetting = GlobalData::subFunctionSettings[currentSubFunction];
+            auto& currentSetting = GlobalData::displayInfoSubFunctions[currentSubFunction];
             currentSetting.textAlignment = Qt::Alignment(
                 ui.cbDisplayInfoTextHAlign->itemData(index).toInt()
                 | currentSetting.textAlignment & Qt::AlignVertical_Mask);
@@ -372,7 +395,7 @@ void SettingDialog::initDisplayInfoSettings()
     }
     connect(ui.cbDisplayInfoTextVAlign, QOverload<int>::of(&QComboBox::currentIndexChanged),
         this, [=](int index) {
-            auto& currentSetting = GlobalData::subFunctionSettings[currentSubFunction];
+            auto& currentSetting = GlobalData::displayInfoSubFunctions[currentSubFunction];
             currentSetting.textAlignment = Qt::Alignment(
                 ui.cbDisplayInfoTextVAlign->itemData(index).toInt()
                 | currentSetting.textAlignment & Qt::AlignHorizontal_Mask);
@@ -383,40 +406,31 @@ void SettingDialog::initDisplayInfoSettings()
 
     // 在窗口展示
     connect(ui.cbDisplayInfoFuncEnable, &QCheckBox::stateChanged, this, [=](int state) {
-        GlobalData::subFunctionSettings[currentSubFunction].display = state == Qt::Checked;
+        GlobalData::displayInfoSubFunctions[currentSubFunction].display = state == Qt::Checked;
         if (displayInfoDialog) {
             displayInfoDialog->setDisplay();
         }
     });
 
-    // 刷新间隔
-    connect(ui.sbDisplayInfoUpdateInterval, &QSpinBox::valueChanged, this, [=](int value) {
-        GlobalData::subFunctionSettings[currentSubFunction].updateIntervalMs = value;
-        if (displayInfoDialog) {
-            displayInfoDialog->setTextStyle();
-        }
-    });
-
     // 设置分类
     for (auto f : GlobalData::funcs) {
-        ui.cbDisplayInfoFunction->addItem(SubFunctionUtil::toDisplayString(f), f);
+        ui.cbDisplayInfoFunction->addItem(DisplayInfoSubFunctionUtil::toDisplayString(f), f);
     }
     ui.cbDisplayInfoFunction->removeItem(0); // 暂时不显示防火墙
     connect(ui.cbDisplayInfoFunction, QOverload<int>::of(&QComboBox::currentIndexChanged),
         this, [=](int index) {
             currentSubFunctionIndex = index;
-            currentSubFunction = ui.cbDisplayInfoFunction->itemData(index).value<SubFunction>();
+            currentSubFunction = ui.cbDisplayInfoFunction->itemData(index).value<DisplayInfoSubFunction>();
             setDisplayInfoCententSettings(currentSubFunction);
         });
     setDisplayInfoCententSettings(currentSubFunction);
     ui.cbDisplayInfoFunction->setCurrentIndex(currentSubFunctionIndex);
 }
 
-void SettingDialog::setDisplayInfoCententSettings(SubFunction f)
+void SettingDialog::setDisplayInfoCententSettings(DisplayInfoSubFunction f)
 {
-    auto& currentSetting = GlobalData::subFunctionSettings[f];
+    auto& currentSetting = GlobalData::displayInfoSubFunctions[f];
     ui.cbDisplayInfoFuncEnable->setChecked(currentSetting.display);
-    ui.sbDisplayInfoUpdateInterval->setValue(currentSetting.updateIntervalMs);
     ui.fcbDisplayInfoFont->setCurrentFont(QFont(currentSetting.fontFamily));
     ui.sbDisplayInfoTextSize->setValue(currentSetting.textSize);
     ui.labDisplayInfoTextColor->setStyleSheet(

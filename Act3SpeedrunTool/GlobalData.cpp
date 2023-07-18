@@ -5,26 +5,33 @@
 #include <QSettings>
 #include <windows.h>
 
-QList<SubFunction> GlobalData::funcs = { SubFunction::Firewall, SubFunction::Headshot, SubFunction::Timer };
-QString GlobalData::firewallStartHotkey = "F9";
-QString GlobalData::firewallStopHotkey = "F9";
-QString GlobalData::language = "";
-QString GlobalData::firewallStartSound = "";
-QString GlobalData::firewallStopSound = "";
-QString GlobalData::firewallErrorSound = "";
-bool GlobalData::firewallPlaySound = true;
-QString GlobalData::firewallAppPath = "";
-QSubFuncSettingsMap GlobalData::subFunctionSettings;
+// 信息展示
+QList<DisplayInfoSubFunction> GlobalData::funcs = { DisplayInfoSubFunction::Firewall, DisplayInfoSubFunction::Headshot, DisplayInfoSubFunction::Timer };
+QDisplayInfoSubFuncsMap GlobalData::displayInfoSubFunctions;
 bool GlobalData::displayInfoShow = true;
 bool GlobalData::displayInfoServer = false;
 bool GlobalData::displayInfoTouchable = false;
 QPoint GlobalData::displayInfoPos = { 20, 20 };
 QSize GlobalData::displayInfoSize = { 300, 100 };
 QColor GlobalData::displayInfoBackground = Qt::transparent;
-QString GlobalData::startTimerHotkey = "F7";
-QString GlobalData::pauseTimerHotkey = "F8";
-QString GlobalData::stopTimerHotkey = "F7";
+// 防火墙
+QString GlobalData::firewallStartHotkey = "F9";
+QString GlobalData::firewallStopHotkey = "F9";
+QString GlobalData::firewallStartSound = "";
+QString GlobalData::firewallStopSound = "";
+QString GlobalData::firewallErrorSound = "";
+bool GlobalData::firewallPlaySound = true;
+QString GlobalData::firewallAppPath = "";
+// 爆头
+int GlobalData::headshotUpdateInterval = 100;
+// 计时器
+QString GlobalData::timerStartHotkey = "F7";
+QString GlobalData::timerPauseHotkey = "F8";
+QString GlobalData::timerStopHotkey = "F7";
 bool GlobalData::timerZeroAfterStop = false;
+int GlobalData::timerUpdateInterval = 50;
+// 语言
+QString GlobalData::language = "";
 
 GlobalData::GlobalData()
 {
@@ -49,10 +56,6 @@ void GlobalData::readSettings()
 {
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
 
-    settings.beginGroup("General");
-    language = settings.value("Language", "").toString();
-    settings.endGroup();
-
     settings.beginGroup("DisplayInfo");
     RECT rect;
     rect.left = GetSystemMetrics(SM_XVIRTUALSCREEN);
@@ -72,13 +75,7 @@ void GlobalData::readSettings()
     };
     displayInfoBackground = QColor::fromRgba(settings.value("DisplayInfoBackground", displayInfoBackground.rgba()).toUInt());
     settings.endGroup();
-
-    settings.beginGroup("Timer");
-    startTimerHotkey = settings.value("StartTimerhotkey", startTimerHotkey).toString();
-    pauseTimerHotkey = settings.value("PauseTimerHotkey", pauseTimerHotkey).toString();
-    stopTimerHotkey = settings.value("StopTimerHotkey", stopTimerHotkey).toString();
-    timerZeroAfterStop = settings.value("TimerZeroAfterStop", timerZeroAfterStop).toBool();
-    settings.endGroup();
+    readSubFuncSettingsMap(settings);
 
     settings.beginGroup("Firewall");
     firewallStartHotkey = settings.value("FirewallStartHotkey", firewallStartHotkey).toString();
@@ -90,16 +87,26 @@ void GlobalData::readSettings()
     firewallAppPath = settings.value("FirewallAppPath", firewallAppPath).toString();
     settings.endGroup();
 
-    readSubFuncSettingsMap(settings);
+    settings.beginGroup("Headshot");
+    headshotUpdateInterval = settings.value("HeadshotUpdateInterval", headshotUpdateInterval).toInt();
+    settings.endGroup();
+
+    settings.beginGroup("Timer");
+    timerStartHotkey = settings.value("TimerStarthotkey", timerStartHotkey).toString();
+    timerPauseHotkey = settings.value("TimerPauseHotkey", timerPauseHotkey).toString();
+    timerStopHotkey = settings.value("TimerStopHotkey", timerStopHotkey).toString();
+    timerZeroAfterStop = settings.value("TimerZeroAfterStop", timerZeroAfterStop).toBool();
+    timerUpdateInterval = settings.value("TimerUpdateInterval", timerUpdateInterval).toInt();
+    settings.endGroup();
+
+    settings.beginGroup("Language");
+    language = settings.value("Language", "").toString();
+    settings.endGroup();
 }
 
 void GlobalData::writeSettings()
 {
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
-
-    settings.beginGroup("General");
-    settings.setValue("Language", language);
-    settings.endGroup();
 
     settings.beginGroup("DisplayInfo");
     settings.setValue("DisplayInfoShow", displayInfoShow);
@@ -111,13 +118,7 @@ void GlobalData::writeSettings()
     settings.setValue("DisplayInfoHeight", displayInfoSize.height());
     settings.setValue("DisplayInfoBackground", displayInfoBackground.rgba());
     settings.endGroup();
-
-    settings.beginGroup("Timer");
-    settings.setValue("StartTimerhotkey", startTimerHotkey);
-    settings.setValue("PauseTimerHotkey", pauseTimerHotkey);
-    settings.setValue("StopTimerHotkey", stopTimerHotkey);
-    settings.setValue("TimerZeroAfterStop", timerZeroAfterStop);
-    settings.endGroup();
+    writeSubFuncSettingsMap(settings);
 
     settings.beginGroup("Firewall");
     settings.setValue("FirewallStartHotkey", firewallStartHotkey);
@@ -129,21 +130,34 @@ void GlobalData::writeSettings()
     settings.setValue("FirewallAppPath", firewallAppPath);
     settings.endGroup();
 
-    writeSubFuncSettingsMap(settings);
+    settings.beginGroup("Headshot");
+    settings.setValue("HeadshotUpdateInterval", headshotUpdateInterval);
+    settings.endGroup();
+
+    settings.beginGroup("Timer");
+    settings.setValue("TimerStarthotkey", timerStartHotkey);
+    settings.setValue("TimerPauseHotkey", timerPauseHotkey);
+    settings.setValue("TimerStopHotkey", timerStopHotkey);
+    settings.setValue("TimerZeroAfterStop", timerZeroAfterStop);
+    settings.setValue("TimerUpdateInterval", timerUpdateInterval);
+    settings.endGroup();
+
+    settings.beginGroup("Language");
+    settings.setValue("Language", language);
+    settings.endGroup();
 }
 
 void GlobalData::readSubFuncSettingsMap(QSettings& settings)
 {
-    QSubFuncSettingsMap subFunctionSettings;
+    QDisplayInfoSubFuncsMap displayInfoSubFunctions;
     for (auto i : funcs) {
-        subFunctionSettings[i] = SubFunctionSettingItem();
+        displayInfoSubFunctions[i] = DisplayInfoSubFunctionItem();
     }
     settings.beginGroup("SubFunctions");
-    for (auto i = subFunctionSettings.constBegin(); i != subFunctionSettings.constEnd(); i++) {
+    for (auto i = displayInfoSubFunctions.constBegin(); i != displayInfoSubFunctions.constEnd(); i++) {
         auto defaultValue = i.value();
-        settings.beginGroup(SubFunctionUtil::toString(i.key()));
+        settings.beginGroup(DisplayInfoSubFunctionUtil::toString(i.key()));
         defaultValue.display = settings.value("Display", defaultValue.display).toBool();
-        defaultValue.updateIntervalMs = settings.value("UpdateIntervalMs", defaultValue.updateIntervalMs).toInt();
         defaultValue.textAlignment = Qt::Alignment(
             settings.value("TextAlignment", defaultValue.textAlignment.toInt()).toInt());
         defaultValue.textSize = settings.value("TextSize", defaultValue.textSize).toInt();
@@ -153,7 +167,7 @@ void GlobalData::readSubFuncSettingsMap(QSettings& settings)
         defaultValue.textShadowBlurRadius = settings.value("TextShadowBlurRadius", defaultValue.textShadowBlurRadius).toInt();
         defaultValue.textShadowOffset = settings.value("TextShadowOffset", defaultValue.textShadowOffset).value<QPointF>();
         defaultValue.fontFamily = settings.value("FontFamily", defaultValue.fontFamily).toString();
-        GlobalData::subFunctionSettings[i.key()] = defaultValue;
+        GlobalData::displayInfoSubFunctions[i.key()] = defaultValue;
         settings.endGroup();
     }
     settings.endGroup();
@@ -162,11 +176,10 @@ void GlobalData::readSubFuncSettingsMap(QSettings& settings)
 void GlobalData::writeSubFuncSettingsMap(QSettings& settings)
 {
     settings.beginGroup("SubFunctions");
-    for (auto i = subFunctionSettings.constBegin(); i != subFunctionSettings.constEnd(); i++) {
+    for (auto i = displayInfoSubFunctions.constBegin(); i != displayInfoSubFunctions.constEnd(); i++) {
         auto currentValue = i.value();
-        settings.beginGroup(SubFunctionUtil::toString(i.key()));
+        settings.beginGroup(DisplayInfoSubFunctionUtil::toString(i.key()));
         settings.setValue("Display", currentValue.display);
-        settings.setValue("UpdateIntervalMs", currentValue.updateIntervalMs);
         settings.setValue("TextAlignment", currentValue.textAlignment.toInt());
         settings.setValue("TextSize", currentValue.textSize);
         settings.setValue("TextColor", currentValue.textColor);
