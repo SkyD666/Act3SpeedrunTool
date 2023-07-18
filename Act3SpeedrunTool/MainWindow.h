@@ -24,6 +24,8 @@ protected:
 
     void setHotkey();
 
+    void updateTimerInterval();
+
     void initMenu();
 
     void showDisplayInfo();
@@ -59,7 +61,8 @@ private:
 
     QLabel* labState;
 
-    QTimer* readMemTimer = nullptr;
+    short headshotCount = 0;
+    QTimer* headShotTimer = nullptr;
     QTimer* topMostTimer = nullptr;
 
     QTimer* timer = nullptr;

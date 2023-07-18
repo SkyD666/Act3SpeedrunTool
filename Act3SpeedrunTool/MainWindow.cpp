@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "FirewallUtil.h"
 #include "GlobalData.h"
+#include "HttpServerUtil.h"
 #include "LogUtil.h"
 #include "MemoryUtil.h"
 #include "SettingDialog.h"
@@ -41,9 +42,9 @@ MainWindow::MainWindow(QWidget* parent)
     labState->setPalette(palette);
     ui.statusbar->addPermanentWidget(labState);
 
-    ui.cbSound->setChecked(GlobalData::playSound);
+    ui.cbSound->setChecked(GlobalData::firewallPlaySound);
     connect(ui.cbSound, &QCheckBox::stateChanged, this, [=](int state) {
-        GlobalData::playSound = state;
+        GlobalData::firewallPlaySound = state;
     });
 
     ui.btnStartFirewall->setText(tr("已关闭"));
@@ -59,8 +60,8 @@ MainWindow::MainWindow(QWidget* parent)
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::green);
                 labState->setPalette(palette);
-                if (GlobalData::playSound) {
-                    PlaySound(GlobalData::startSound.toStdWString().c_str(),
+                if (GlobalData::firewallPlaySound) {
+                    PlaySound(GlobalData::firewallStartSound.toStdWString().c_str(),
                         nullptr, SND_FILENAME | SND_ASYNC);
                 }
             } else {
@@ -69,15 +70,15 @@ MainWindow::MainWindow(QWidget* parent)
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::red);
                 labState->setPalette(palette);
-                if (GlobalData::playSound) {
-                    PlaySound(GlobalData::stopSound.toStdWString().c_str(),
+                if (GlobalData::firewallPlaySound) {
+                    PlaySound(GlobalData::firewallStopSound.toStdWString().c_str(),
                         nullptr, SND_FILENAME | SND_ASYNC);
                 }
             }
         } else {
             LogUtil::addLog("Firewall operate failed!");
-            if (GlobalData::playSound) {
-                PlaySound(GlobalData::errorSound.toStdWString().c_str(),
+            if (GlobalData::firewallPlaySound) {
+                PlaySound(GlobalData::firewallErrorSound.toStdWString().c_str(),
                     nullptr, SND_FILENAME | SND_ASYNC);
             }
             ui.btnStartFirewall->setChecked(!checked);
@@ -102,7 +103,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui.btnStartTimer, &QAbstractButton::toggled, this, [=](bool checked) {
         if (checked) {
             startTimer();
-            ui.btnStartTimer->setText(tr("点击关闭"));
+            ui.btnStartTimer->setText(tr("点击停止"));
             ui.btnPauseTimer->setEnabled(true);
         } else {
             ui.btnPauseTimer->setChecked(false);
@@ -158,16 +159,16 @@ void MainWindow::removeHotkey(QHotkey*& h)
 void MainWindow::setHotkey()
 {
     labCurrentHotkey->setText(hotkeyStatePattern.arg(
-        GlobalData::startFirewallHotkey,
-        GlobalData::stopFirewallHotkey,
+        GlobalData::firewallStartHotkey,
+        GlobalData::firewallStopHotkey,
         GlobalData::startTimerHotkey,
         GlobalData::pauseTimerHotkey,
         GlobalData::stopTimerHotkey));
 
     // 防火墙
-    if (!GlobalData::startFirewallHotkey.isEmpty() && !GlobalData::stopFirewallHotkey.isEmpty()) {
-        bool sameFirewallHotkey = GlobalData::startFirewallHotkey == GlobalData::stopFirewallHotkey;
-        startFirewallHotkey = new QHotkey(QKeySequence(GlobalData::startFirewallHotkey), true, qApp);
+    if (!GlobalData::firewallStartHotkey.isEmpty() && !GlobalData::firewallStopHotkey.isEmpty()) {
+        bool sameFirewallHotkey = GlobalData::firewallStartHotkey == GlobalData::firewallStopHotkey;
+        startFirewallHotkey = new QHotkey(QKeySequence(GlobalData::firewallStartHotkey), true, qApp);
         if (startFirewallHotkey->isRegistered()) {
             connect(startFirewallHotkey, &QHotkey::activated, qApp, [=]() {
                 if (sameFirewallHotkey) {
@@ -180,7 +181,7 @@ void MainWindow::setHotkey()
             QMessageBox::critical(nullptr, QString(), tr("注册启用防火墙热键失败！"));
         }
         if (!sameFirewallHotkey) {
-            stopFirewallHotkey = new QHotkey(QKeySequence(GlobalData::stopFirewallHotkey), true, qApp);
+            stopFirewallHotkey = new QHotkey(QKeySequence(GlobalData::firewallStopHotkey), true, qApp);
             if (stopFirewallHotkey->isRegistered()) {
                 connect(stopFirewallHotkey, &QHotkey::activated, qApp, [=]() {
                     ui.btnStartFirewall->setChecked(false);
@@ -234,6 +235,16 @@ void MainWindow::setHotkey()
     }
 }
 
+void MainWindow::updateTimerInterval()
+{
+    if (headShotTimer) {
+        headShotTimer->setInterval(GlobalData::subFunctionSettings[SubFunction::Headshot].updateIntervalMs);
+    }
+    if (timer) {
+        timer->setInterval(GlobalData::subFunctionSettings[SubFunction::Timer].updateIntervalMs);
+    }
+}
+
 void MainWindow::initMenu()
 {
     connect(ui.actionDisplayInfo, &QAction::toggled, this, [=](bool checked) {
@@ -282,10 +293,22 @@ void MainWindow::initMenu()
     });
     ui.actionDisplayInfoTouchable->setChecked(GlobalData::displayInfoTouchable);
 
+    // 启动服务器
+    connect(ui.actionEnableServer, &QAction::toggled, this, [=](bool checked) {
+        GlobalData::displayInfoServer = checked;
+        if (checked) {
+            HttpServerController::getInstance()->start();
+        } else {
+            HttpServerController::getInstance()->stop();
+        }
+    });
+    ui.actionEnableServer->setChecked(GlobalData::displayInfoServer);
+
     connect(ui.actionSetting, &QAction::triggered, this, [=]() {
         auto dialog = new SettingDialog(this, displayInfoDialog);
         removeAllHotkeys();
         dialog->exec();
+        updateTimerInterval();
         setHotkey();
     });
 
@@ -331,6 +354,7 @@ void MainWindow::showDisplayInfo()
                     rect.right - rect.left, rect.bottom - rect.top,
                     SWP_SHOWWINDOW);
             }
+            emit HttpServerController::getInstance()->sendNewData(QTime::currentTime().second());
         }
     });
     topMostTimer->start(2000);
@@ -347,19 +371,20 @@ void MainWindow::hideDisplayInfo()
 
 bool MainWindow::startReadHeadShot()
 {
-    if (!readMemTimer) {
-        readMemTimer = new QTimer(this);
+    if (!headShotTimer) {
+        headShotTimer = new QTimer(this);
         gtaHandle = MemoryUtil::getProcessHandle(&pid);
         if (!gtaHandle) {
-            QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败！"));
+            QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败，请启动或重启游戏后再进行尝试！"));
             return false;
         }
     }
     int offsets[10] = { 0x30, 0x8, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x108, 0x3668 };
-    connect(readMemTimer, &QTimer::timeout, this, [=]() {
-        gtaHandle = MemoryUtil::getProcessHandle(&pid); // ?
-        static short count = 0;
+    static bool firstTime = true;
+    connect(headShotTimer, &QTimer::timeout, this, [=]() {
+        gtaHandle = MemoryUtil::getProcessHandle(&pid); // 必须每次获取数据时都刷新，否则re后获取不到爆头数
         static DWORD64 ptr;
+        static short count = 0;
         ReadProcessMemory(gtaHandle,
             (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x294E098),
             &ptr, sizeof(DWORD64), 0);
@@ -367,22 +392,28 @@ bool MainWindow::startReadHeadShot()
             ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[i]), &ptr, sizeof(DWORD64), 0);
         }
         ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[9]), &count, 2, 0);
-        ui.labHeadShotCount->setText(QString::number(count));
-        if (displayInfoDialogIsShowing && displayInfoDialog) {
-            displayInfoDialog->setHeadShotCount(count);
+        if (firstTime || count != headshotCount) {
+            headshotCount = count;
+            emit HttpServerController::getInstance()->sendNewData(headshotCount);
+            ui.labHeadShotCount->setText(QString::number(headshotCount));
+            if (displayInfoDialogIsShowing && displayInfoDialog) {
+                displayInfoDialog->setHeadShotCount(headshotCount);
+            }
         }
+        firstTime = false;
     });
-    readMemTimer->start(200);
+    firstTime = true;
+    headShotTimer->start(GlobalData::subFunctionSettings[SubFunction::Headshot].updateIntervalMs);
 
     return true;
 }
 
 void MainWindow::stopReadHeadShot()
 {
-    if (readMemTimer) {
-        readMemTimer->stop();
-        delete readMemTimer;
-        readMemTimer = nullptr;
+    if (headShotTimer) {
+        headShotTimer->stop();
+        delete headShotTimer;
+        headShotTimer = nullptr;
     }
     if (gtaHandle) {
         gtaHandle = NULL;
@@ -421,7 +452,7 @@ void MainWindow::startTimer(bool isContinue)
         }
     });
     timer->setTimerType(Qt::PreciseTimer);
-    timer->start(50);
+    timer->start(GlobalData::subFunctionSettings[SubFunction::Timer].updateIntervalMs);
 }
 
 void MainWindow::pauseTimer()
@@ -438,5 +469,11 @@ void MainWindow::stopTimer()
         timer->stop();
         timerTime = 0L;
         stoppedTime = 0L;
+    }
+    if (GlobalData::timerZeroAfterStop) {
+        if (displayInfoDialogIsShowing && displayInfoDialog) {
+            displayInfoDialog->setTime(0, 0, 0);
+        }
+        ui.labTimer->setText(DisplayInfoDialog::timePattern.arg("26", "00", "00", "16", "00"));
     }
 }

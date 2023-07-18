@@ -248,43 +248,44 @@
         <translation type="vanished">Failed to register hotkey!</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="354"/>
-        <source>获取窗口句柄失败！</source>
-        <translation>Failed to get window handle!</translation>
+        <location filename="MainWindow.cpp" line="365"/>
+        <source>获取窗口句柄失败，请启动或重启游戏后再进行尝试！</source>
+        <oldsource>获取窗口句柄失败！</oldsource>
+        <translation type="unfinished">Failed to get window handle!</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="390"/>
+        <location filename="MainWindow.cpp" line="401"/>
         <source>已停止记录</source>
         <translation>Stopped</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="75"/>
+        <location filename="MainWindow.h" line="77"/>
         <source>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;A GTAOL doomsday scenario speedrun tool that supports quick startup of the firewall and automatic counting of headshots, and manual timing. This tool only reads the memory and does not write the memory.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="76"/>
+        <location filename="MainWindow.h" line="78"/>
         <source>作者：</source>
         <translation>Author: </translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="77"/>
+        <location filename="MainWindow.h" line="79"/>
         <source>加入 Discord 一起划水~</source>
         <translation>Join Discord~</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="78"/>
+        <location filename="MainWindow.h" line="80"/>
         <source>赞助作者</source>
         <translation>Sponsor</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="79"/>
+        <location filename="MainWindow.h" line="81"/>
         <source>特别感谢 &lt;b&gt;ACT3 帮会&lt;/b&gt;对本工具的宣传和支持。特别感谢 &lt;b&gt;CZ9946 和 Adstargod&lt;/b&gt; 两位大佬，他们对本工具的研发提供了大量的帮助！</source>
         <translation>Special thanks to the &lt;b&gt;World Save Act Elite&lt;/b&gt; for promoting and supporting this tool. Special thanks to &lt;b&gt;CZ9946 and Adstargod&lt;/b&gt;, who provided a lot of help in the development of this tool!</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="80"/>
+        <location filename="MainWindow.h" line="82"/>
         <source>感谢所有提供赞助的朋友们！</source>
         <translation>Thanks to all those who sponsored!</translation>
     </message>
@@ -316,13 +317,13 @@
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="775"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="806"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
     <message>
         <location filename="SettingDialog.ui" line="49"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="776"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="807"/>
         <source>防火墙热键</source>
         <oldsource>启动热键</oldsource>
         <translation>Firewall hotkeys</translation>
@@ -330,8 +331,8 @@
     <message>
         <location filename="SettingDialog.ui" line="61"/>
         <location filename="SettingDialog.ui" line="104"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="777"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="782"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="808"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="813"/>
         <source>启动</source>
         <translation>Enable</translation>
     </message>
@@ -341,11 +342,11 @@
         <location filename="SettingDialog.ui" line="111"/>
         <location filename="SettingDialog.ui" line="125"/>
         <location filename="SettingDialog.ui" line="142"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="778"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="780"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="783"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="785"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="787"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="809"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="811"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="814"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="816"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="818"/>
         <source>Del</source>
         <translation></translation>
     </message>
@@ -356,127 +357,139 @@
     <message>
         <location filename="SettingDialog.ui" line="75"/>
         <location filename="SettingDialog.ui" line="118"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="779"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="784"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="810"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="815"/>
         <source>停止</source>
         <translation>Disable</translation>
     </message>
     <message>
         <location filename="SettingDialog.ui" line="92"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="781"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="812"/>
         <source>计时器热键</source>
         <translation>Timer hotkeys</translation>
     </message>
     <message>
         <location filename="SettingDialog.ui" line="132"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="786"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="817"/>
         <source>暂停/恢复</source>
         <translation>Pause/resume</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="509"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="809"/>
+        <location filename="SettingDialog.ui" line="285"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="822"/>
+        <source>刷新间隔</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="SettingDialog.ui" line="292"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="824"/>
+        <source>建议设置为50-200之间</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="SettingDialog.ui" line="552"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="844"/>
         <source>窗口</source>
         <translation>Window</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="544"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="802"/>
+        <location filename="SettingDialog.ui" line="587"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="837"/>
         <source>X 坐标</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="562"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="803"/>
+        <location filename="SettingDialog.ui" line="605"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="838"/>
         <source>Y 坐标</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="583"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="804"/>
+        <location filename="SettingDialog.ui" line="626"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="839"/>
         <source>宽度</source>
         <translation>Width</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="601"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="805"/>
+        <location filename="SettingDialog.ui" line="644"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="840"/>
         <source>高度</source>
         <translation>Height</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="327"/>
-        <location filename="SettingDialog.ui" line="433"/>
-        <location filename="SettingDialog.ui" line="628"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="793"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="797"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="806"/>
+        <location filename="SettingDialog.ui" line="370"/>
+        <location filename="SettingDialog.ui" line="476"/>
+        <location filename="SettingDialog.ui" line="671"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="828"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="832"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="841"/>
         <source>颜色</source>
         <translation>Color</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="653"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="808"/>
+        <location filename="SettingDialog.ui" line="696"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="843"/>
         <source>透明度</source>
         <translation>Alpha</translation>
     </message>
     <message>
         <location filename="SettingDialog.ui" line="185"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="801"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="836"/>
         <source>内容</source>
         <translation>Content</translation>
     </message>
     <message>
         <location filename="SettingDialog.ui" line="232"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="788"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="819"/>
         <source>选择要设置的功能</source>
         <translation>Select function</translation>
     </message>
     <message>
         <location filename="SettingDialog.ui" line="257"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="789"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="820"/>
         <source>注：该页设置仅针对所选的功能</source>
         <oldsource>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;注：该页设置仅针对所选的功能&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation>NOTE: The settings on this page are only for the selected function</translation>
     </message>
     <message>
         <location filename="SettingDialog.ui" line="270"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="790"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="821"/>
         <source>在屏幕上显示</source>
         <translation>Display on screen</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="283"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="791"/>
+        <location filename="SettingDialog.ui" line="326"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="826"/>
         <source>字体</source>
         <translation>Font</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="300"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="792"/>
+        <location filename="SettingDialog.ui" line="343"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="827"/>
         <source>字号</source>
         <translation>Size</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="355"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="794"/>
+        <location filename="SettingDialog.ui" line="398"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="829"/>
         <source>文字阴影</source>
         <translation>Text shadow</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="455"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="798"/>
+        <location filename="SettingDialog.ui" line="498"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="833"/>
         <source>文字对齐</source>
         <translation>Text alignment</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="369"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="795"/>
+        <location filename="SettingDialog.ui" line="412"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="830"/>
         <source>模糊半径</source>
         <translation>Blur radius</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="396"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="796"/>
+        <location filename="SettingDialog.ui" line="439"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="831"/>
         <source>偏移</source>
         <translation>Offset</translation>
     </message>
@@ -485,14 +498,14 @@
         <translation type="vanished">Content Alignment</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="469"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="799"/>
+        <location filename="SettingDialog.ui" line="512"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="834"/>
         <source>水平</source>
         <translation>Horizontal</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="489"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="800"/>
+        <location filename="SettingDialog.ui" line="532"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="835"/>
         <source>垂直</source>
         <translation>Vertical</translation>
     </message>
@@ -501,26 +514,26 @@
         <translation type="vanished">Size</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="697"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="810"/>
+        <location filename="SettingDialog.ui" line="740"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="845"/>
         <source>启动音效</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="718"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="811"/>
+        <location filename="SettingDialog.ui" line="761"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="846"/>
         <source>停止音效</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="739"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="812"/>
+        <location filename="SettingDialog.ui" line="782"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="847"/>
         <source>操作失败音效</source>
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location filename="SettingDialog.ui" line="780"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="813"/>
+        <location filename="SettingDialog.ui" line="823"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="848"/>
         <source>切换语言后需重启才可生效</source>
         <translation>Application needs to be restarted after switching languages</translation>
     </message>

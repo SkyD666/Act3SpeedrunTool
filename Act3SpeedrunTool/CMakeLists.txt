@@ -11,9 +11,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS HttpServer)
+find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -25,6 +27,7 @@ set(PROJECT_SOURCES
         LogUtil.h LogUtil.cpp
         LanguageUtil.h LanguageUtil.cpp
         MemoryUtil.h MemoryUtil.cpp
+        HttpServerUtil.h HttpServerUtil.cpp
         SubFunction.h SubFunction.cpp
         resource.qrc
 )
@@ -64,7 +67,9 @@ qt6_add_translations(Act3SpeedrunTool
 install(FILES ${qm_files} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
 
 
-target_link_libraries(Act3SpeedrunTool PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Act3SpeedrunTool PRIVATE Qt6::Widgets)
+target_link_libraries(Act3SpeedrunTool PRIVATE Qt6::HttpServer)
+target_link_libraries(Act3SpeedrunTool PRIVATE Qt6::Concurrent)
 
 set_target_properties(Act3SpeedrunTool PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER https://github.com/SkyD666

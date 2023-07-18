@@ -25,24 +25,28 @@ public:
 
     static void writeSettings();
 
-    static QString startFirewallHotkey;
-    static QString stopFirewallHotkey;
+    static QString firewallStartHotkey;
+    static QString firewallStopHotkey;
     static QString language;
-    static bool playSound;
+    static bool firewallPlaySound;
+
+    static QString firewallAppPath;
 
     static QSubFuncSettingsMap subFunctionSettings;
     static bool displayInfoShow;
     static bool displayInfoTouchable;
+    static bool displayInfoServer;
     static QPoint displayInfoPos;
     static QSize displayInfoSize;
     static QColor displayInfoBackground;
     static QString startTimerHotkey;
     static QString pauseTimerHotkey;
     static QString stopTimerHotkey;
+    static bool timerZeroAfterStop;
 
-    static QString startSound;
-    static QString stopSound;
-    static QString errorSound;
+    static QString firewallStartSound;
+    static QString firewallStopSound;
+    static QString firewallErrorSound;
 
 private:
     static void readSubFuncSettingsMap(QSettings& settings);

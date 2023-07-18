@@ -20,6 +20,7 @@ struct SubFunctionSettingItem {
     SubFunctionSettingItem()
     {
         display = true;
+        updateIntervalMs = 50;
         textAlignment = Qt::AlignLeft | Qt::AlignVCenter;
         textSize = 26;
         textColor = Qt::yellow;
@@ -28,11 +29,12 @@ struct SubFunctionSettingItem {
         textShadowOffset = { 0, 0 };
         fontFamily = QFont().family();
     };
-    SubFunctionSettingItem(bool display, Qt::Alignment textAlignment, int textSize,
-        QColor textColor, QColor textShadowColor, int textShadowBlurRadius,
+    SubFunctionSettingItem(bool display, int updateIntervalMs, Qt::Alignment textAlignment,
+        int textSize, QColor textColor, QColor textShadowColor, int textShadowBlurRadius,
         QPointF textShadowOffset, QString fontFamily)
     {
         this->display = display;
+        this->updateIntervalMs = updateIntervalMs;
         this->textAlignment = textAlignment;
         this->textAlignment = textAlignment;
         this->textSize = textSize;
@@ -43,6 +45,7 @@ struct SubFunctionSettingItem {
         this->fontFamily = fontFamily;
     }
     bool display;
+    int updateIntervalMs;
     Qt::Alignment textAlignment;
     int textSize;
     QColor textColor;

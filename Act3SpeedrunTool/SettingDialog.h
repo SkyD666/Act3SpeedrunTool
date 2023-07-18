@@ -11,7 +11,7 @@ public:
     explicit SettingDialog(QWidget* parent = nullptr, DisplayInfoDialog* displayInfoDialog = nullptr);
     ~SettingDialog();
 
-    QString pageName[4] = { tr("全局热键"), tr("信息展示"), tr("提示音"), tr("语言") };
+    QString pageName[4] = { tr("信息展示"), tr("断网"), tr("计时器"), tr("语言") };
     const static QString pageIcon[];
 
 protected:
@@ -20,7 +20,9 @@ protected:
     int currentSubFunctionIndex = 0;
     SubFunction currentSubFunction = SubFunction::Headshot;
 
-    void initHotkeySettings();
+    void initFirewallSettings();
+
+    void initTimerSettings();
 
     void initDisplayInfoSettings();
 

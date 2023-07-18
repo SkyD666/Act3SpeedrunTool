@@ -30,34 +30,8 @@ SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDial
     }
     connect(ui.lwPage, &QListWidget::currentRowChanged, ui.stackedWidget, &QStackedWidget::setCurrentIndex);
 
-    initHotkeySettings();
-
-    ui.leStartSoundPath->setText(GlobalData::startSound);
-    connect(ui.tbSelectStartSound, &QAbstractButton::clicked, this, [=]() {
-        QString fileName = getSoundFile();
-        if (!fileName.isEmpty()) {
-            ui.leStartSoundPath->setText(fileName);
-            GlobalData::startSound = fileName;
-        }
-    });
-
-    ui.leStopSoundPath->setText(GlobalData::stopSound);
-    connect(ui.tbSelectStopSound, &QAbstractButton::clicked, this, [=]() {
-        QString fileName = getSoundFile();
-        if (!fileName.isEmpty()) {
-            ui.leStopSoundPath->setText(fileName);
-            GlobalData::stopSound = fileName;
-        }
-    });
-
-    ui.leErrorSoundPath->setText(GlobalData::errorSound);
-    connect(ui.tbSelectErrorSound, &QAbstractButton::clicked, this, [=]() {
-        QString fileName = getSoundFile();
-        if (!fileName.isEmpty()) {
-            ui.leErrorSoundPath->setText(fileName);
-            GlobalData::errorSound = fileName;
-        }
-    });
+    initFirewallSettings();
+    initTimerSettings();
 
     for (auto l : LanguageUtil::getInstance()->languages) {
         ui.cbLanguage->addItem(LanguageUtil::getDisplayName(l.name), l.name);
@@ -83,43 +57,88 @@ QString SettingDialog::getSoundFile()
         QString(), tr("WAV 文件 (*.wav)"));
 }
 
-void SettingDialog::initHotkeySettings()
+// 防火墙
+void SettingDialog::initFirewallSettings()
 {
-    // 防火墙
-    ui.keySeqStartFirewall->setKeySequence(QKeySequence(GlobalData::startFirewallHotkey));
+    // 热键
+    ui.keySeqStartFirewall->setKeySequence(QKeySequence(GlobalData::firewallStartHotkey));
     connect(ui.keySeqStartFirewall, &QKeySequenceEdit::editingFinished, this, [=]() {
         if (ui.keySeqStartFirewall->keySequence().count() > 1) {
             QKeyCombination value = ui.keySeqStartFirewall->keySequence()[0];
             QKeySequence shortcut(value);
             ui.keySeqStartFirewall->setKeySequence(shortcut);
-            GlobalData::startFirewallHotkey = shortcut.toString();
+            GlobalData::firewallStartHotkey = shortcut.toString();
         } else {
-            GlobalData::startFirewallHotkey = ui.keySeqStartFirewall->keySequence().toString();
+            GlobalData::firewallStartHotkey = ui.keySeqStartFirewall->keySequence().toString();
         }
     });
 
     connect(ui.tbClearStartFirewallHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
         ui.keySeqStartFirewall->clear();
-        GlobalData::startFirewallHotkey = "";
+        GlobalData::firewallStartHotkey = "";
     });
 
-    ui.keySeqStopFirewall->setKeySequence(QKeySequence(GlobalData::stopFirewallHotkey));
+    ui.keySeqStopFirewall->setKeySequence(QKeySequence(GlobalData::firewallStopHotkey));
     connect(ui.keySeqStopFirewall, &QKeySequenceEdit::editingFinished, this, [=]() {
         if (ui.keySeqStopFirewall->keySequence().count() > 1) {
             QKeyCombination value = ui.keySeqStopFirewall->keySequence()[0];
             QKeySequence shortcut(value);
             ui.keySeqStopFirewall->setKeySequence(shortcut);
-            GlobalData::stopFirewallHotkey = shortcut.toString();
+            GlobalData::firewallStopHotkey = shortcut.toString();
         } else {
-            GlobalData::stopFirewallHotkey = ui.keySeqStopFirewall->keySequence().toString();
+            GlobalData::firewallStopHotkey = ui.keySeqStopFirewall->keySequence().toString();
         }
     });
 
     connect(ui.tbClearStopFirewallHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
         ui.keySeqStopFirewall->clear();
-        GlobalData::stopFirewallHotkey = "";
+        GlobalData::firewallStopHotkey = "";
     });
 
+    // 音效
+    ui.leStartSoundPath->setText(GlobalData::firewallStartSound);
+    connect(ui.tbSelectStartSound, &QAbstractButton::clicked, this, [=]() {
+        QString fileName = getSoundFile();
+        if (!fileName.isEmpty()) {
+            ui.leStartSoundPath->setText(fileName);
+            GlobalData::firewallStartSound = fileName;
+        }
+    });
+
+    ui.leStopSoundPath->setText(GlobalData::firewallStopSound);
+    connect(ui.tbSelectStopSound, &QAbstractButton::clicked, this, [=]() {
+        QString fileName = getSoundFile();
+        if (!fileName.isEmpty()) {
+            ui.leStopSoundPath->setText(fileName);
+            GlobalData::firewallStopSound = fileName;
+        }
+    });
+
+    ui.leErrorSoundPath->setText(GlobalData::firewallErrorSound);
+    connect(ui.tbSelectErrorSound, &QAbstractButton::clicked, this, [=]() {
+        QString fileName = getSoundFile();
+        if (!fileName.isEmpty()) {
+            ui.leErrorSoundPath->setText(fileName);
+            GlobalData::firewallErrorSound = fileName;
+        }
+    });
+
+    ui.leFirewallAppPath->setText(GlobalData::firewallAppPath);
+    connect(ui.tbSelectFirewallApp, &QAbstractButton::clicked, this, [=]() {
+        QString fileName = QFileDialog::getOpenFileName(this, tr("选择程序"),
+            GlobalData::firewallAppPath, tr("应用程序 (*.exe)"));
+        if (!fileName.isEmpty()) {
+            ui.leFirewallAppPath->setText(fileName);
+            GlobalData::firewallAppPath = fileName;
+        }
+    });
+    connect(ui.leFirewallAppPath, &QLineEdit::textChanged, this, [=](const QString& text) {
+        GlobalData::firewallAppPath = text;
+    });
+}
+
+void SettingDialog::initTimerSettings()
+{
     // 计时器
     ui.keySeqStartTimer->setKeySequence(QKeySequence(GlobalData::startTimerHotkey));
     connect(ui.keySeqStartTimer, &QKeySequenceEdit::editingFinished, this, [=]() {
@@ -170,6 +189,12 @@ void SettingDialog::initHotkeySettings()
     connect(ui.tbClearStopTimerHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
         ui.keySeqStopTimer->clear();
         GlobalData::stopTimerHotkey = "";
+    });
+
+    // 停止后归零
+    ui.cbTimerZeroAfterStop->setChecked(GlobalData::timerZeroAfterStop);
+    connect(ui.cbTimerZeroAfterStop, &QCheckBox::stateChanged, this, [=](int state) {
+        GlobalData::timerZeroAfterStop = state == Qt::Checked;
     });
 }
 
@@ -364,6 +389,14 @@ void SettingDialog::initDisplayInfoSettings()
         }
     });
 
+    // 刷新间隔
+    connect(ui.sbDisplayInfoUpdateInterval, &QSpinBox::valueChanged, this, [=](int value) {
+        GlobalData::subFunctionSettings[currentSubFunction].updateIntervalMs = value;
+        if (displayInfoDialog) {
+            displayInfoDialog->setTextStyle();
+        }
+    });
+
     // 设置分类
     for (auto f : GlobalData::funcs) {
         ui.cbDisplayInfoFunction->addItem(SubFunctionUtil::toDisplayString(f), f);
@@ -383,6 +416,7 @@ void SettingDialog::setDisplayInfoCententSettings(SubFunction f)
 {
     auto& currentSetting = GlobalData::subFunctionSettings[f];
     ui.cbDisplayInfoFuncEnable->setChecked(currentSetting.display);
+    ui.sbDisplayInfoUpdateInterval->setValue(currentSetting.updateIntervalMs);
     ui.fcbDisplayInfoFont->setCurrentFont(QFont(currentSetting.fontFamily));
     ui.sbDisplayInfoTextSize->setValue(currentSetting.textSize);
     ui.labDisplayInfoTextColor->setStyleSheet(

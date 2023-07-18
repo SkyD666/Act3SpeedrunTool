@@ -1,4 +1,5 @@
 #include "FirewallUtil.h"
+#include "GlobalData.h"
 #include "LogUtil.h"
 #include <QDebug>
 
@@ -51,7 +52,18 @@ INetFwRule* FirewallUtil::getNetFwRule()
     hr = pFwRules->Item(bstrRuleName, (INetFwRule**)&pFwRule);
     if (SUCCEEDED(hr)) {
         LogUtil::addLog("Found NetFwRule by pFwRules->Item()");
-        return pFwRule;
+        HRESULT h;
+        if (GlobalData::firewallAppPath.isEmpty()) {
+            h = pFwRule->put_ApplicationName(NULL);
+        } else {
+            h = pFwRule->put_ApplicationName(SysAllocString(GlobalData::firewallAppPath.replace("/", "\\").toStdWString().c_str()));
+        }
+        if (SUCCEEDED(h)) {
+            return pFwRule;
+        } else {
+            LogUtil::addLog("put_ApplicationName failed!");
+            qDebug() << h;
+        }
     }
 
     // Create a new Firewall Rule object.
@@ -70,6 +82,9 @@ INetFwRule* FirewallUtil::getNetFwRule()
 
     // Populate the Firewall Rule object
     pFwRule->put_Name(bstrRuleName);
+    if (!GlobalData::firewallAppPath.isEmpty()) {
+        pFwRule->put_ApplicationName(SysAllocString(GlobalData::firewallAppPath.replace("/", "\\").toStdWString().c_str()));
+    }
     pFwRule->put_Protocol(NET_FW_IP_PROTOCOL_TCP);
     //    pFwRule->put_LocalPorts(bstrRuleLPorts);
     pFwRule->put_Grouping(bstrRuleGroup);
