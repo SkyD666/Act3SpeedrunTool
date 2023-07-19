@@ -10,6 +10,18 @@
 
 typedef QMap<DisplayInfoSubFunction, DisplayInfoSubFunctionItem> QDisplayInfoSubFuncsMap;
 
+enum TimerStopStrategy {
+    OnlyStop,
+    StopAndZero,
+    StopSecondZero
+};
+
+namespace TimerStopStrategyUtil {
+TimerStopStrategy fromString(QString strategy);
+QString toDisplayString(TimerStopStrategy strategy);
+QString toString(TimerStopStrategy strategy);
+}
+
 class GlobalData {
 public:
     GlobalData();
@@ -49,7 +61,8 @@ public:
     static QString timerStartHotkey;
     static QString timerPauseHotkey;
     static QString timerStopHotkey;
-    static bool timerZeroAfterStop;
+    static QList<TimerStopStrategy> timerStopStrategies;
+    static TimerStopStrategy timerStopStrategy;
     static int timerUpdateInterval;
 
     // 语言

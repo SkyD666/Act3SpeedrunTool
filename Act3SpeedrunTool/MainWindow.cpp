@@ -12,6 +12,7 @@
 #include <QHotkey>
 #include <QMessageBox>
 #include <QPalette>
+#include <QState>
 #include <QUrl>
 
 const QString MainWindow::hotkeyStatePattern = "F: %1, %2  T: %3, %4, %5";
@@ -100,29 +101,7 @@ MainWindow::MainWindow(QWidget* parent)
         }
     });
 
-    connect(ui.btnStartTimer, &QAbstractButton::toggled, this, [=](bool checked) {
-        if (checked) {
-            startTimer();
-            ui.btnStartTimer->setText(tr("点击停止"));
-            ui.btnPauseTimer->setEnabled(true);
-        } else {
-            ui.btnPauseTimer->setChecked(false);
-            stopTimer();
-            ui.btnStartTimer->setText(tr("点击启动"));
-            ui.btnPauseTimer->setEnabled(false);
-        }
-    });
-
-    ui.btnPauseTimer->setEnabled(false);
-    connect(ui.btnPauseTimer, &QAbstractButton::toggled, this, [=](bool checked) {
-        if (checked) {
-            pauseTimer();
-            ui.btnPauseTimer->setText(tr("点击恢复"));
-        } else {
-            startTimer(true);
-            ui.btnPauseTimer->setText(tr("点击暂停"));
-        }
-    });
+    initTimerStateMachine();
 }
 
 MainWindow::~MainWindow()
@@ -199,9 +178,16 @@ void MainWindow::setHotkey()
         if (startTimerHotkey->isRegistered()) {
             connect(startTimerHotkey, &QHotkey::activated, qApp, [=]() {
                 if (sameTimerHotkey) {
-                    ui.btnStartTimer->toggle();
+                    ui.btnStartTimer->click();
                 } else {
-                    ui.btnStartTimer->setChecked(true);
+                    if (GlobalData::timerStopStrategy == TimerStopStrategy::StopSecondZero) {
+                        // 在 stoppedState 时，按下开始热键要求不能开始，因此try尝试
+                        // 只有 stoppedAndZeroState 接受 tryToTimerRunningState 信号
+                        // 因此 TimerStopStrategy::StopSecondZero 且在 stoppedState 时按下开始热键也没有接收者
+                        emit tryToTimerRunningState();
+                    } else {
+                        emit toTimerRunningState();
+                    }
                 }
             });
         } else {
@@ -211,7 +197,15 @@ void MainWindow::setHotkey()
             stopTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerStopHotkey), true, qApp);
             if (stopTimerHotkey->isRegistered()) {
                 connect(stopTimerHotkey, &QHotkey::activated, qApp, [=]() {
-                    ui.btnStartTimer->setChecked(false);
+                    if (GlobalData::timerStopStrategy == TimerStopStrategy::OnlyStop
+                        || GlobalData::timerStopStrategy == TimerStopStrategy::StopAndZero) {
+                        // 在 stoppedState 时，按下停止热键要求不能（再次）归零，因此try尝试
+                        // 只有 runningState 接受 tryToTimerStoppedOrStoppedAndZeroState 信号
+                        // 因此 (TimerStopStrategy::OnlyStop 或 TimerStopStrategy::StopAndZero) 且在 stoppedState 时按下停止热键也没有接收者
+                        emit tryToTimerStoppedOrStoppedAndZeroState();
+                    } else {
+                        emit toTimerStoppedOrStoppedAndZeroState();
+                    }
                 });
             } else {
                 QMessageBox::critical(nullptr, QString(), tr("注册停止计时器热键失败！"));
@@ -225,7 +219,7 @@ void MainWindow::setHotkey()
             if (pauseTimerHotkey->isRegistered()) {
                 connect(pauseTimerHotkey, &QHotkey::activated, qApp, [=]() {
                     if (ui.btnPauseTimer->isEnabled()) {
-                        ui.btnPauseTimer->toggle();
+                        ui.btnPauseTimer->click();
                     }
                 });
             } else {
@@ -466,14 +460,117 @@ void MainWindow::pauseTimer()
 void MainWindow::stopTimer()
 {
     if (timer) {
-        timer->stop();
+        if (timer->isActive()) {
+            timer->stop();
+        }
         timerTime = 0L;
         stoppedTime = 0L;
     }
-    if (GlobalData::timerZeroAfterStop) {
-        if (displayInfoDialogIsShowing && displayInfoDialog) {
-            displayInfoDialog->setTime(0, 0, 0);
-        }
-        ui.labTimer->setText(DisplayInfoDialog::timePattern.arg("26", "00", "00", "16", "00"));
+}
+
+void MainWindow::zeroTimer()
+{
+    if (displayInfoDialogIsShowing && displayInfoDialog) {
+        displayInfoDialog->setTime(0, 0, 0);
     }
+    ui.labTimer->setText(DisplayInfoDialog::timePattern.arg("26", "00", "00", "16", "00"));
+}
+
+void MainWindow::initTimerStateMachine()
+{
+    // 设置 parent 后相当于已经 addState 了
+    QState* stoppedAndZeroState = new QState(&timerStateMachine);
+    // 判断到停止并归零 还是 运行态
+    QState* stoppedAndZeroOrRunningState = new QState(&timerStateMachine);
+    QState* stoppedState = new QState(&timerStateMachine);
+    QState* runningState = new QState(&timerStateMachine);
+    QState* pausedState = new QState(&timerStateMachine);
+
+    stoppedAndZeroState->addTransition(ui.btnStartTimer, &QAbstractButton::clicked, runningState);
+    stoppedAndZeroState->addTransition(this, &MainWindow::toTimerRunningState, runningState);
+    stoppedAndZeroState->addTransition(this, &MainWindow::tryToTimerRunningState, runningState);
+
+    runningState->addTransition(ui.btnStartTimer, &QAbstractButton::clicked, stoppedState);
+    runningState->addTransition(ui.btnPauseTimer, &QAbstractButton::clicked, pausedState);
+    runningState->addTransition(this, &MainWindow::toTimerStoppedOrStoppedAndZeroState, stoppedState);
+    runningState->addTransition(this, &MainWindow::tryToTimerStoppedOrStoppedAndZeroState, stoppedState);
+
+    stoppedState->addTransition(ui.btnStartTimer, &QAbstractButton::clicked, stoppedAndZeroOrRunningState);
+    stoppedState->addTransition(this, &MainWindow::toTimerRunningState, runningState);
+    stoppedState->addTransition(this, &MainWindow::toTimerStoppedAndZeroState, stoppedAndZeroState);
+    stoppedState->addTransition(this, &MainWindow::toTimerStoppedOrStoppedAndZeroState, stoppedAndZeroState);
+
+    stoppedAndZeroOrRunningState->addTransition(this, &MainWindow::toTimerStoppedAndZeroState, stoppedAndZeroState);
+    stoppedAndZeroOrRunningState->addTransition(this, &MainWindow::toTimerRunningState, runningState);
+
+    pausedState->addTransition(ui.btnStartTimer, &QAbstractButton::clicked, stoppedAndZeroState);
+    pausedState->addTransition(ui.btnPauseTimer, &QAbstractButton::clicked, runningState);
+    pausedState->addTransition(this, &MainWindow::toTimerStoppedOrStoppedAndZeroState, stoppedAndZeroState);
+
+    connect(stoppedAndZeroOrRunningState, &QState::entered, this, [=]() {
+        switch (GlobalData::timerStopStrategy) {
+        // 停止后不归零（v3.3方案）
+        case TimerStopStrategy::OnlyStop:
+            emit toTimerRunningState();
+            break;
+        // 第二次按停止键归零
+        case TimerStopStrategy::StopSecondZero:
+            emit toTimerStoppedAndZeroState();
+            break;
+        default:
+            emit toTimerRunningState();
+            break;
+        }
+    });
+    connect(stoppedAndZeroState, &QState::entered, this, [=]() {
+        ui.btnStartTimer->setText(tr("点击启动"));
+        ui.btnPauseTimer->setEnabled(false);
+        ui.btnPauseTimer->setText(tr("点击暂停"));
+        stopTimer();
+        zeroTimer();
+    });
+    connect(stoppedAndZeroState, &QState::exited, this, [=]() {
+        startTimer(false);
+    });
+    connect(stoppedState, &QState::exited, this, [=]() {
+        // 注意是 != 不能改成 == OnlyStop
+        // 因为有种情况：在当前状态，调整了策略为 StopSecondZero，为了让点击开始能够 startTimer，只能用 !=
+        if (GlobalData::timerStopStrategy != TimerStopStrategy::StopSecondZero) { // 停止后不归零（v3.3方案）
+            startTimer(false);
+        }
+    });
+    connect(stoppedState, &QState::entered, this, [=]() {
+        ui.btnPauseTimer->setEnabled(false);
+        ui.btnPauseTimer->setText(tr("点击暂停"));
+        switch (GlobalData::timerStopStrategy) {
+        // 停止后不归零（v3.3方案）
+        case TimerStopStrategy::OnlyStop:
+            ui.btnStartTimer->setText(tr("点击启动"));
+            break;
+        // 停止后立即归零
+        case TimerStopStrategy::StopAndZero:
+            emit toTimerStoppedAndZeroState();
+            break;
+        // 第二次按停止键归零
+        case TimerStopStrategy::StopSecondZero:
+            ui.btnStartTimer->setText(tr("点击归零"));
+            break;
+        }
+        stopTimer();
+    });
+    connect(runningState, &QState::entered, this, [=]() {
+        ui.btnStartTimer->setText(tr("点击停止"));
+        ui.btnPauseTimer->setEnabled(true);
+        ui.btnPauseTimer->setText(tr("点击暂停"));
+    });
+    connect(pausedState, &QState::entered, this, [=]() {
+        ui.btnPauseTimer->setText(tr("点击恢复"));
+        pauseTimer();
+    });
+    connect(pausedState, &QState::exited, this, [=]() {
+        startTimer(true);
+    });
+
+    timerStateMachine.setInitialState(stoppedAndZeroState);
+    timerStateMachine.start();
 }

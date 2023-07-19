@@ -18,6 +18,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
       <widget class="QWidget" name="tabFirewall">
        <attribute name="title">
         <string>断网</string>
@@ -196,9 +199,6 @@
           <property name="text">
            <string>点击启动</string>
           </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
          </widget>
         </item>
         <item>
@@ -211,9 +211,6 @@
           </property>
           <property name="text">
            <string>点击暂停</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
           </property>
          </widget>
         </item>

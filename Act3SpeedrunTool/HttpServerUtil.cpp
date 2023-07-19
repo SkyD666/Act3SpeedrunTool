@@ -3,7 +3,6 @@
 #include <QApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QtConcurrent>
 
 Q_GLOBAL_STATIC(HttpServerController, controllerInstance)
 

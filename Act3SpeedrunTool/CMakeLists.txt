@@ -15,7 +15,7 @@ find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 find_package(Qt6 REQUIRED COMPONENTS HttpServer)
-find_package(Qt6 REQUIRED COMPONENTS Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS StateMachine)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -69,7 +69,8 @@ install(FILES ${qm_files} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(Act3SpeedrunTool PRIVATE Qt6::Widgets)
 target_link_libraries(Act3SpeedrunTool PRIVATE Qt6::HttpServer)
-target_link_libraries(Act3SpeedrunTool PRIVATE Qt6::Concurrent)
+target_link_libraries(Act3SpeedrunTool PRIVATE Qt6::StateMachine)
+
 
 set_target_properties(Act3SpeedrunTool PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER https://github.com/SkyD666

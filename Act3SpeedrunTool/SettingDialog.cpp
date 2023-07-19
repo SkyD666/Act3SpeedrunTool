@@ -214,11 +214,23 @@ void SettingDialog::initTimerSettings()
         }
     });
 
-    // 停止后归零
-    ui.cbTimerZeroAfterStop->setChecked(GlobalData::timerZeroAfterStop);
-    connect(ui.cbTimerZeroAfterStop, &QCheckBox::stateChanged, this, [=](int state) {
-        GlobalData::timerZeroAfterStop = state == Qt::Checked;
-    });
+    // 停止计时器策略
+    {
+        int i = 0;
+        int currentTimerStopStrategyIndex = 0;
+        for (auto s : GlobalData::timerStopStrategies) {
+            ui.cbTimerStopStrategy->addItem(TimerStopStrategyUtil::toDisplayString(s), s);
+            if (s == GlobalData::timerStopStrategy) {
+                currentTimerStopStrategyIndex = i;
+            }
+            i++;
+        }
+        connect(ui.cbTimerStopStrategy, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, [=](int index) {
+                GlobalData::timerStopStrategy = ui.cbTimerStopStrategy->itemData(index).value<TimerStopStrategy>();
+            });
+        ui.cbTimerStopStrategy->setCurrentIndex(currentTimerStopStrategyIndex);
+    }
 }
 
 void SettingDialog::initDisplayInfoSettings()

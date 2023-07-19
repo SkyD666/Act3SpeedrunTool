@@ -5,6 +5,7 @@
 #include <QHotkey>
 #include <QLabel>
 #include <QMainWindow>
+#include <QStateMachine>
 #include <QTimer>
 #include <windows.h>
 
@@ -42,6 +43,17 @@ protected:
 
     void stopTimer();
 
+    void zeroTimer();
+
+    void initTimerStateMachine();
+
+signals:
+    void toTimerStoppedAndZeroState();
+    void toTimerStoppedOrStoppedAndZeroState();
+    void toTimerRunningState();
+    void tryToTimerRunningState();
+    void tryToTimerStoppedOrStoppedAndZeroState();
+
 private:
     Ui::MainWindow ui;
 
@@ -68,6 +80,7 @@ private:
     QTimer* timer = nullptr;
     long stoppedTime = 0L; // 上次暂停的时间
     long timerTime = 0L; // 计时器开始的时间
+    QStateMachine timerStateMachine = QStateMachine(this); // 计时器状态
 
     DWORD pid = 0;
 

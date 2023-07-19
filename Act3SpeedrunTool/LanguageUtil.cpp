@@ -45,14 +45,14 @@ void LanguageUtil::applyLanguage()
         QString fileName = LanguageUtil::getInstance()->getFileName(GlobalData::language);
         if (fileName == "*") { // 简体中文无需更改
             setTranslator = true;
-        } else if (!fileName.isEmpty() && translator->load(fileName, "./translate")) {
+        } else if (!fileName.isEmpty() && translator->load(fileName, "./translations")) {
             QCoreApplication::installTranslator(translator);
             setTranslator = true;
         }
     }
     if (!setTranslator) {
         if (QLocale().language() != QLocale::Chinese) {
-            if (translator->load(QLocale(), "", "", "./translate", ".qm")) {
+            if (translator->load(QLocale(), "", "", "./translations", ".qm")) {
                 QCoreApplication::installTranslator(translator);
             }
         }

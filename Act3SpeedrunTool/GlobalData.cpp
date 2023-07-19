@@ -5,6 +5,55 @@
 #include <QSettings>
 #include <windows.h>
 
+namespace TimerStopStrategyUtil {
+TimerStopStrategy fromString(QString strategy)
+{
+    if (strategy == "OnlyStop") {
+        return TimerStopStrategy::OnlyStop;
+    } else if (strategy == "StopAndZero") {
+        return TimerStopStrategy::StopAndZero;
+    } else if (strategy == "StopSecondZero") {
+        return TimerStopStrategy::StopSecondZero;
+    } else {
+        return TimerStopStrategy::OnlyStop;
+    }
+}
+QString toDisplayString(TimerStopStrategy strategy)
+{
+    switch (strategy) {
+    case TimerStopStrategy::OnlyStop:
+        return QObject::tr("停止后时间不归零");
+        break;
+    case TimerStopStrategy::StopAndZero:
+        return QObject::tr("停止后时间立即归零");
+        break;
+    case TimerStopStrategy::StopSecondZero:
+        return QObject::tr("停止后，再按一次停止时间才会归零");
+        break;
+    default:
+        break;
+    }
+    return "";
+}
+QString toString(TimerStopStrategy strategy)
+{
+    switch (strategy) {
+    case TimerStopStrategy::OnlyStop:
+        return "OnlyStop";
+        break;
+    case TimerStopStrategy::StopAndZero:
+        return "StopAndZero";
+        break;
+    case TimerStopStrategy::StopSecondZero:
+        return "StopSecondZero";
+        break;
+    default:
+        break;
+    }
+    return "OnlyStop";
+}
+}
+
 // 信息展示
 QList<DisplayInfoSubFunction> GlobalData::funcs = { DisplayInfoSubFunction::Firewall, DisplayInfoSubFunction::Headshot, DisplayInfoSubFunction::Timer };
 QDisplayInfoSubFuncsMap GlobalData::displayInfoSubFunctions;
@@ -28,7 +77,8 @@ int GlobalData::headshotUpdateInterval = 100;
 QString GlobalData::timerStartHotkey = "F7";
 QString GlobalData::timerPauseHotkey = "F8";
 QString GlobalData::timerStopHotkey = "F7";
-bool GlobalData::timerZeroAfterStop = false;
+QList<TimerStopStrategy> GlobalData::timerStopStrategies = { TimerStopStrategy::OnlyStop, TimerStopStrategy::StopAndZero, TimerStopStrategy::StopSecondZero };
+TimerStopStrategy GlobalData::timerStopStrategy = TimerStopStrategy::OnlyStop;
 int GlobalData::timerUpdateInterval = 50;
 // 语言
 QString GlobalData::language = "";
@@ -92,10 +142,11 @@ void GlobalData::readSettings()
     settings.endGroup();
 
     settings.beginGroup("Timer");
-    timerStartHotkey = settings.value("TimerStarthotkey", timerStartHotkey).toString();
+    timerStartHotkey = settings.value("TimerStartHotkey", timerStartHotkey).toString();
     timerPauseHotkey = settings.value("TimerPauseHotkey", timerPauseHotkey).toString();
     timerStopHotkey = settings.value("TimerStopHotkey", timerStopHotkey).toString();
-    timerZeroAfterStop = settings.value("TimerZeroAfterStop", timerZeroAfterStop).toBool();
+    timerStopStrategy = TimerStopStrategyUtil::fromString(
+        settings.value("TimerStopStrategy", TimerStopStrategyUtil::toString(timerStopStrategy)).toString());
     timerUpdateInterval = settings.value("TimerUpdateInterval", timerUpdateInterval).toInt();
     settings.endGroup();
 
@@ -135,10 +186,10 @@ void GlobalData::writeSettings()
     settings.endGroup();
 
     settings.beginGroup("Timer");
-    settings.setValue("TimerStarthotkey", timerStartHotkey);
+    settings.setValue("TimerStartHotkey", timerStartHotkey);
     settings.setValue("TimerPauseHotkey", timerPauseHotkey);
     settings.setValue("TimerStopHotkey", timerStopHotkey);
-    settings.setValue("TimerZeroAfterStop", timerZeroAfterStop);
+    settings.setValue("TimerStopStrategy", TimerStopStrategyUtil::toString(timerStopStrategy));
     settings.setValue("TimerUpdateInterval", timerUpdateInterval);
     settings.endGroup();
 
@@ -153,7 +204,11 @@ void GlobalData::readSubFuncSettingsMap(QSettings& settings)
     for (auto i : funcs) {
         displayInfoSubFunctions[i] = DisplayInfoSubFunctionItem();
     }
-    settings.beginGroup("SubFunctions");
+    if (settings.childGroups().contains("DisplayInfoSubFunctions", Qt::CaseInsensitive)) {
+        settings.beginGroup("DisplayInfoSubFunctions");
+    } else {
+        settings.beginGroup("SubFunctions");
+    }
     for (auto i = displayInfoSubFunctions.constBegin(); i != displayInfoSubFunctions.constEnd(); i++) {
         auto defaultValue = i.value();
         settings.beginGroup(DisplayInfoSubFunctionUtil::toString(i.key()));
@@ -175,7 +230,8 @@ void GlobalData::readSubFuncSettingsMap(QSettings& settings)
 
 void GlobalData::writeSubFuncSettingsMap(QSettings& settings)
 {
-    settings.beginGroup("SubFunctions");
+
+    settings.beginGroup("DisplayInfoSubFunctions");
     for (auto i = displayInfoSubFunctions.constBegin(); i != displayInfoSubFunctions.constEnd(); i++) {
         auto currentValue = i.value();
         settings.beginGroup(DisplayInfoSubFunctionUtil::toString(i.key()));
@@ -190,4 +246,9 @@ void GlobalData::writeSubFuncSettingsMap(QSettings& settings)
         settings.endGroup();
     }
     settings.endGroup();
+    if (settings.childGroups().contains("SubFunctions", Qt::CaseInsensitive)) {
+        settings.beginGroup("SubFunctions");
+        settings.remove("");
+        settings.endGroup();
+    }
 }
