@@ -54,6 +54,8 @@ QString toString(TimerStopStrategy strategy)
 }
 }
 
+// 版本
+QString GlobalData::version = "0.0";
 // 信息展示
 QList<DisplayInfoSubFunction> GlobalData::funcs = { DisplayInfoSubFunction::Firewall, DisplayInfoSubFunction::Headshot, DisplayInfoSubFunction::Timer };
 QDisplayInfoSubFuncsMap GlobalData::displayInfoSubFunctions;
@@ -82,6 +84,9 @@ TimerStopStrategy GlobalData::timerStopStrategy = TimerStopStrategy::OnlyStop;
 int GlobalData::timerUpdateInterval = 50;
 // 语言
 QString GlobalData::language = "";
+// 服务器
+int GlobalData::serverHttpPort = 9975;
+int GlobalData::serverWebsocketPort = 9976;
 
 GlobalData::GlobalData()
 {
@@ -105,6 +110,10 @@ void GlobalData::destory()
 void GlobalData::readSettings()
 {
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
+
+    settings.beginGroup("General");
+    version = settings.value("Version", version).toString();
+    settings.endGroup();
 
     settings.beginGroup("DisplayInfo");
     RECT rect;
@@ -158,6 +167,10 @@ void GlobalData::readSettings()
 void GlobalData::writeSettings()
 {
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
+
+    settings.beginGroup("General");
+    settings.setValue("Version", QApplication::applicationVersion());
+    settings.endGroup();
 
     settings.beginGroup("DisplayInfo");
     settings.setValue("DisplayInfoShow", displayInfoShow);

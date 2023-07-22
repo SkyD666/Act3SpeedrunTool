@@ -78,8 +78,8 @@ private:
     QTimer* topMostTimer = nullptr;
 
     QTimer* timer = nullptr;
-    long stoppedTime = 0L; // 上次暂停的时间
-    long timerTime = 0L; // 计时器开始的时间
+    qint64 stoppedTime = 0L; // 上次暂停的时间
+    qint64 timerTime = 0L; // 计时器开始的时间
     QStateMachine timerStateMachine = QStateMachine(this); // 计时器状态
 
     DWORD pid = 0;

@@ -258,10 +258,19 @@
      <property name="title">
       <string>信息展示</string>
      </property>
+     <widget class="QMenu" name="menuServer">
+      <property name="title">
+       <string>服务器</string>
+      </property>
+      <addaction name="actionEnableServer"/>
+      <addaction name="separator"/>
+      <addaction name="actionCopyHostAddress"/>
+      <addaction name="actionOpenBrowser"/>
+     </widget>
      <addaction name="actionDisplayInfo"/>
      <addaction name="actionDisplayInfoTouchable"/>
      <addaction name="separator"/>
-     <addaction name="actionEnableServer"/>
+     <addaction name="menuServer"/>
     </widget>
     <addaction name="menuDisplayInfo"/>
    </widget>
@@ -308,14 +317,6 @@
     <string>赞助作者...</string>
    </property>
   </action>
-  <action name="action_2">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>顶层显示</string>
-   </property>
-  </action>
   <action name="actionDisplayInfo">
    <property name="checkable">
     <bool>true</bool>
@@ -337,12 +338,22 @@
     <string>帮助我们进行翻译...</string>
    </property>
   </action>
+  <action name="actionCopyHostAddress">
+   <property name="text">
+    <string>复制地址</string>
+   </property>
+  </action>
   <action name="actionEnableServer">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>启动服务器</string>
+    <string>运行</string>
+   </property>
+  </action>
+  <action name="actionOpenBrowser">
+   <property name="text">
+    <string>在浏览器中打开...</string>
    </property>
   </action>
  </widget>

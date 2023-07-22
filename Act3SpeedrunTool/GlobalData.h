@@ -35,6 +35,9 @@ public:
 
     static void writeSettings();
 
+    // 版本
+    static QString version;
+
     // 信息展示
     static QList<DisplayInfoSubFunction> funcs;
     static QDisplayInfoSubFuncsMap displayInfoSubFunctions;
@@ -67,6 +70,10 @@ public:
 
     // 语言
     static QString language;
+
+    // 服务器
+    static int serverHttpPort;
+    static int serverWebsocketPort;
 
 private:
     // 读取/写入信息展示设置

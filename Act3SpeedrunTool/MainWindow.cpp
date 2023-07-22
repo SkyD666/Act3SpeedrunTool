@@ -6,6 +6,7 @@
 #include "MemoryUtil.h"
 #include "SettingDialog.h"
 #include <MMSystem.h>
+#include <QClipboard>
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QDesktopServices>
@@ -288,15 +289,40 @@ void MainWindow::initMenu()
     ui.actionDisplayInfoTouchable->setChecked(GlobalData::displayInfoTouchable);
 
     // 启动服务器
-    connect(ui.actionEnableServer, &QAction::toggled, this, [=](bool checked) {
+    auto enableServerLambda = [=](bool checked) {
         GlobalData::displayInfoServer = checked;
+        ui.actionCopyHostAddress->setEnabled(checked);
+        ui.actionOpenBrowser->setEnabled(checked);
         if (checked) {
+            ui.actionCopyHostAddress->setText(tr("复制地址"));
             HttpServerController::getInstance()->start();
         } else {
+            ui.actionCopyHostAddress->setText(tr("服务器未运行"));
             HttpServerController::getInstance()->stop();
         }
-    });
+    };
+    connect(ui.actionEnableServer, &QAction::toggled, this, enableServerLambda);
     ui.actionEnableServer->setChecked(GlobalData::displayInfoServer);
+    enableServerLambda(GlobalData::displayInfoServer);
+
+    connect(ui.actionCopyHostAddress, &QAction::triggered, this, [=]() {
+        auto domain = HttpServerUtil::getHttpServerDomain();
+        if (domain.isEmpty()) {
+            QMessageBox::critical(nullptr, QString(), tr("获取服务器地址失败！"));
+        } else {
+            QGuiApplication::clipboard()->setText(domain);
+            QMessageBox::information(nullptr, QString(), tr("已复制服务器地址！"));
+        }
+    });
+
+    connect(ui.actionOpenBrowser, &QAction::triggered, this, [=]() {
+        auto domain = HttpServerUtil::getHttpServerDomain();
+        if (domain.isEmpty()) {
+            QMessageBox::critical(nullptr, QString(), tr("获取服务器地址失败！"));
+        } else {
+            QDesktopServices::openUrl(QUrl(domain));
+        }
+    });
 
     connect(ui.actionSetting, &QAction::triggered, this, [=]() {
         auto dialog = new SettingDialog(this, displayInfoDialog);
@@ -348,7 +374,7 @@ void MainWindow::showDisplayInfo()
                     rect.right - rect.left, rect.bottom - rect.top,
                     SWP_SHOWWINDOW);
             }
-            emit HttpServerController::getInstance()->sendNewData(QTime::currentTime().second());
+            //            emit HttpServerController::getInstance()->sendNewData(QTime::currentTime().second());
         }
     });
     topMostTimer->start(2000);
@@ -430,7 +456,7 @@ void MainWindow::startTimer(bool isContinue)
         timer = new QTimer(this);
     }
     connect(timer, &QTimer::timeout, this, [=]() {
-        long deltaTime = QDateTime::currentDateTime().toMSecsSinceEpoch() - timerTime;
+        qint64 deltaTime = QDateTime::currentDateTime().toMSecsSinceEpoch() - timerTime;
         int m = deltaTime / 1000 / 60;
         int s = (deltaTime / 1000) % 60;
         int ms = (deltaTime % 1000) / 10;
@@ -447,6 +473,7 @@ void MainWindow::startTimer(bool isContinue)
     });
     timer->setTimerType(Qt::PreciseTimer);
     timer->start(GlobalData::timerUpdateInterval);
+    emit HttpServerController::getInstance()->startOrContinueTimer(isContinue, timerTime);
 }
 
 void MainWindow::pauseTimer()
@@ -455,6 +482,7 @@ void MainWindow::pauseTimer()
         timer->stop();
         stoppedTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
     }
+    emit HttpServerController::getInstance()->pauseTimer();
 }
 
 void MainWindow::stopTimer()
@@ -466,6 +494,7 @@ void MainWindow::stopTimer()
         timerTime = 0L;
         stoppedTime = 0L;
     }
+    emit HttpServerController::getInstance()->stopTimer();
 }
 
 void MainWindow::zeroTimer()
@@ -474,6 +503,7 @@ void MainWindow::zeroTimer()
         displayInfoDialog->setTime(0, 0, 0);
     }
     ui.labTimer->setText(DisplayInfoDialog::timePattern.arg("26", "00", "00", "16", "00"));
+    emit HttpServerController::getInstance()->zeroTimer();
 }
 
 void MainWindow::initTimerStateMachine()
