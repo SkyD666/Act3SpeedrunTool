@@ -28,7 +28,7 @@ QString toDisplayString(TimerStopStrategy strategy)
         return QObject::tr("停止后时间立即归零");
         break;
     case TimerStopStrategy::StopSecondZero:
-        return QObject::tr("停止后，再按一次停止时间才会归零");
+        return QObject::tr("停止后，再按一次停止键，时间才会归零");
         break;
     default:
         break;

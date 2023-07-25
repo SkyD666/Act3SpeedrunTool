@@ -87,7 +87,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>271</width>
+                <width>370</width>
                 <height>483</height>
                </rect>
               </property>
@@ -411,8 +411,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>232</height>
+                <width>384</width>
+                <height>432</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -727,7 +727,7 @@
                 <item>
                  <widget class="QToolButton" name="tbSelectFirewallApp">
                   <property name="text">
-                   <string>...</string>
+                   <string notr="true">...</string>
                   </property>
                  </widget>
                 </item>
@@ -836,6 +836,9 @@ C:\Program Files (x86)\nn\nn.exe</string>
              <layout class="QHBoxLayout" name="horizontalLayout_21">
               <item>
                <widget class="QSpinBox" name="sbHeadshotUpdateInterval">
+                <property name="toolTip">
+                 <string>建议设置为50-200之间</string>
+                </property>
                 <property name="minimum">
                  <number>5</number>
                 </property>
@@ -976,6 +979,9 @@ C:\Program Files (x86)\nn\nn.exe</string>
              <layout class="QHBoxLayout" name="horizontalLayout_20">
               <item>
                <widget class="QSpinBox" name="sbTimerUpdateInterval">
+                <property name="toolTip">
+                 <string>建议设置为50-200之间</string>
+                </property>
                 <property name="minimum">
                  <number>5</number>
                 </property>
@@ -1075,8 +1081,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>474</height>
+            <width>388</width>
+            <height>461</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">
