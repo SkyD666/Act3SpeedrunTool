@@ -127,10 +127,14 @@ AdstarGod Firewall, easy to use
         <translation>Display info</translation>
     </message>
     <message>
+        <source>服务器</source>
+        <translation type="vanished">Server</translation>
+    </message>
+    <message>
         <location filename="MainWindow.ui" line="266"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="302"/>
-        <source>服务器</source>
-        <translation>Server</translation>
+        <source>多端显示（开发中）</source>
+        <translation>Multi-end display (developing)</translation>
     </message>
     <message>
         <location filename="MainWindow.ui" line="287"/>
@@ -356,7 +360,7 @@ AdstarGod Firewall, easy to use
     <message>
         <location filename="main.cpp" line="19"/>
         <source>末日三速通工具</source>
-        <translation>ACT3 Speedrun Tool</translation>
+        <translation>Act3 Speedrun Tool</translation>
     </message>
     <message>
         <location filename="main.cpp" line="23"/>

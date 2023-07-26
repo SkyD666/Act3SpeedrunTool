@@ -29,12 +29,24 @@
 </div>
 
 
+## 🎉 主要功能
+
+1. 支持统计任务内**爆头数量**（不统计爆头路人、不统计击杀重甲/天基炮/埃万）
+2. 支持对特定的程序**快速断网**（快捷键）
+3. 支持手动**计时**（快捷键）
+4. 支持爆头数/计时器**显示在屏幕上**（仅适用于窗口化或者无边框）
+5. ......
+
 
 ## 🤩 应用截图
 
-![ic_main_window_firewall](../../image/zh-rCN/ic_main_window_firewall.png) ![ic_main_window_headshot](../../image/zh-rCN/ic_main_window_headshot.png)
-![ic_setting_dialog_hotkey](../../image/zh-rCN/ic_setting_dialog_hotkey.png) ![ic_setting_dialog_headshot](../../image/zh-rCN/ic_setting_dialog_headshot.png)
-![ic_setting_dialog_sound](../../image/zh-rCN/ic_setting_dialog_sound.png) ![ic_setting_dialog_language](../../image/zh-rCN/ic_setting_dialog_language.png)
+![ic_main_window_firewall](../../image/zh-rCN/ic_main_window_firewall.png) ![ic_main_window_headshot](../../image/zh-rCN/ic_main_window_headshot.png) ![ic_main_window_timer](../../image/zh-rCN/ic_main_window_timer.png)
+![ic_setting_dialog_display_info_content](../../image/zh-rCN/ic_setting_dialog_display_info_content.png)
+![ic_setting_dialog_display_info_window](../../image/zh-rCN/ic_setting_dialog_display_info_window.png)
+![ic_setting_dialog_firewall](../../image/zh-rCN/ic_setting_dialog_firewall.png)
+![ic_setting_dialog_headshot](../../image/zh-rCN/ic_setting_dialog_headshot.png)
+![ic_setting_dialog_timer](../../image/zh-rCN/ic_setting_dialog_timer.png)
+![ic_setting_dialog_language](../../image/zh-rCN/ic_setting_dialog_language.png)
 
 ## ✨ 其他作品
 

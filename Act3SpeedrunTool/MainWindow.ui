@@ -263,7 +263,7 @@
        <bool>false</bool>
       </property>
       <property name="title">
-       <string>服务器</string>
+       <string>多端显示（开发中）</string>
       </property>
       <addaction name="actionEnableServer"/>
       <addaction name="separator"/>

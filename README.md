@@ -32,13 +32,23 @@
 </div>
 
 
+## 🎉 Features
 
+1. Support tracking the number of **headshots** in the mission (excluding headshots on civilians and killing Juggernaut/Orbital Canon/Avon Hertz).
+2. Support **fast disconnection** of specific programs (hotkey).
+3. Support manual **timing** (hotkey).
+4. Support displaying the headshot count/timer **on the screen** (only applicable to windowed or borderless mode).
+5. ......
 
 ## 🤩 Screenshots
 
-![ic_main_window_firewall](image/en/ic_main_window_firewall.png) ![ic_main_window_headshot](image/en/ic_main_window_headshot.png)
-![ic_setting_dialog_hotkey](image/en/ic_setting_dialog_hotkey.png) ![ic_setting_dialog_headshot](image/en/ic_setting_dialog_headshot.png)
-![ic_setting_dialog_sound](image/en/ic_setting_dialog_sound.png) ![ic_setting_dialog_language](image/en/ic_setting_dialog_language.png)
+![ic_main_window_firewall](image/en/ic_main_window_firewall.png) ![ic_main_window_headshot](image/en/ic_main_window_headshot.png) ![ic_main_window_timer](image/en/ic_main_window_timer.png)
+![ic_setting_dialog_display_info_content](image/en/ic_setting_dialog_display_info_content.png)
+![ic_setting_dialog_display_info_window](image/en/ic_setting_dialog_display_info_window.png)
+![ic_setting_dialog_firewall](image/en/ic_setting_dialog_firewall.png)
+![ic_setting_dialog_headshot](image/en/ic_setting_dialog_headshot.png)
+![ic_setting_dialog_timer](image/en/ic_setting_dialog_timer.png)
+![ic_setting_dialog_language](image/en/ic_setting_dialog_language.png)
 
 ## ✨ Other works
 
