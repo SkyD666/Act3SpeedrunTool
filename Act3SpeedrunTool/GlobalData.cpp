@@ -54,6 +54,7 @@ QString toString(TimerStopStrategy strategy)
 }
 }
 
+bool GlobalData::minimizeToTray = false;
 // 版本
 QString GlobalData::version = "0.0";
 // 信息展示
@@ -113,6 +114,7 @@ void GlobalData::readSettings()
 
     settings.beginGroup("General");
     version = settings.value("Version", version).toString();
+    minimizeToTray = settings.value("MinimizeToTray", minimizeToTray).toBool();
     settings.endGroup();
 
     settings.beginGroup("DisplayInfo");
@@ -170,6 +172,7 @@ void GlobalData::writeSettings()
 
     settings.beginGroup("General");
     settings.setValue("Version", QApplication::applicationVersion());
+    settings.setValue("MinimizeToTray", minimizeToTray);
     settings.endGroup();
 
     settings.beginGroup("DisplayInfo");

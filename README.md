@@ -24,7 +24,7 @@
         </a>
     </p>
     <p>
-        A <b>GTAOL doomsday scenario speedrun tool</b> that supports quick <b>startup of the firewall</b> and <b>automatic counting of headshots</b>. This tool only reads the memory and does not write the memory.
+        A <b>GTAOL doomsday scenario speedrun tool</b> that supports quick <b>startup of the firewall</b>, <b>automatic counting of headshots</b> and <b>timing</b>. This tool only reads the memory and does not write the memory.
     </p>
     <p>
         <b><a href="doc/README/README-zh-rCN.md">中文</a></b>
@@ -32,9 +32,10 @@
 </div>
 
 
+
 ## 🎉 Features
 
-1. Support tracking the number of **headshots** in the mission (excluding headshots on civilians and killing Juggernaut/Orbital Canon/Avon Hertz).
+1. Support tracking the number of **headshots** in the mission (**Not counted**: Headshot **civilians**, killing **Juggernaut**, **Orbital Canon** kills, killing **Avon Hertz**).
 2. Support **fast disconnection** of specific programs (hotkey).
 3. Support manual **timing** (hotkey).
 4. Support displaying the headshot count/timer **on the screen** (only applicable to windowed or borderless mode).

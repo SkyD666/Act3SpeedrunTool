@@ -1,6 +1,7 @@
 #include "SettingDialog.h"
 #include "GlobalData.h"
 #include "LanguageUtil.h"
+#include "MainWindow.h"
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QFont>
@@ -30,6 +31,7 @@ SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDial
     }
     connect(ui.lwPage, &QListWidget::currentRowChanged, ui.stackedWidget, &QStackedWidget::setCurrentIndex);
 
+    initGeneralSettings();
     initFirewallSettings();
     initHeadshotSettings();
     initTimerSettings();
@@ -50,6 +52,23 @@ SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDial
 
 SettingDialog::~SettingDialog()
 {
+}
+
+void SettingDialog::initGeneralSettings()
+{
+    // 最小化到托盘
+    ui.cbMinimizeToTray->setChecked(GlobalData::minimizeToTray);
+    connect(ui.cbMinimizeToTray, &QCheckBox::stateChanged, this, [=](int state) {
+        GlobalData::minimizeToTray = state == Qt::Checked;
+        auto mainWindow = dynamic_cast<MainWindow*>(parent());
+        if (mainWindow) {
+            if (GlobalData::minimizeToTray) {
+                mainWindow->initSystemTray();
+            } else {
+                mainWindow->closeSystemTray();
+            }
+        }
+    });
 }
 
 QString SettingDialog::getSoundFile()

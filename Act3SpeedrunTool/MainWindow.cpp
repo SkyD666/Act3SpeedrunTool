@@ -6,10 +6,13 @@
 #include "MemoryUtil.h"
 #include "SettingDialog.h"
 #include <MMSystem.h>
+#include <QBoxLayout>
 #include <QClipboard>
+#include <QCloseEvent>
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QDesktopServices>
+#include <QFile>
 #include <QHotkey>
 #include <QMessageBox>
 #include <QPalette>
@@ -28,6 +31,8 @@ MainWindow::MainWindow(QWidget* parent)
     connect(qApp, &QCoreApplication::aboutToQuit, this, [=]() {
         GlobalData::destory();
     });
+
+    initSystemTray();
 
     FirewallUtil::init();
 
@@ -112,8 +117,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    if (displayInfoDialog) {
-        displayInfoDialog->done(-1);
+    if (!waitingToExit && GlobalData::minimizeToTray) {
+        setVisible(false);
+        event->ignore();
+        return;
+    } else {
+        if (displayInfoDialog) {
+            displayInfoDialog->done(-1);
+        }
+    }
+
+    if (event->isAccepted()) {
+        qApp->exit();
     }
 }
 
@@ -242,6 +257,14 @@ void MainWindow::updateTimerInterval()
 
 void MainWindow::initMenu()
 {
+    connect(ui.actionExit, &QAction::triggered, this, [=]() {
+        waitingToExit = true;
+        close();
+    });
+    connect(ui.actionShow, &QAction::triggered, this, [=]() {
+        show();
+        setWindowState(Qt::WindowActive);
+    });
     connect(ui.actionDisplayInfo, &QAction::toggled, this, [=](bool checked) {
         static bool firstTime = true;
         if (!firstTime && GlobalData::displayInfoShow == checked) {
@@ -344,8 +367,22 @@ void MainWindow::initMenu()
         QDesktopServices::openUrl(QUrl("https://github.com/SkyD666/AutoFirewall"));
     });
 
-    connect(ui.actionSponsor, &QAction::triggered, this, [=]() {
+    connect(ui.actionAiFaDian, &QAction::triggered, this, [=]() {
         QDesktopServices::openUrl(QUrl("https://afdian.net/a/SkyD666"));
+    });
+    connect(ui.actionBuyMeACoffee, &QAction::triggered, this, [=]() {
+        QDesktopServices::openUrl(QUrl("https://www.buymeacoffee.com/SkyD666"));
+    });
+    connect(ui.actionAliPay, &QAction::triggered, this, [=]() {
+        QDialog dialog(this);
+        QLabel* imageLabel = new QLabel(&dialog);
+        imageLabel->setPixmap(QPixmap(":/alipay.jpg"));
+        auto layout = new QBoxLayout(QBoxLayout::LeftToRight);
+        layout->addWidget(imageLabel);
+        layout->setSizeConstraint(QLayout::SetFixedSize);
+        dialog.setLayout(layout);
+        dialog.setWindowTitle(tr("支付宝收款二维码"));
+        dialog.exec();
     });
 
     connect(ui.actionHelpTranslate, &QAction::triggered, this, [=]() {
@@ -603,4 +640,53 @@ void MainWindow::initTimerStateMachine()
 
     timerStateMachine.setInitialState(stoppedAndZeroState);
     timerStateMachine.start();
+}
+
+void MainWindow::initSystemTray()
+{
+    if (!GlobalData::minimizeToTray || systemTray) {
+        return;
+    }
+    systemTrayMenu = new QMenu(this);
+    systemTray = new QSystemTrayIcon(QIcon(":/ico.png"), this);
+
+    systemTrayMenu->addAction(ui.actionShow);
+    systemTrayMenu->addSeparator();
+    systemTrayMenu->addAction(ui.actionSetting);
+    systemTrayMenu->addAction(ui.actionSetting);
+    systemTrayMenu->addMenu(ui.menuDisplayInfo);
+    systemTrayMenu->addSeparator();
+    systemTrayMenu->addAction(ui.actionExit);
+
+    systemTray->setToolTip(QApplication::applicationName());
+    systemTray->setContextMenu(systemTrayMenu);
+
+    connect(systemTray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
+        switch (reason) {
+        case QSystemTrayIcon::Context:
+            systemTrayMenu->show();
+            break;
+        case QSystemTrayIcon::DoubleClick:
+        case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::MiddleClick:
+            ui.actionShow->trigger();
+            break;
+        case QSystemTrayIcon::Unknown:
+            break;
+        }
+    });
+
+    systemTray->show();
+}
+
+void MainWindow::closeSystemTray()
+{
+    if (!systemTray) {
+        return;
+    }
+    systemTray->hide();
+    delete systemTray;
+    delete systemTrayMenu;
+    systemTray = nullptr;
+    systemTrayMenu = nullptr;
 }

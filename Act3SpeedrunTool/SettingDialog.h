@@ -11,10 +11,12 @@ public:
     explicit SettingDialog(QWidget* parent = nullptr, DisplayInfoDialog* displayInfoDialog = nullptr);
     ~SettingDialog();
 
-    QString pageName[5] = { tr("信息展示"), tr("断网"), tr("爆头"), tr("计时器"), tr("语言") };
+    QString pageName[6] = { tr("常规"), tr("信息展示"), tr("断网"), tr("爆头"), tr("计时器"), tr("语言") };
     const static QString pageIcon[];
 
 protected:
+    void initGeneralSettings();
+
     QString getSoundFile();
 
     int currentSubFunctionIndex = 0;

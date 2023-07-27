@@ -14,10 +14,12 @@ int main(int argc, char* argv[])
 
     LanguageUtil::applyLanguage();
 
+    // 必须设置为 false。否则在没有顶层窗口或者隐藏主窗口后，如果有子窗口弹出等，若关闭该弹出的子窗口，就会导致主窗口也被关闭
+    QApplication::setQuitOnLastWindowClosed(false);
     QApplication::setWindowIcon(QIcon(":/icon.png"));
     QApplication::setOrganizationName("SkyD666");
     QApplication::setApplicationName(QObject::tr("末日三速通工具"));
-    QApplication::setApplicationVersion("4.0");
+    QApplication::setApplicationVersion("5.0-beta01");
 
     if (QApplication::applicationVersion() != GlobalData::version) {
         QMessageBox::critical(nullptr, QString(), QObject::tr("*** 应用版本变更，请认真检查各项配置（热键、外观、提示音等）是否需要重新设置！***"));

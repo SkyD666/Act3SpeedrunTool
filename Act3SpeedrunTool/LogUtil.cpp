@@ -30,6 +30,7 @@ void LogUtil::addLog(const QString newLog)
     if (firstTime) {
         if (logDir.entryInfoList(QStringList() << "*.log").size() > 10) {
             logDir.removeRecursively();
+            logDir.mkpath(getLogDir());
         }
         firstTime = false;
     }

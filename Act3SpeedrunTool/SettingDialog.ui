@@ -39,8 +39,63 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
+     <widget class="QWidget" name="pageGeneral">
+      <layout class="QVBoxLayout" name="verticalLayout_21">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QScrollArea" name="scrollArea_7">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_7">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>388</width>
+            <height>461</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_23">
+           <item>
+            <widget class="QCheckBox" name="cbMinimizeToTray">
+             <property name="text">
+              <string>最小化到托盘</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="pageDisplayInfo">
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="leftMargin">
@@ -592,7 +647,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-108</y>
             <width>374</width>
             <height>569</height>
            </rect>
@@ -773,7 +828,7 @@
                   <item>
                    <widget class="QLabel" name="label_30">
                     <property name="text">
-                     <string>使用 UU 加速器的用户请填写 GTA5.exe 的完整路径，然后在 UU 内使用”路由模式“进行加速。
+                     <string>使用 UU 加速器的用户请填写 GTA5.exe 的完整路径，然后在 UU 内使用“路由模式”进行加速。
 GTA5.exe 的完整路径例如：
 F:\Epic Games\GTAV\GTA5.exe
 
@@ -1028,7 +1083,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
               <item>
                <widget class="QLabel" name="label_31">
                 <property name="text">
-                 <string>注：无论选择何种策略，从”暂停“状态到”停止“状态后计时器都会归零</string>
+                 <string>注：无论选择何种策略，从“暂停”状态到“停止”状态后计时器都会归零</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>

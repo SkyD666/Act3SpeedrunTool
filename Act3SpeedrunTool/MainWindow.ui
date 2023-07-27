@@ -233,13 +233,21 @@
     <property name="title">
      <string>帮助(&amp;H)</string>
     </property>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string>赞助作者</string>
+     </property>
+     <addaction name="actionAliPay"/>
+     <addaction name="actionAiFaDian"/>
+     <addaction name="actionBuyMeACoffee"/>
+    </widget>
     <addaction name="actionLogDir"/>
     <addaction name="actionLog"/>
     <addaction name="separator"/>
     <addaction name="actionGitHub"/>
     <addaction name="actionHelpTranslate"/>
     <addaction name="separator"/>
-    <addaction name="actionSponsor"/>
+    <addaction name="menu"/>
     <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
     <addaction name="actionAbout"/>
@@ -315,11 +323,6 @@
     <string>打开日志文件夹...</string>
    </property>
   </action>
-  <action name="actionSponsor">
-   <property name="text">
-    <string>赞助作者...</string>
-   </property>
-  </action>
   <action name="actionDisplayInfo">
    <property name="checkable">
     <bool>true</bool>
@@ -357,6 +360,35 @@
   <action name="actionOpenBrowser">
    <property name="text">
     <string>在浏览器中打开...</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>退出(&amp;X)</string>
+   </property>
+  </action>
+  <action name="actionShow">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/ico.png</normaloff>:/ico.png</iconset>
+   </property>
+   <property name="text">
+    <string>显示(&amp;S)...</string>
+   </property>
+  </action>
+  <action name="actionAiFaDian">
+   <property name="text">
+    <string>爱发电...</string>
+   </property>
+  </action>
+  <action name="actionBuyMeACoffee">
+   <property name="text">
+    <string>Buy Me A Coffee...</string>
+   </property>
+  </action>
+  <action name="actionAliPay">
+   <property name="text">
+    <string>支付宝...</string>
    </property>
   </action>
  </widget>

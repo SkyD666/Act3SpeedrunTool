@@ -16,12 +16,15 @@
         <a href="https://github.com/SkyD666/AutoFirewall/blob/master/LICENSE" style="text-decoration:none" >
             <img src="https://img.shields.io/github/license/SkyD666/AutoFirewall?style=for-the-badge" alt="GitHub license"/>
         </a>
+        <a href="https://t.me/SkyD666Chat" style="text-decoration:none" >
+            <img src="https://img.shields.io/badge/Telegram-2CA5E0?logo=telegram&logoColor=white&style=for-the-badge" alt="Telegram"/>
+        </a>
         <a href="https://discord.gg/pEWEjeJTa3" style="text-decoration:none" >
             <img src="https://img.shields.io/discord/982522006819991622?color=5865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Discord"/>
         </a>
     </p>
     <p>
-        一个 <b>GTAOL 末日三速通工具</b>，支持<b>快速启动防火墙、自动统计爆头数</b>。本软件仅读取内存，不会修改任何内存。
+        一个 <b>GTAOL 末日三速通工具</b>，支持<b>快速启动防火墙、自动统计爆头数、手动计时</b>。本软件仅读取内存，不会修改任何内存。
     </p>
     <p>
         <b><a href="../../README.md">English</a></b>
@@ -29,9 +32,10 @@
 </div>
 
 
+
 ## 🎉 主要功能
 
-1. 支持统计任务内**爆头数量**（不统计爆头路人、不统计击杀重甲/天基炮/埃万）
+1. 支持统计任务内**爆头数量**（不统计：爆头路人、击杀重甲、天基炮击杀、击杀埃万）
 2. 支持对特定的程序**快速断网**（快捷键）
 3. 支持手动**计时**（快捷键）
 4. 支持爆头数/计时器**显示在屏幕上**（仅适用于窗口化或者无边框）

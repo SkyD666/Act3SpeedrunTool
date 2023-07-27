@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>ico.png</file>
+        <file>alipay.jpg</file>
     </qresource>
 </RCC>

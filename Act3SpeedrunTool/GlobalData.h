@@ -35,6 +35,7 @@ public:
 
     static void writeSettings();
 
+    static bool minimizeToTray;
     // 版本
     static QString version;
 

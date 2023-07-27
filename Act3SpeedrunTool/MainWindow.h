@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QStateMachine>
+#include <QSystemTrayIcon>
 #include <QTimer>
 #include <windows.h>
 
@@ -15,6 +16,9 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
+
+    void initSystemTray();
+    void closeSystemTray();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -56,6 +60,11 @@ signals:
 
 private:
     Ui::MainWindow ui;
+
+    bool waitingToExit = false;
+
+    QSystemTrayIcon* systemTray = nullptr;
+    QMenu* systemTrayMenu = nullptr;
 
     static const QString hotkeyStatePattern;
 
