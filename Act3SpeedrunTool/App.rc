@@ -1,15 +1,15 @@
-IDI_ICON1 ICON "icon.ico"
-1 24 "app.exe.manifest"
-
 #if defined(UNDER_CE)
 #include <winbase.h>
 #else
 #include <winver.h>
 #endif
 
+1 24 "app.exe.manifest"
+2 ICON "icon.ico"
+
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION 4,0,0,0
-    PRODUCTVERSION 4,0,0,0
+    FILEVERSION 5,0,0,0
+    PRODUCTVERSION 5,0,0,0
     FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
     FILEFLAGS VS_FF_DEBUG
@@ -26,13 +26,9 @@ VS_VERSION_INFO VERSIONINFO
             BEGIN
                 VALUE "CompanyName", "SkyD666\0"
                 VALUE "FileDescription", "Act3 Speedrun Tool\0"
-                VALUE "FileVersion", "4.0.0.0\0"
-                VALUE "ProductVersion", "4.0.0.0\0"
-                VALUE "LegalCopyright", "\0"
-                VALUE "LegalTrademarks", "\0"
-                VALUE "OriginalFilename", "Act3 Speedrun Tool.exe\0"
+                VALUE "FileVersion", "5.0.0.0\0"
+                VALUE "ProductVersion", "5.0.0.0\0"
                 VALUE "ProductName", "Act3 Speedrun Tool\0"
-                VALUE "InternalName", "Act3 Speedrun Tool.exe\0"
            END
         END
 

@@ -24,6 +24,7 @@ set(PROJECT_SOURCES
         GlobalData.h GlobalData.cpp
         SettingDialog.h SettingDialog.cpp SettingDialog.ui
         DisplayInfoDialog.h DisplayInfoDialog.cpp DisplayInfoDialog.ui
+        UpdateDialog.h UpdateDialog.cpp UpdateDialog.ui
         LogUtil.h LogUtil.cpp
         LanguageUtil.h LanguageUtil.cpp
         MemoryUtil.h MemoryUtil.cpp

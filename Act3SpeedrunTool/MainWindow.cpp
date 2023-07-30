@@ -5,6 +5,7 @@
 #include "LogUtil.h"
 #include "MemoryUtil.h"
 #include "SettingDialog.h"
+#include "UpdateDialog.h"
 #include <MMSystem.h>
 #include <QBoxLayout>
 #include <QClipboard>
@@ -40,6 +41,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     initMenu();
 
+    checkUpdate();
+
     ui.statusbar->addPermanentWidget(labCurrentHotkey);
 
     labState->setAutoFillBackground(true);
@@ -50,12 +53,12 @@ MainWindow::MainWindow(QWidget* parent)
     ui.statusbar->addPermanentWidget(labState);
 
     ui.cbSound->setChecked(GlobalData::firewallPlaySound);
-    connect(ui.cbSound, &QCheckBox::stateChanged, this, [=](int state) {
+    connect(ui.cbSound, &QCheckBox::stateChanged, this, [](int state) {
         GlobalData::firewallPlaySound = state;
     });
 
     ui.btnStartFirewall->setText(tr("已关闭"));
-    connect(ui.btnStartFirewall, &QAbstractButton::toggled, this, [=](bool checked) {
+    connect(ui.btnStartFirewall, &QAbstractButton::toggled, this, [this](bool checked) {
         if (checked == FirewallUtil::getIsEnabled()) {
             return;
         }
@@ -94,7 +97,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui.btnStartFirewall->setFocus();
 
-    connect(ui.btnStartHeadShot, &QAbstractButton::toggled, this, [=](bool checked) {
+    connect(ui.btnStartHeadShot, &QAbstractButton::toggled, this, [this](bool checked) {
         if (checked) {
             if (startReadHeadShot()) {
                 ui.btnStartHeadShot->setText(tr("点击关闭"));
@@ -132,6 +135,24 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 }
 
+void MainWindow::checkUpdate()
+{
+    if (!GlobalData::autoCheckUpdate) {
+        return;
+    }
+    UpdateDialog::sendCheckRequest(
+        this,
+        [this](GitHubRelease* release) {
+            if (UpdateDialog::isNewVersion(release->tagName)
+                && GlobalData::ignoredNewVersion != release->tagName) {
+                (new UpdateDialog(release, this))->exec();
+            } else {
+                delete release;
+            }
+        },
+        [](int, QString) {});
+}
+
 void MainWindow::removeAllHotkeys()
 {
     removeHotkey(startFirewallHotkey);
@@ -165,7 +186,7 @@ void MainWindow::setHotkey()
         bool sameFirewallHotkey = GlobalData::firewallStartHotkey == GlobalData::firewallStopHotkey;
         startFirewallHotkey = new QHotkey(QKeySequence(GlobalData::firewallStartHotkey), true, qApp);
         if (startFirewallHotkey->isRegistered()) {
-            connect(startFirewallHotkey, &QHotkey::activated, qApp, [=]() {
+            connect(startFirewallHotkey, &QHotkey::activated, qApp, [this, sameFirewallHotkey]() {
                 if (sameFirewallHotkey) {
                     ui.btnStartFirewall->toggle();
                 } else {
@@ -173,16 +194,16 @@ void MainWindow::setHotkey()
                 }
             });
         } else {
-            QMessageBox::critical(nullptr, QString(), tr("注册启用防火墙热键失败！"));
+            QMessageBox::critical(this, QString(), tr("注册启用防火墙热键失败！"));
         }
         if (!sameFirewallHotkey) {
             stopFirewallHotkey = new QHotkey(QKeySequence(GlobalData::firewallStopHotkey), true, qApp);
             if (stopFirewallHotkey->isRegistered()) {
-                connect(stopFirewallHotkey, &QHotkey::activated, qApp, [=]() {
+                connect(stopFirewallHotkey, &QHotkey::activated, qApp, [this]() {
                     ui.btnStartFirewall->setChecked(false);
                 });
             } else {
-                QMessageBox::critical(nullptr, QString(), tr("注册关闭防火墙热键失败！"));
+                QMessageBox::critical(this, QString(), tr("注册关闭防火墙热键失败！"));
             }
         }
     }
@@ -192,7 +213,7 @@ void MainWindow::setHotkey()
         bool sameTimerHotkey = GlobalData::timerStartHotkey == GlobalData::timerStopHotkey;
         startTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerStartHotkey), true, qApp);
         if (startTimerHotkey->isRegistered()) {
-            connect(startTimerHotkey, &QHotkey::activated, qApp, [=]() {
+            connect(startTimerHotkey, &QHotkey::activated, qApp, [this, sameTimerHotkey]() {
                 if (sameTimerHotkey) {
                     ui.btnStartTimer->click();
                 } else {
@@ -224,22 +245,22 @@ void MainWindow::setHotkey()
                     }
                 });
             } else {
-                QMessageBox::critical(nullptr, QString(), tr("注册停止计时器热键失败！"));
+                QMessageBox::critical(this, QString(), tr("注册停止计时器热键失败！"));
             }
         }
         if (GlobalData::timerPauseHotkey == GlobalData::timerStartHotkey
             || GlobalData::timerPauseHotkey == GlobalData::timerStopHotkey) {
-            QMessageBox::critical(nullptr, QString(), tr("暂停计时器热键与启动/停止计时器热键相同，暂停计时器热键将会无效！"));
+            QMessageBox::critical(this, QString(), tr("暂停计时器热键与启动/停止计时器热键相同，暂停计时器热键将会无效！"));
         } else {
             pauseTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerPauseHotkey), true, qApp);
             if (pauseTimerHotkey->isRegistered()) {
-                connect(pauseTimerHotkey, &QHotkey::activated, qApp, [=]() {
+                connect(pauseTimerHotkey, &QHotkey::activated, qApp, [this]() {
                     if (ui.btnPauseTimer->isEnabled()) {
                         ui.btnPauseTimer->click();
                     }
                 });
             } else {
-                QMessageBox::critical(nullptr, QString(), tr("注册暂停计时器热键失败！"));
+                QMessageBox::critical(this, QString(), tr("注册暂停计时器热键失败！"));
             }
         }
     }
@@ -257,11 +278,11 @@ void MainWindow::updateTimerInterval()
 
 void MainWindow::initMenu()
 {
-    connect(ui.actionExit, &QAction::triggered, this, [=]() {
+    connect(ui.actionExit, &QAction::triggered, this, [this]() {
         waitingToExit = true;
         close();
     });
-    connect(ui.actionShow, &QAction::triggered, this, [=]() {
+    connect(ui.actionShow, &QAction::triggered, this, [this]() {
         show();
         setWindowState(Qt::WindowActive);
     });
@@ -276,7 +297,7 @@ void MainWindow::initMenu()
         GlobalData::displayInfoShow = checked;
         if (checked) {
             displayInfoDialog = new DisplayInfoDialog();
-            auto closeLambda = [=](int result) {
+            auto closeLambda = [this](int result) {
                 disconnect(this, nullptr, displayInfoDialog, nullptr);
                 displayInfoDialogIsShowing = false;
                 // Qt::WA_DeleteOnClose
@@ -301,7 +322,7 @@ void MainWindow::initMenu()
     });
     ui.actionDisplayInfo->setChecked(GlobalData::displayInfoShow);
 
-    connect(ui.actionDisplayInfoTouchable, &QAction::toggled, this, [=](bool checked) {
+    connect(ui.actionDisplayInfoTouchable, &QAction::toggled, this, [this](bool checked) {
         GlobalData::displayInfoTouchable = checked;
         // 重启页面
         if (ui.actionDisplayInfo->isChecked()) {
@@ -328,26 +349,26 @@ void MainWindow::initMenu()
     ui.actionEnableServer->setChecked(GlobalData::displayInfoServer);
     enableServerLambda(GlobalData::displayInfoServer);
 
-    connect(ui.actionCopyHostAddress, &QAction::triggered, this, [=]() {
+    connect(ui.actionCopyHostAddress, &QAction::triggered, this, [this]() {
         auto domain = HttpServerUtil::getHttpServerDomain();
         if (domain.isEmpty()) {
-            QMessageBox::critical(nullptr, QString(), tr("获取服务器地址失败！"));
+            QMessageBox::critical(this, QString(), tr("获取服务器地址失败！"));
         } else {
             QGuiApplication::clipboard()->setText(domain);
-            QMessageBox::information(nullptr, QString(), tr("已复制服务器地址！"));
+            QMessageBox::information(this, QString(), tr("已复制服务器地址！"));
         }
     });
 
-    connect(ui.actionOpenBrowser, &QAction::triggered, this, [=]() {
+    connect(ui.actionOpenBrowser, &QAction::triggered, this, [this]() {
         auto domain = HttpServerUtil::getHttpServerDomain();
         if (domain.isEmpty()) {
-            QMessageBox::critical(nullptr, QString(), tr("获取服务器地址失败！"));
+            QMessageBox::critical(this, QString(), tr("获取服务器地址失败！"));
         } else {
             QDesktopServices::openUrl(QUrl(domain));
         }
     });
 
-    connect(ui.actionSetting, &QAction::triggered, this, [=]() {
+    connect(ui.actionSetting, &QAction::triggered, this, [this]() {
         auto dialog = new SettingDialog(this, displayInfoDialog);
         removeAllHotkeys();
         dialog->exec();
@@ -355,28 +376,32 @@ void MainWindow::initMenu()
         setHotkey();
     });
 
-    connect(ui.actionLogDir, &QAction::triggered, this, [=]() {
+    connect(ui.actionUpdate, &QAction::triggered, this, [this]() {
+        (new UpdateDialog(nullptr, this))->exec();
+    });
+
+    connect(ui.actionLogDir, &QAction::triggered, this, []() {
         QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogDir()));
     });
 
-    connect(ui.actionLog, &QAction::triggered, this, [=]() {
+    connect(ui.actionLog, &QAction::triggered, this, []() {
         QDesktopServices::openUrl(QUrl("file:///" + LogUtil::getLogFilePath()));
     });
 
-    connect(ui.actionGitHub, &QAction::triggered, this, [=]() {
+    connect(ui.actionGitHub, &QAction::triggered, this, []() {
         QDesktopServices::openUrl(QUrl("https://github.com/SkyD666/AutoFirewall"));
     });
 
-    connect(ui.actionAiFaDian, &QAction::triggered, this, [=]() {
+    connect(ui.actionAiFaDian, &QAction::triggered, this, []() {
         QDesktopServices::openUrl(QUrl("https://afdian.net/a/SkyD666"));
     });
-    connect(ui.actionBuyMeACoffee, &QAction::triggered, this, [=]() {
+    connect(ui.actionBuyMeACoffee, &QAction::triggered, this, []() {
         QDesktopServices::openUrl(QUrl("https://www.buymeacoffee.com/SkyD666"));
     });
-    connect(ui.actionAliPay, &QAction::triggered, this, [=]() {
+    connect(ui.actionAliPay, &QAction::triggered, this, [this]() {
         QDialog dialog(this);
         QLabel* imageLabel = new QLabel(&dialog);
-        imageLabel->setPixmap(QPixmap(":/alipay.jpg"));
+        imageLabel->setPixmap(QPixmap("://image/ic_alipay.jpg"));
         auto layout = new QBoxLayout(QBoxLayout::LeftToRight);
         layout->addWidget(imageLabel);
         layout->setSizeConstraint(QLayout::SetFixedSize);
@@ -385,13 +410,13 @@ void MainWindow::initMenu()
         dialog.exec();
     });
 
-    connect(ui.actionHelpTranslate, &QAction::triggered, this, [=]() {
+    connect(ui.actionHelpTranslate, &QAction::triggered, this, []() {
         QDesktopServices::openUrl(QUrl("https://discord.gg/pEWEjeJTa3"));
     });
 
-    connect(ui.actionAboutQt, &QAction::triggered, this, [=]() { qApp->aboutQt(); });
+    connect(ui.actionAboutQt, &QAction::triggered, this, []() { qApp->aboutQt(); });
 
-    connect(ui.actionAbout, &QAction::triggered, this, [=]() {
+    connect(ui.actionAbout, &QAction::triggered, this, [this]() {
         QMessageBox::about(this, QString(), license);
     });
 }
@@ -648,7 +673,7 @@ void MainWindow::initSystemTray()
         return;
     }
     systemTrayMenu = new QMenu(this);
-    systemTray = new QSystemTrayIcon(QIcon(":/ico.png"), this);
+    systemTray = new QSystemTrayIcon(QApplication::windowIcon(), this);
 
     systemTrayMenu->addAction(ui.actionShow);
     systemTrayMenu->addSeparator();

@@ -1,11 +1,11 @@
 #include "LanguageUtil.h"
 #include "GlobalData.h"
 #include <QCoreApplication>
-#include <QLocale>
 
 Q_GLOBAL_STATIC(LanguageUtil, instance)
 
 QTranslator* LanguageUtil::translator = new QTranslator();
+QTranslator* LanguageUtil::systemTranslator = new QTranslator();
 
 LanguageUtil::LanguageUtil()
 {
@@ -38,12 +38,25 @@ QString LanguageUtil::getDisplayName(const QString name)
     return "";
 }
 
+QLocale::Language LanguageUtil::getQLocaleLanguage(const QString name)
+{
+    if (name == "default") {
+        return QLocale().language();
+    } else if (name == "zh") {
+        return QLocale::Chinese;
+    } else if (name == "en") {
+        return QLocale::English;
+    }
+    return QLocale().language();
+}
+
 void LanguageUtil::applyLanguage()
 {
     bool setTranslator = false;
     if (!GlobalData::language.isEmpty()) {
+        tryApplySystemLanguage();
         QString fileName = LanguageUtil::getInstance()->getFileName(GlobalData::language);
-        if (fileName == "*") { // 简体中文无需更改
+        if (fileName == "*") { // 简体中文
             setTranslator = true;
         } else if (!fileName.isEmpty() && translator->load(fileName, "./translations")) {
             QCoreApplication::installTranslator(translator);
@@ -51,10 +64,26 @@ void LanguageUtil::applyLanguage()
         }
     }
     if (!setTranslator) {
-        if (QLocale().language() != QLocale::Chinese) {
-            if (translator->load(QLocale(), "", "", "./translations", ".qm")) {
+        QLocale locale;
+        tryApplySystemLanguage(locale);
+        if (locale.language() != QLocale::Chinese) {
+            if (translator->load(locale, "", "", "./translations", ".qm")) {
                 QCoreApplication::installTranslator(translator);
             }
         }
     }
+}
+
+// 加载系统控件的翻译
+void LanguageUtil::tryApplySystemLanguage(QLocale locale)
+{
+    if (systemTranslator->load(locale, "qt", "_", "./translations", ".qm")) {
+        QCoreApplication::installTranslator(systemTranslator);
+    }
+}
+
+// 加载系统控件的翻译
+void LanguageUtil::tryApplySystemLanguage()
+{
+    tryApplySystemLanguage(getQLocaleLanguage(GlobalData::language));
 }

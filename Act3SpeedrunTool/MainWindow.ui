@@ -10,10 +10,6 @@
     <height>266</height>
    </rect>
   </property>
-  <property name="windowIcon">
-   <iconset resource="resource.qrc">
-    <normaloff>:/ico.png</normaloff>:/ico.png</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -77,7 +73,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <spacer name="verticalSpacer_3">
+         <spacer name="spacer_4">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -108,7 +104,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer_4">
+         <spacer name="spacer_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -147,7 +143,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <spacer name="verticalSpacer">
+         <spacer name="spacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -173,7 +169,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer_2">
+         <spacer name="spacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -241,6 +237,8 @@
      <addaction name="actionAiFaDian"/>
      <addaction name="actionBuyMeACoffee"/>
     </widget>
+    <addaction name="actionUpdate"/>
+    <addaction name="separator"/>
     <addaction name="actionLogDir"/>
     <addaction name="actionLog"/>
     <addaction name="separator"/>
@@ -266,12 +264,17 @@
      <property name="title">
       <string>信息展示</string>
      </property>
+     <property name="icon">
+      <iconset resource="resource.qrc">
+       <normaloff>:/image/ic_lighton.ico</normaloff>:/image/ic_lighton.ico</iconset>
+     </property>
      <widget class="QMenu" name="menuServer">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
       <property name="title">
-       <string>多端显示（开发中）</string>
+       <string>多端显示</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resource.qrc">
+        <normaloff>:/image/ic_browser.ico</normaloff>:/image/ic_browser.ico</iconset>
       </property>
       <addaction name="actionEnableServer"/>
       <addaction name="separator"/>
@@ -296,6 +299,10 @@
    </property>
   </action>
   <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/ic_info.ico</normaloff>:/image/ic_info.ico</iconset>
+   </property>
    <property name="text">
     <string>关于本软件...</string>
    </property>
@@ -306,6 +313,10 @@
    </property>
   </action>
   <action name="actionSetting">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/ic_setting.ico</normaloff>:/image/ic_setting.ico</iconset>
+   </property>
    <property name="text">
     <string>设置(&amp;S)...</string>
    </property>
@@ -314,11 +325,19 @@
    </property>
   </action>
   <action name="actionLog">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/ic_note_2.ico</normaloff>:/image/ic_note_2.ico</iconset>
+   </property>
    <property name="text">
     <string>查看日志...</string>
    </property>
   </action>
   <action name="actionLogDir">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/ic_open_folder.ico</normaloff>:/image/ic_open_folder.ico</iconset>
+   </property>
    <property name="text">
     <string>打开日志文件夹...</string>
    </property>
@@ -345,6 +364,10 @@
    </property>
   </action>
   <action name="actionCopyHostAddress">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/ic_link.ico</normaloff>:/image/ic_link.ico</iconset>
+   </property>
    <property name="text">
     <string>复制地址</string>
    </property>
@@ -358,6 +381,10 @@
    </property>
   </action>
   <action name="actionOpenBrowser">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/ic_network.ico</normaloff>:/image/ic_network.ico</iconset>
+   </property>
    <property name="text">
     <string>在浏览器中打开...</string>
    </property>
@@ -370,10 +397,10 @@
   <action name="actionShow">
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/ico.png</normaloff>:/ico.png</iconset>
+     <normaloff>:/image/ic_computer.ico</normaloff>:/image/ic_computer.ico</iconset>
    </property>
    <property name="text">
-    <string>显示(&amp;S)...</string>
+    <string>显示(&amp;D)...</string>
    </property>
   </action>
   <action name="actionAiFaDian">
@@ -389,6 +416,11 @@
   <action name="actionAliPay">
    <property name="text">
     <string>支付宝...</string>
+   </property>
+  </action>
+  <action name="actionUpdate">
+   <property name="text">
+    <string>检查更新...</string>
    </property>
   </action>
  </widget>

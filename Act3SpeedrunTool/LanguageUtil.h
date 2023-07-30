@@ -1,3 +1,4 @@
+#include <QLocale>
 #include <QObject>
 #include <QString>
 #include <QTranslator>
@@ -25,9 +26,12 @@ public:
 
     static QString getDisplayName(const QString name);
 
+    static QLocale::Language getQLocaleLanguage(const QString name);
+
     QString getFileName(const QString name);
 
     static QTranslator* translator;
+    static QTranslator* systemTranslator;
 
     static void applyLanguage();
 
@@ -36,4 +40,8 @@ public:
         Language("en", "en.qm"),
         Language("zh", "*")
     };
+
+private:
+    static void tryApplySystemLanguage(QLocale locale);
+    static void tryApplySystemLanguage();
 };

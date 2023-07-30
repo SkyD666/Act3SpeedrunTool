@@ -56,7 +56,9 @@ QString toString(TimerStopStrategy strategy)
 
 bool GlobalData::minimizeToTray = false;
 // 版本
+bool GlobalData::autoCheckUpdate = true;
 QString GlobalData::version = "0.0";
+QString GlobalData::ignoredNewVersion = "";
 // 信息展示
 QList<DisplayInfoSubFunction> GlobalData::funcs = { DisplayInfoSubFunction::Firewall, DisplayInfoSubFunction::Headshot, DisplayInfoSubFunction::Timer };
 QDisplayInfoSubFuncsMap GlobalData::displayInfoSubFunctions;
@@ -113,7 +115,9 @@ void GlobalData::readSettings()
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
 
     settings.beginGroup("General");
+    autoCheckUpdate = settings.value("AutoCheckUpdate", autoCheckUpdate).toBool();
     version = settings.value("Version", version).toString();
+    ignoredNewVersion = settings.value("IgnoredNewVersion", ignoredNewVersion).toString();
     minimizeToTray = settings.value("MinimizeToTray", minimizeToTray).toBool();
     settings.endGroup();
 
@@ -171,7 +175,9 @@ void GlobalData::writeSettings()
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
 
     settings.beginGroup("General");
+    settings.setValue("AutoCheckUpdate", autoCheckUpdate);
     settings.setValue("Version", QApplication::applicationVersion());
+    settings.setValue("IgnoredNewVersion", ignoredNewVersion);
     settings.setValue("MinimizeToTray", minimizeToTray);
     settings.endGroup();
 

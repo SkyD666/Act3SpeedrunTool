@@ -37,7 +37,9 @@ public:
 
     static bool minimizeToTray;
     // 版本
+    static bool autoCheckUpdate;
     static QString version;
+    static QString ignoredNewVersion;
 
     // 信息展示
     static QList<DisplayInfoSubFunction> funcs;

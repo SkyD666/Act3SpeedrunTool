@@ -23,6 +23,8 @@ public:
 protected:
     void closeEvent(QCloseEvent* event) override;
 
+    void checkUpdate();
+
     void removeAllHotkeys();
 
     void removeHotkey(QHotkey*& h);

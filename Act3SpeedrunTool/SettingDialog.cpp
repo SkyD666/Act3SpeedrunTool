@@ -10,8 +10,6 @@
 #include <QScreen>
 #include <windows.h>
 
-const QString SettingDialog::pageIcon[] = { ":/ic_settings.svg", ":/ic_search.svg", ":/ic_key_f.svg" };
-
 SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDialog)
     : QDialog(parent)
     , displayInfoDialog(displayInfoDialog)
@@ -23,8 +21,7 @@ SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDial
     {
         int i = 0;
         for (auto name : pageName) {
-            QListWidgetItem* item = new QListWidgetItem(name, ui.lwPage);
-            //            item->setIcon(QIcon(pageIcon[i]));
+            QListWidgetItem* item = new QListWidgetItem(QIcon(pageIcon[i]), name, ui.lwPage);
             ui.lwPage->addItem(item);
             i++;
         }
@@ -68,6 +65,12 @@ void SettingDialog::initGeneralSettings()
                 mainWindow->closeSystemTray();
             }
         }
+    });
+
+    // 自动检测更新
+    ui.cbAutoCheckUpdate->setChecked(GlobalData::autoCheckUpdate);
+    connect(ui.cbAutoCheckUpdate, &QCheckBox::stateChanged, this, [=](int state) {
+        GlobalData::autoCheckUpdate = state == Qt::Checked;
     });
 }
 
