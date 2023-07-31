@@ -56,7 +56,7 @@ void LanguageUtil::applyLanguage()
     if (!GlobalData::language.isEmpty()) {
         tryApplySystemLanguage();
         QString fileName = LanguageUtil::getInstance()->getFileName(GlobalData::language);
-        if (fileName == "*") { // 简体中文
+        if (fileName == "*") { // 简体中文，无需更改自定义组件的翻译
             setTranslator = true;
         } else if (!fileName.isEmpty() && translator->load(fileName, "./translations")) {
             QCoreApplication::installTranslator(translator);

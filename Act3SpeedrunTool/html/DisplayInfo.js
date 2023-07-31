@@ -80,12 +80,12 @@ else {
 }
 
 function timerFunc(timerStartTime) {
-  var now = new Date();
-  var deltaTime = now - timerStartTime + serverBrowserTimeDelta;
-  var m = parseInt(deltaTime / 1000 / 60);
-  var s = parseInt(deltaTime / 1000) % 60;
-  var ms = parseInt((deltaTime % 1000) / 10);
-  document.getElementById("timerMinute").innerHTML = m.toString().padStart(2, '0');
-  document.getElementById("timerSecond").innerHTML = s.toString().padStart(2, '0');
-  document.getElementById("timerMs").innerHTML = ms.toString().padStart(2, '0');
+	var now = new Date();
+	var deltaTime = now - timerStartTime + serverBrowserTimeDelta;
+	var m = parseInt(deltaTime / 1000 / 60);
+	var s = parseInt(deltaTime / 1000) % 60;
+	var ms = parseInt((deltaTime % 1000) / 10);
+	document.getElementById("timerMinute").innerHTML = m.toString().padStart(2, '0');
+	document.getElementById("timerSecond").innerHTML = s.toString().padStart(2, '0');
+	document.getElementById("timerMs").innerHTML = ms.toString().padStart(2, '0');
 }

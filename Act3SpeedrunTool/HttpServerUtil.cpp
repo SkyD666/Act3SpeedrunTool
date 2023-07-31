@@ -30,19 +30,24 @@ void HttpServerUtil::startHttp()
     httpServer = new QHttpServer(this);
     webSocketServer = new QWebSocketServer("Act3 Speedrun Tool", QWebSocketServer::NonSecureMode, this);
     httpServer->route("/favicon.ico", [](QHttpServerResponder&& responder) {
-        auto favicon = QFile("./resource/favicon.ico");
+        auto favicon = QFile("./html/favicon.ico");
         favicon.open(QFile::ReadOnly);
         responder.write(favicon.readAll(), "image/x-icon");
     });
-    httpServer->route("/displayInfo", []() {
-        auto htmlFile = QFile("./resource/DisplayInfo.html");
+    httpServer->route("/displayInfo", [](QHttpServerResponder&& responder) {
+        auto htmlFile = QFile("./html/DisplayInfo.html");
         htmlFile.open(QFile::ReadOnly | QFile::Text);
-        return QTextStream(&htmlFile).readAll();
+        responder.write(htmlFile.readAll(), "text/html");
     });
-    httpServer->route("/displayInfo.js", []() {
-        auto jsFile = QFile("./resource/DisplayInfo.js");
+    httpServer->route("/displayInfo.js", [](QHttpServerResponder&& responder) {
+        auto jsFile = QFile("./html/DisplayInfo.js");
         jsFile.open(QFile::ReadOnly | QFile::Text);
-        return QTextStream(&jsFile).readAll();
+        responder.write(jsFile.readAll(), "text/javascript");
+    });
+    httpServer->route("/displayInfo.css", [](QHttpServerResponder&& responder) {
+        auto cssFile = QFile("./html/DisplayInfo.css");
+        cssFile.open(QFile::ReadOnly | QFile::Text);
+        responder.write(cssFile.readAll(), "text/css");
     });
     currentHttpPort = httpServer->listen(QHostAddress::Any, GlobalData::serverHttpPort);
     if (webSocketServer->listen(QHostAddress::Any, GlobalData::serverWebsocketPort)) {
