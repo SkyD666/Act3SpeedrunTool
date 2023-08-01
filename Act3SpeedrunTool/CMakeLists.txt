@@ -62,9 +62,7 @@ endif()
 
 file(GLOB TS_FILES "${PROJECT_SOURCE_DIR}/*.ts")
 
-qt6_add_translations(Act3SpeedrunTool
-    TS_FILES en.ts
-    QM_FILES_OUTPUT_VARIABLE qm_files)
+qt_add_lupdate(Act3SpeedrunTool TS_FILES en.ts OPTIONS "-no-obsolete")
 install(FILES ${qm_files} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
 
 
@@ -95,8 +93,6 @@ target_link_libraries(Act3SpeedrunTool PRIVATE QHotkey)
 
 if (WIN32)
     target_link_libraries(Act3SpeedrunTool PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/lib/Ole32.Lib
-        ${CMAKE_CURRENT_SOURCE_DIR}/lib/OleAut32.Lib
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/WinMM.Lib
     )
 endif()

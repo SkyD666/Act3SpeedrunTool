@@ -55,6 +55,7 @@ QString toString(TimerStopStrategy strategy)
 }
 
 bool GlobalData::minimizeToTray = false;
+QString GlobalData::styleName = "windowsvista";
 // 版本
 bool GlobalData::autoCheckUpdate = true;
 QString GlobalData::version = "0.0";
@@ -115,6 +116,7 @@ void GlobalData::readSettings()
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
 
     settings.beginGroup("General");
+    styleName = settings.value("StyleName", styleName).toString();
     autoCheckUpdate = settings.value("AutoCheckUpdate", autoCheckUpdate).toBool();
     version = settings.value("Version", version).toString();
     ignoredNewVersion = settings.value("IgnoredNewVersion", ignoredNewVersion).toString();
@@ -175,6 +177,7 @@ void GlobalData::writeSettings()
     QSettings settings(getSettingsFilePath(), QSettings::IniFormat);
 
     settings.beginGroup("General");
+    settings.setValue("StyleName", styleName);
     settings.setValue("AutoCheckUpdate", autoCheckUpdate);
     settings.setValue("Version", QApplication::applicationVersion());
     settings.setValue("IgnoredNewVersion", ignoredNewVersion);

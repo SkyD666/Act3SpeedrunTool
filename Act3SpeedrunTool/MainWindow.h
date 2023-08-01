@@ -100,7 +100,7 @@ private:
     QString license = "<h3>" + QApplication::applicationDisplayName()
         + " v" + QApplication::applicationVersion() + "</h3>"
         + tr("<p>一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本软件仅读取内存，不会修改任何内存。</p>")
-        + "<p>" + tr("作者：") + QApplication::organizationName() + "</p>"
+        + "<p>" + tr("作者：%1").arg(QApplication::organizationName()) + "</p>"
         + "<p><a href='https://discord.gg/pEWEjeJTa3'>" + tr("加入 Discord 一起划水~") + "</a></p>"
         + "<p><a href='https://afdian.net/a/SkyD666'>" + tr("赞助作者") + "</a></p>"
         + "<p>" + tr("特别感谢 <b>ACT3 帮会</b>对本工具的宣传和支持。特别感谢 <b>CZ9946 和 Adstargod</b> 两位大佬，他们对本工具的研发提供了大量的帮助！") + "</p>"

@@ -21,6 +21,8 @@ int main(int argc, char* argv[])
     QApplication::setApplicationName(QObject::tr("末日三速通工具"));
     QApplication::setApplicationVersion("5.0-beta01");
 
+    qApp->setStyle(GlobalData::styleName);
+
     if (QApplication::applicationVersion() != GlobalData::version) {
         QMessageBox::warning(nullptr, QString(), QObject::tr("*** 应用版本变更，请认真检查各项配置（热键、外观、提示音等）是否需要重新设置！***"));
     }

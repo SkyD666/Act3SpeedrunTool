@@ -8,6 +8,7 @@
 #include <QFontComboBox>
 #include <QPair>
 #include <QScreen>
+#include <QStyleFactory>
 #include <windows.h>
 
 SettingDialog::SettingDialog(QWidget* parent, DisplayInfoDialog* displayInfoDialog)
@@ -71,6 +72,18 @@ void SettingDialog::initGeneralSettings()
     ui.cbAutoCheckUpdate->setChecked(GlobalData::autoCheckUpdate);
     connect(ui.cbAutoCheckUpdate, &QCheckBox::stateChanged, this, [=](int state) {
         GlobalData::autoCheckUpdate = state == Qt::Checked;
+    });
+
+    // 样式
+    for (auto k : QStyleFactory::keys()) {
+        ui.cbStyle->addItem(k, k);
+        if (k == GlobalData::styleName) {
+            ui.cbStyle->setCurrentText(k);
+        }
+    }
+    connect(ui.cbStyle, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        GlobalData::styleName = ui.cbStyle->itemData(index).toString();
+        qApp->setStyle(GlobalData::styleName);
     });
 }
 

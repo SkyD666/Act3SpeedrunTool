@@ -36,6 +36,7 @@ public:
     static void writeSettings();
 
     static bool minimizeToTray;
+    static QString styleName;
     // 版本
     static bool autoCheckUpdate;
     static QString version;

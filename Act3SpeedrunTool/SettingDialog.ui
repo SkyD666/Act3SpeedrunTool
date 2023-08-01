@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
+    <width>569</width>
     <height>485</height>
    </rect>
   </property>
@@ -20,11 +20,14 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QListWidget" name="lwPage">
-     <property name="maximumSize">
-      <size>
-       <width>110</width>
-       <height>16777215</height>
-      </size>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="iconSize">
       <size>
@@ -69,7 +72,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>428</width>
+            <width>469</width>
             <height>461</height>
            </rect>
           </property>
@@ -86,6 +89,28 @@
              <property name="text">
               <string>启动时自动检查更新</string>
              </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_11">
+             <property name="title">
+              <string>外观样式</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_26">
+              <item>
+               <widget class="QComboBox" name="cbStyle"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_34">
+                <property name="text">
+                 <string>windowsvista 样式不支持深色模式，其他样式支持深色模式跟随系统</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
@@ -152,8 +177,8 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>0</y>
-                <width>271</width>
+                <y>-51</y>
+                <width>410</width>
                 <height>483</height>
                </rect>
               </property>
@@ -477,8 +502,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>87</width>
-                <height>232</height>
+                <width>424</width>
+                <height>432</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -658,9 +683,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>197</width>
-            <height>697</height>
+            <y>-108</y>
+            <width>414</width>
+            <height>569</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -888,7 +913,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>428</width>
+            <width>371</width>
             <height>461</height>
            </rect>
           </property>
@@ -930,6 +955,9 @@ C:\Program Files (x86)\nn\nn.exe</string>
                <widget class="QLabel" name="label_32">
                 <property name="text">
                  <string>建议设置为50-200之间，配置低的用户请适当增大数值</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -979,7 +1007,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>428</width>
+            <width>371</width>
             <height>461</height>
            </rect>
           </property>
@@ -1085,6 +1113,9 @@ C:\Program Files (x86)\nn\nn.exe</string>
                 <property name="text">
                  <string>建议设置为50-200之间，配置低的用户请适当增大数值</string>
                 </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
                </widget>
               </item>
              </layout>
@@ -1165,7 +1196,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>428</width>
+            <width>371</width>
             <height>461</height>
            </rect>
           </property>
