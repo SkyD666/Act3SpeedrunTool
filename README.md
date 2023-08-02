@@ -43,7 +43,8 @@
 
 ## 🤩 Screenshots
 
-![ic_main_window_firewall](image/en/ic_main_window_firewall.png) ![ic_main_window_headshot](image/en/ic_main_window_headshot.png) ![ic_main_window_timer](image/en/ic_main_window_timer.png)
+![ic_main_window_firewall](image/en/ic_main_window_firewall.png)![ic_main_window_headshot](image/en/ic_main_window_headshot.png)![ic_main_window_timer](image/en/ic_main_window_timer.png)
+![ic_setting_dialog_general](image/en/ic_setting_dialog_general.png)
 ![ic_setting_dialog_display_info_content](image/en/ic_setting_dialog_display_info_content.png)
 ![ic_setting_dialog_display_info_window](image/en/ic_setting_dialog_display_info_window.png)
 ![ic_setting_dialog_firewall](image/en/ic_setting_dialog_firewall.png)

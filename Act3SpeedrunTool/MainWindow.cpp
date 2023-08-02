@@ -389,7 +389,7 @@ void MainWindow::initMenu()
     });
 
     connect(ui.actionGitHub, &QAction::triggered, this, []() {
-        QDesktopServices::openUrl(QUrl("https://github.com/SkyD666/AutoFirewall"));
+        QDesktopServices::openUrl(QUrl("https://github.com/SkyD666/Act3SpeedrunTool"));
     });
 
     connect(ui.actionAiFaDian, &QAction::triggered, this, []() {

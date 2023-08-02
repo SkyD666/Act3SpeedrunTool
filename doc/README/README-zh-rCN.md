@@ -44,7 +44,9 @@
 
 ## 🤩 应用截图
 
-![ic_main_window_firewall](../../image/zh-rCN/ic_main_window_firewall.png) ![ic_main_window_headshot](../../image/zh-rCN/ic_main_window_headshot.png) ![ic_main_window_timer](../../image/zh-rCN/ic_main_window_timer.png)
+![ic_main_window_firewall](../../image/zh-rCN/ic_main_window_firewall.png)![ic_main_window_headshot](../../image/zh-rCN/ic_main_window_headshot.png)![ic_main_window_timer](../../image/zh-rCN/ic_main_window_timer.png)
+![ic_setting_dialog_general](../../image/zh-rCN/ic_setting_dialog_general.png)
+
 ![ic_setting_dialog_display_info_content](../../image/zh-rCN/ic_setting_dialog_display_info_content.png)
 ![ic_setting_dialog_display_info_window](../../image/zh-rCN/ic_setting_dialog_display_info_window.png)
 ![ic_setting_dialog_firewall](../../image/zh-rCN/ic_setting_dialog_firewall.png)

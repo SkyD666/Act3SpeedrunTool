@@ -88,7 +88,7 @@ void UpdateDialog::sendCheckRequest(
         manager->deleteLater();
     });
 
-    manager->get(QNetworkRequest(QUrl("https://api.github.com/repos/SkyD666/AutoFirewall/releases/latest")));
+    manager->get(QNetworkRequest(QUrl("https://api.github.com/repos/SkyD666/Act3SpeedrunTool/releases/latest")));
 }
 
 bool UpdateDialog::isNewVersion(QString version)
