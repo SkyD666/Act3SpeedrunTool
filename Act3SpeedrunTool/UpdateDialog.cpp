@@ -29,7 +29,7 @@ UpdateDialog::UpdateDialog(GitHubRelease* release, QWidget* parent)
 
     connect(ui.pbIgnoreThisVersion, &QPushButton::clicked, this, [=]() {
         if (githubRelease) {
-            GlobalData::ignoredNewVersion = githubRelease->tagName;
+            globalData->setIgnoredNewVersion(githubRelease->tagName);
             close();
         }
     });
@@ -140,7 +140,7 @@ void UpdateDialog::updateViewToSuccess()
         ui.labResult->setText(tr("发现新版本：%1").arg(githubRelease->tagName));
         auto dateTime = QDateTime::fromString(githubRelease->publishedAt, Qt::ISODate);
         dateTime.setTimeSpec(Qt::UTC);
-        QLocale::Language language = LanguageUtil::getQLocaleLanguage(GlobalData::language);
+        QLocale::Language language = LanguageUtil::getQLocaleLanguage(globalData->language());
         QLocale locale = QLocale(language);
         ui.labReleaseTime->setText(tr("发布时间：%1")
                                        .arg(dateTime

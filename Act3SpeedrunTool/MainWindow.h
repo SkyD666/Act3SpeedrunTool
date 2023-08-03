@@ -23,6 +23,8 @@ public:
 protected:
     void closeEvent(QCloseEvent* event) override;
 
+    void initGlobalDataConnects();
+
     void checkUpdate();
 
     void removeAllHotkeys();
@@ -30,8 +32,6 @@ protected:
     void removeHotkey(QHotkey*& h);
 
     void setHotkey();
-
-    void updateTimerInterval();
 
     void initMenu();
 

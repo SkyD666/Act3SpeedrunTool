@@ -15,7 +15,7 @@ public:
     explicit DisplayInfoDialog(QWidget* parent = nullptr);
     ~DisplayInfoDialog();
 
-    void setDialogBackground(QColor color = GlobalData::displayInfoBackground);
+    void setDialogBackground(QColor color = globalData->displayInfoBackground());
 
     void setDisplay();
 
@@ -24,6 +24,16 @@ public:
     void setFont();
 
     void setTextStyle();
+    void setHeadShotTextStyle(
+        const QColor& textColor,
+        const QColor& textShadowColor,
+        qreal textShadowBlurRadius,
+        const QPointF& textShadowOffset);
+    void setTimerTextStyle(
+        const QColor& textColor,
+        const QColor& textShadowColor,
+        qreal textShadowBlurRadius,
+        const QPointF& textShadowOffset);
 
     void setHeadShotCount(short count);
 
@@ -34,7 +44,9 @@ public:
     static const QString textQssPattern;
 
 private:
-    void setTouchable(bool touchable = GlobalData::displayInfoTouchable);
+    void initGlobalDataConnects();
+
+    void setTouchable(bool touchable = globalData->displayInfoTouchable());
 
     void setChildrenTransparentForMouseEvents(bool transparent = true);
 

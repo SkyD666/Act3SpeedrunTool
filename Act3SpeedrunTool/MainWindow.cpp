@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui.setupUi(this);
 
     connect(qApp, &QCoreApplication::aboutToQuit, this, [=]() {
-        GlobalData::destory();
+        globalData->destory();
     });
 
     initSystemTray();
@@ -52,9 +52,9 @@ MainWindow::MainWindow(QWidget* parent)
     labState->setPalette(palette);
     ui.statusbar->addPermanentWidget(labState);
 
-    ui.cbSound->setChecked(GlobalData::firewallPlaySound);
+    ui.cbSound->setChecked(globalData->firewallPlaySound());
     connect(ui.cbSound, &QCheckBox::stateChanged, this, [](int state) {
-        GlobalData::firewallPlaySound = state;
+        globalData->setFirewallPlaySound(state);
     });
 
     ui.btnStartFirewall->setText(tr("已关闭"));
@@ -70,8 +70,8 @@ MainWindow::MainWindow(QWidget* parent)
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::green);
                 labState->setPalette(palette);
-                if (GlobalData::firewallPlaySound) {
-                    PlaySound(GlobalData::firewallStartSound.toStdWString().c_str(),
+                if (globalData->firewallPlaySound()) {
+                    PlaySound(globalData->firewallStartSound().toStdWString().c_str(),
                         nullptr, SND_FILENAME | SND_ASYNC);
                 }
             } else {
@@ -80,15 +80,15 @@ MainWindow::MainWindow(QWidget* parent)
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::red);
                 labState->setPalette(palette);
-                if (GlobalData::firewallPlaySound) {
-                    PlaySound(GlobalData::firewallStopSound.toStdWString().c_str(),
+                if (globalData->firewallPlaySound()) {
+                    PlaySound(globalData->firewallStopSound().toStdWString().c_str(),
                         nullptr, SND_FILENAME | SND_ASYNC);
                 }
             }
         } else {
             LogUtil::addLog("Firewall operate failed!");
-            if (GlobalData::firewallPlaySound) {
-                PlaySound(GlobalData::firewallErrorSound.toStdWString().c_str(),
+            if (globalData->firewallPlaySound()) {
+                PlaySound(globalData->firewallErrorSound().toStdWString().c_str(),
                     nullptr, SND_FILENAME | SND_ASYNC);
             }
             ui.btnStartFirewall->setChecked(!checked);
@@ -111,6 +111,8 @@ MainWindow::MainWindow(QWidget* parent)
     });
 
     initTimerStateMachine();
+
+    initGlobalDataConnects();
 }
 
 MainWindow::~MainWindow()
@@ -120,7 +122,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    if (!waitingToExit && GlobalData::minimizeToTray) {
+    if (!waitingToExit && globalData->minimizeToTray()) {
         setVisible(false);
         event->ignore();
         return;
@@ -135,16 +137,37 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 }
 
+void MainWindow::initGlobalDataConnects()
+{
+    connect(globalData, &GlobalData::minimizeToTrayChanged, this, [this]() {
+        if (globalData->minimizeToTray()) {
+            initSystemTray();
+        } else {
+            closeSystemTray();
+        }
+    });
+    connect(globalData, &GlobalData::headshotUpdateIntervalChanged, this, [this]() {
+        if (headShotTimer) {
+            headShotTimer->setInterval(globalData->headshotUpdateInterval());
+        }
+    });
+    connect(globalData, &GlobalData::timerUpdateIntervalChanged, this, [this]() {
+        if (timer) {
+            timer->setInterval(globalData->timerUpdateInterval());
+        }
+    });
+}
+
 void MainWindow::checkUpdate()
 {
-    if (!GlobalData::autoCheckUpdate) {
+    if (!globalData->autoCheckUpdate()) {
         return;
     }
     UpdateDialog::sendCheckRequest(
         this,
         [this](GitHubRelease* release) {
             if (UpdateDialog::isNewVersion(release->tagName)
-                && GlobalData::ignoredNewVersion != release->tagName) {
+                && globalData->ignoredNewVersion() != release->tagName) {
                 (new UpdateDialog(release, this))->exec();
             } else {
                 delete release;
@@ -175,16 +198,16 @@ void MainWindow::removeHotkey(QHotkey*& h)
 void MainWindow::setHotkey()
 {
     labCurrentHotkey->setText(hotkeyStatePattern.arg(
-        GlobalData::firewallStartHotkey,
-        GlobalData::firewallStopHotkey,
-        GlobalData::timerStartHotkey,
-        GlobalData::timerPauseHotkey,
-        GlobalData::timerStopHotkey));
+        globalData->firewallStartHotkey(),
+        globalData->firewallStopHotkey(),
+        globalData->timerStartHotkey(),
+        globalData->timerPauseHotkey(),
+        globalData->timerStopHotkey()));
 
     // 防火墙
-    if (!GlobalData::firewallStartHotkey.isEmpty() && !GlobalData::firewallStopHotkey.isEmpty()) {
-        bool sameFirewallHotkey = GlobalData::firewallStartHotkey == GlobalData::firewallStopHotkey;
-        startFirewallHotkey = new QHotkey(QKeySequence(GlobalData::firewallStartHotkey), true, qApp);
+    if (!globalData->firewallStartHotkey().isEmpty() && !globalData->firewallStopHotkey().isEmpty()) {
+        bool sameFirewallHotkey = globalData->firewallStartHotkey() == globalData->firewallStopHotkey();
+        startFirewallHotkey = new QHotkey(QKeySequence(globalData->firewallStartHotkey()), true, qApp);
         if (startFirewallHotkey->isRegistered()) {
             connect(startFirewallHotkey, &QHotkey::activated, qApp, [this, sameFirewallHotkey]() {
                 if (sameFirewallHotkey) {
@@ -197,7 +220,7 @@ void MainWindow::setHotkey()
             QMessageBox::critical(this, QString(), tr("注册启用防火墙热键失败！"));
         }
         if (!sameFirewallHotkey) {
-            stopFirewallHotkey = new QHotkey(QKeySequence(GlobalData::firewallStopHotkey), true, qApp);
+            stopFirewallHotkey = new QHotkey(QKeySequence(globalData->firewallStopHotkey()), true, qApp);
             if (stopFirewallHotkey->isRegistered()) {
                 connect(stopFirewallHotkey, &QHotkey::activated, qApp, [this]() {
                     ui.btnStartFirewall->setChecked(false);
@@ -209,15 +232,15 @@ void MainWindow::setHotkey()
     }
 
     // 计时器
-    if (!GlobalData::timerStartHotkey.isEmpty() && !GlobalData::timerStopHotkey.isEmpty()) {
-        bool sameTimerHotkey = GlobalData::timerStartHotkey == GlobalData::timerStopHotkey;
-        startTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerStartHotkey), true, qApp);
+    if (!globalData->timerStartHotkey().isEmpty() && !globalData->timerStopHotkey().isEmpty()) {
+        bool sameTimerHotkey = globalData->timerStartHotkey() == globalData->timerStopHotkey();
+        startTimerHotkey = new QHotkey(QKeySequence(globalData->timerStartHotkey()), true, qApp);
         if (startTimerHotkey->isRegistered()) {
             connect(startTimerHotkey, &QHotkey::activated, qApp, [this, sameTimerHotkey]() {
                 if (sameTimerHotkey) {
                     ui.btnStartTimer->click();
                 } else {
-                    if (GlobalData::timerStopStrategy == TimerStopStrategy::StopSecondZero) {
+                    if (globalData->timerStopStrategy() == TimerStopStrategy::StopSecondZero) {
                         // 在 stoppedState 时，按下开始热键要求不能开始，因此try尝试
                         // 只有 stoppedAndZeroState 接受 tryToTimerRunningState 信号
                         // 因此 TimerStopStrategy::StopSecondZero 且在 stoppedState 时按下开始热键也没有接收者
@@ -231,11 +254,11 @@ void MainWindow::setHotkey()
             QMessageBox::critical(nullptr, QString(), tr("注册启动计时器热键失败！"));
         }
         if (!sameTimerHotkey) {
-            stopTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerStopHotkey), true, qApp);
+            stopTimerHotkey = new QHotkey(QKeySequence(globalData->timerStopHotkey()), true, qApp);
             if (stopTimerHotkey->isRegistered()) {
                 connect(stopTimerHotkey, &QHotkey::activated, qApp, [=]() {
-                    if (GlobalData::timerStopStrategy == TimerStopStrategy::OnlyStop
-                        || GlobalData::timerStopStrategy == TimerStopStrategy::StopAndZero) {
+                    if (globalData->timerStopStrategy() == TimerStopStrategy::OnlyStop
+                        || globalData->timerStopStrategy() == TimerStopStrategy::StopAndZero) {
                         // 在 stoppedState 时，按下停止热键要求不能（再次）归零，因此try尝试
                         // 只有 runningState 接受 tryToTimerStoppedOrStoppedAndZeroState 信号
                         // 因此 (TimerStopStrategy::OnlyStop 或 TimerStopStrategy::StopAndZero) 且在 stoppedState 时按下停止热键也没有接收者
@@ -248,11 +271,11 @@ void MainWindow::setHotkey()
                 QMessageBox::critical(this, QString(), tr("注册停止计时器热键失败！"));
             }
         }
-        if (GlobalData::timerPauseHotkey == GlobalData::timerStartHotkey
-            || GlobalData::timerPauseHotkey == GlobalData::timerStopHotkey) {
+        if (globalData->timerPauseHotkey() == globalData->timerStartHotkey()
+            || globalData->timerPauseHotkey() == globalData->timerStopHotkey()) {
             QMessageBox::critical(this, QString(), tr("暂停计时器热键与启动/停止计时器热键相同，暂停计时器热键将会无效！"));
         } else {
-            pauseTimerHotkey = new QHotkey(QKeySequence(GlobalData::timerPauseHotkey), true, qApp);
+            pauseTimerHotkey = new QHotkey(QKeySequence(globalData->timerPauseHotkey()), true, qApp);
             if (pauseTimerHotkey->isRegistered()) {
                 connect(pauseTimerHotkey, &QHotkey::activated, qApp, [this]() {
                     if (ui.btnPauseTimer->isEnabled()) {
@@ -263,16 +286,6 @@ void MainWindow::setHotkey()
                 QMessageBox::critical(this, QString(), tr("注册暂停计时器热键失败！"));
             }
         }
-    }
-}
-
-void MainWindow::updateTimerInterval()
-{
-    if (headShotTimer) {
-        headShotTimer->setInterval(GlobalData::headshotUpdateInterval);
-    }
-    if (timer) {
-        timer->setInterval(GlobalData::timerUpdateInterval);
     }
 }
 
@@ -288,13 +301,13 @@ void MainWindow::initMenu()
     });
     connect(ui.actionDisplayInfo, &QAction::toggled, this, [=](bool checked) {
         static bool firstTime = true;
-        if (!firstTime && GlobalData::displayInfoShow == checked) {
+        if (!firstTime && globalData->displayInfoShow() == checked) {
             return;
         }
         if (firstTime) {
             firstTime = false;
         }
-        GlobalData::displayInfoShow = checked;
+        globalData->setDisplayInfoShow(checked);
         if (checked) {
             displayInfoDialog = new DisplayInfoDialog();
             auto closeLambda = [this](int result) {
@@ -303,7 +316,7 @@ void MainWindow::initMenu()
                 // Qt::WA_DeleteOnClose
                 // delete displayInfoDialog;
                 displayInfoDialog = nullptr;
-                // -1表示不需要设置GlobalData::displayInfo = false也不需要setChecked(false)的情况
+                // -1表示不需要设置globalData->displayInfo = false也不需要setChecked(false)的情况
                 if (result != -1) {
                     ui.actionDisplayInfo->setChecked(false);
                 }
@@ -320,21 +333,21 @@ void MainWindow::initMenu()
             }
         }
     });
-    ui.actionDisplayInfo->setChecked(GlobalData::displayInfoShow);
+    ui.actionDisplayInfo->setChecked(globalData->displayInfoShow());
 
     connect(ui.actionDisplayInfoTouchable, &QAction::toggled, this, [this](bool checked) {
-        GlobalData::displayInfoTouchable = checked;
+        globalData->setDisplayInfoTouchable(checked);
         // 重启页面
         if (ui.actionDisplayInfo->isChecked()) {
             ui.actionDisplayInfo->setChecked(false);
             ui.actionDisplayInfo->setChecked(true);
         }
     });
-    ui.actionDisplayInfoTouchable->setChecked(GlobalData::displayInfoTouchable);
+    ui.actionDisplayInfoTouchable->setChecked(globalData->displayInfoTouchable());
 
     // 启动服务器
     auto enableServerLambda = [=](bool checked) {
-        GlobalData::displayInfoServer = checked;
+        globalData->setDisplayInfoServer(checked);
         ui.actionCopyHostAddress->setEnabled(checked);
         ui.actionOpenBrowser->setEnabled(checked);
         if (checked) {
@@ -346,8 +359,8 @@ void MainWindow::initMenu()
         }
     };
     connect(ui.actionEnableServer, &QAction::toggled, this, enableServerLambda);
-    ui.actionEnableServer->setChecked(GlobalData::displayInfoServer);
-    enableServerLambda(GlobalData::displayInfoServer);
+    ui.actionEnableServer->setChecked(globalData->displayInfoServer());
+    enableServerLambda(globalData->displayInfoServer());
 
     connect(ui.actionCopyHostAddress, &QAction::triggered, this, [this]() {
         auto domain = HttpServerUtil::getHttpServerDomain();
@@ -369,10 +382,9 @@ void MainWindow::initMenu()
     });
 
     connect(ui.actionSetting, &QAction::triggered, this, [this]() {
-        auto dialog = new SettingDialog(this, displayInfoDialog);
+        auto dialog = new SettingDialog(this);
         removeAllHotkeys();
         dialog->exec();
-        updateTimerInterval();
         setHotkey();
     });
 
@@ -485,7 +497,7 @@ bool MainWindow::startReadHeadShot()
         firstTime = false;
     });
     firstTime = true;
-    headShotTimer->start(GlobalData::headshotUpdateInterval);
+    headShotTimer->start(globalData->headshotUpdateInterval());
 
     return true;
 }
@@ -534,7 +546,7 @@ void MainWindow::startTimer(bool isContinue)
         }
     });
     timer->setTimerType(Qt::PreciseTimer);
-    timer->start(GlobalData::timerUpdateInterval);
+    timer->start(globalData->timerUpdateInterval());
     emit HttpServerController::getInstance()->startOrContinueTimer(isContinue, timerTime);
 }
 
@@ -600,7 +612,7 @@ void MainWindow::initTimerStateMachine()
     pausedState->addTransition(this, &MainWindow::toTimerStoppedOrStoppedAndZeroState, stoppedAndZeroState);
 
     connect(stoppedAndZeroOrRunningState, &QState::entered, this, [=]() {
-        switch (GlobalData::timerStopStrategy) {
+        switch (globalData->timerStopStrategy()) {
         // 停止后不归零（v3.3方案）
         case TimerStopStrategy::OnlyStop:
             emit toTimerRunningState();
@@ -627,14 +639,14 @@ void MainWindow::initTimerStateMachine()
     connect(stoppedState, &QState::exited, this, [=]() {
         // 注意是 != 不能改成 == OnlyStop
         // 因为有种情况：在当前状态，调整了策略为 StopSecondZero，为了让点击开始能够 startTimer，只能用 !=
-        if (GlobalData::timerStopStrategy != TimerStopStrategy::StopSecondZero) { // 停止后不归零（v3.3方案）
+        if (globalData->timerStopStrategy() != TimerStopStrategy::StopSecondZero) { // 停止后不归零（v3.3方案）
             startTimer(false);
         }
     });
     connect(stoppedState, &QState::entered, this, [=]() {
         ui.btnPauseTimer->setEnabled(false);
         ui.btnPauseTimer->setText(tr("点击暂停"));
-        switch (GlobalData::timerStopStrategy) {
+        switch (globalData->timerStopStrategy()) {
         // 停止后不归零（v3.3方案）
         case TimerStopStrategy::OnlyStop:
             ui.btnStartTimer->setText(tr("点击启动"));
@@ -669,7 +681,7 @@ void MainWindow::initTimerStateMachine()
 
 void MainWindow::initSystemTray()
 {
-    if (!GlobalData::minimizeToTray || systemTray) {
+    if (!globalData->minimizeToTray() || systemTray) {
         return;
     }
     systemTrayMenu = new QMenu(this);

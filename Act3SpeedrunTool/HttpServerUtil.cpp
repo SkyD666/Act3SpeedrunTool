@@ -49,9 +49,9 @@ void HttpServerUtil::startHttp()
         cssFile.open(QFile::ReadOnly | QFile::Text);
         responder.write(cssFile.readAll(), "text/css");
     });
-    currentHttpPort = httpServer->listen(QHostAddress::Any, GlobalData::serverHttpPort);
-    if (webSocketServer->listen(QHostAddress::Any, GlobalData::serverWebsocketPort)) {
-        currentWebsocketPort = GlobalData::serverWebsocketPort;
+    currentHttpPort = httpServer->listen(QHostAddress::Any, globalData->serverHttpPort());
+    if (webSocketServer->listen(QHostAddress::Any, globalData->serverWebsocketPort())) {
+        currentWebsocketPort = globalData->serverWebsocketPort();
         connect(webSocketServer, &QWebSocketServer::newConnection, this, &HttpServerUtil::onNewConnection);
     }
 }

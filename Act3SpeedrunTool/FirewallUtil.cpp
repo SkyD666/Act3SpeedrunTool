@@ -53,10 +53,14 @@ INetFwRule* FirewallUtil::getNetFwRule()
     if (SUCCEEDED(hr)) {
         LogUtil::addLog("Found NetFwRule by pFwRules->Item()");
         HRESULT h;
-        if (GlobalData::firewallAppPath.isEmpty()) {
+        if (globalData->firewallAppPath().isEmpty()) {
             h = pFwRule->put_ApplicationName(NULL);
         } else {
-            h = pFwRule->put_ApplicationName(SysAllocString(GlobalData::firewallAppPath.replace("/", "\\").toStdWString().c_str()));
+            h = pFwRule->put_ApplicationName(SysAllocString(
+                QString(globalData->firewallAppPath())
+                    .replace("/", "\\")
+                    .toStdWString()
+                    .c_str()));
         }
         if (SUCCEEDED(h)) {
             return pFwRule;
@@ -82,8 +86,12 @@ INetFwRule* FirewallUtil::getNetFwRule()
 
     // Populate the Firewall Rule object
     pFwRule->put_Name(bstrRuleName);
-    if (!GlobalData::firewallAppPath.isEmpty()) {
-        pFwRule->put_ApplicationName(SysAllocString(GlobalData::firewallAppPath.replace("/", "\\").toStdWString().c_str()));
+    if (!globalData->firewallAppPath().isEmpty()) {
+        pFwRule->put_ApplicationName(SysAllocString(
+            QString(globalData->firewallAppPath())
+                .replace("/", "\\")
+                .toStdWString()
+                .c_str()));
     }
     pFwRule->put_Protocol(NET_FW_IP_PROTOCOL_TCP);
     //    pFwRule->put_LocalPorts(bstrRuleLPorts);

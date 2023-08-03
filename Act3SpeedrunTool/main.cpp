@@ -10,7 +10,7 @@
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
-    GlobalData::init();
+    globalData->init();
 
     LanguageUtil::applyLanguage();
 
@@ -21,9 +21,9 @@ int main(int argc, char* argv[])
     QApplication::setApplicationName(QObject::tr("末日三速通工具"));
     QApplication::setApplicationVersion("5.0");
 
-    qApp->setStyle(GlobalData::styleName);
+    qApp->setStyle(globalData->styleName());
 
-    if (QApplication::applicationVersion() != GlobalData::version) {
+    if (QApplication::applicationVersion() != globalData->version()) {
         QMessageBox::warning(nullptr, QString(), QObject::tr("*** 应用版本变更，请认真检查各项配置（热键、外观、提示音等）是否需要重新设置！***"));
     }
 

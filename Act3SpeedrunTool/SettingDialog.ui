@@ -46,7 +46,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>461</height>
+            <width>151</width>
+            <height>256</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -177,8 +177,8 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-51</y>
-                <width>410</width>
+                <y>0</y>
+                <width>271</width>
                 <height>483</height>
                </rect>
               </property>
@@ -502,8 +502,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>424</width>
-                <height>432</height>
+                <width>87</width>
+                <height>232</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -683,8 +683,8 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-108</y>
-            <width>414</width>
+            <y>0</y>
+            <width>455</width>
             <height>569</height>
            </rect>
           </property>
@@ -750,10 +750,18 @@
               <item>
                <layout class="QHBoxLayout" name="_15">
                 <item>
-                 <widget class="QLineEdit" name="leStartSoundPath"/>
+                 <widget class="QLineEdit" name="leFirewallStartSoundPath"/>
                 </item>
                 <item>
-                 <widget class="QToolButton" name="tbSelectStartSound">
+                 <widget class="QToolButton" name="tbFirewallPlayStartSound">
+                  <property name="icon">
+                   <iconset resource="resource.qrc">
+                    <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="tbFirewallSelectStartSound">
                   <property name="text">
                    <string notr="true">...</string>
                   </property>
@@ -771,10 +779,18 @@
               <item>
                <layout class="QHBoxLayout" name="_16">
                 <item>
-                 <widget class="QLineEdit" name="leStopSoundPath"/>
+                 <widget class="QLineEdit" name="leFirewallStopSoundPath"/>
                 </item>
                 <item>
-                 <widget class="QToolButton" name="tbSelectStopSound">
+                 <widget class="QToolButton" name="tbFirewallPlayStopSound">
+                  <property name="icon">
+                   <iconset resource="resource.qrc">
+                    <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="tbFirewallSelectStopSound">
                   <property name="text">
                    <string notr="true">...</string>
                   </property>
@@ -792,10 +808,18 @@
               <item>
                <layout class="QHBoxLayout" name="_17">
                 <item>
-                 <widget class="QLineEdit" name="leErrorSoundPath"/>
+                 <widget class="QLineEdit" name="leFirewallErrorSoundPath"/>
                 </item>
                 <item>
-                 <widget class="QToolButton" name="tbSelectErrorSound">
+                 <widget class="QToolButton" name="tbFirewallPlayErrorSound">
+                  <property name="icon">
+                   <iconset resource="resource.qrc">
+                    <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="tbFirewallSelectErrorSound">
                   <property name="text">
                    <string notr="true">...</string>
                   </property>
@@ -913,8 +937,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>371</width>
-            <height>461</height>
+            <width>123</width>
+            <height>218</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -1007,8 +1031,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>371</width>
-            <height>461</height>
+            <width>154</width>
+            <height>527</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1196,8 +1220,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>371</width>
-            <height>461</height>
+            <width>90</width>
+            <height>474</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">

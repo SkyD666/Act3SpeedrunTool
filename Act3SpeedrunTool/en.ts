@@ -62,7 +62,7 @@ AdstarGod Firewall, easy to use
         <location line="+59"/>
         <location line="+65"/>
         <location filename="MainWindow.cpp" line="+109"/>
-        <location line="+509"/>
+        <location line="+521"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -182,7 +182,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+30"/>
-        <location filename="MainWindow.cpp" line="-315"/>
+        <location filename="MainWindow.cpp" line="-314"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+4"/>
         <source>复制地址</source>
         <translation>Copy link</translation>
@@ -231,7 +231,7 @@ AdstarGod Firewall, easy to use
         <translation>Help us translate...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="-281"/>
+        <location filename="MainWindow.cpp" line="-294"/>
         <location line="+19"/>
         <source>已关闭</source>
         <translation>Stopped</translation>
@@ -247,7 +247,7 @@ AdstarGod Firewall, easy to use
         <translation>Stop counting</translation>
     </message>
     <message>
-        <location line="+241"/>
+        <location line="+254"/>
         <source>服务器未运行</source>
         <translation>Server is not running</translation>
     </message>
@@ -263,7 +263,7 @@ AdstarGod Firewall, easy to use
         <translation>Server address has been copied!</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+50"/>
         <source>支付宝收款二维码</source>
         <translation>Alipay QR code for receiving payments</translation>
     </message>
@@ -283,7 +283,7 @@ AdstarGod Firewall, easy to use
         <translation>Click to continue</translation>
     </message>
     <message>
-        <location line="-462"/>
+        <location line="-451"/>
         <source>注册启用防火墙热键失败！</source>
         <oldsource>注册防火墙启动热键失败！</oldsource>
         <translation>Failed to register enable firewall hotkeys!</translation>
@@ -319,7 +319,7 @@ AdstarGod Firewall, easy to use
         <translation>Failed to register the pause timer hotkey!</translation>
     </message>
     <message>
-        <location line="+197"/>
+        <location line="+186"/>
         <source>获取窗口句柄失败，请启动或重启游戏后再进行尝试！</source>
         <oldsource>获取窗口句柄失败！</oldsource>
         <translation>Failed to get the game window handle, please start or restart the game and try again!</translation>
@@ -392,7 +392,7 @@ AdstarGod Firewall, easy to use
         <translation>Timer</translation>
     </message>
     <message>
-        <location filename="GlobalData.cpp" line="+25"/>
+        <location filename="GlobalData.cpp" line="+27"/>
         <source>停止后时间不归零</source>
         <translation>Time does not reset to zero after stopping</translation>
     </message>
@@ -412,7 +412,7 @@ AdstarGod Firewall, easy to use
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1105"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1128"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
@@ -424,28 +424,28 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+601"/>
-        <location line="+323"/>
+        <location line="+347"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
         <location line="+22"/>
         <source>启动</source>
         <translation>Enable</translation>
     </message>
     <message>
-        <location line="-308"/>
-        <location line="+323"/>
+        <location line="-332"/>
+        <location line="+347"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-21"/>
         <location line="+22"/>
         <source>停止</source>
         <translation>Disable</translation>
     </message>
     <message>
-        <location line="-305"/>
+        <location line="-329"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-21"/>
         <source>音效</source>
         <translation>Sound</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+96"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+4"/>
         <source>断网范围</source>
         <translation>Firewall scope</translation>
@@ -528,7 +528,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Refresh data interval</translation>
     </message>
     <message>
-        <location line="-601"/>
+        <location line="-625"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-27"/>
         <source>窗口</source>
         <translation>Window</translation>
@@ -678,19 +678,19 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Start</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+29"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>停止音效</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+29"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>操作失败音效</source>
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location line="+339"/>
+        <location line="+347"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+22"/>
         <source>停止策略</source>
         <translation>Stop strategy</translation>
@@ -726,17 +726,17 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="SettingDialog.cpp" line="+92"/>
+        <location filename="SettingDialog.cpp" line="+82"/>
         <source>选择文件</source>
         <translation>Choice a sound</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>WAV 文件 (*.wav)</source>
         <translation>WAV file (*.wav)</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+93"/>
         <source>选择程序</source>
         <translation>Select a exe file</translation>
     </message>
@@ -766,7 +766,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>General</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+33"/>
         <source>左对齐</source>
         <translation>Left alignment</translation>
     </message>

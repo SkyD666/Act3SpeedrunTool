@@ -53,9 +53,9 @@ QLocale::Language LanguageUtil::getQLocaleLanguage(const QString name)
 void LanguageUtil::applyLanguage()
 {
     bool setTranslator = false;
-    if (!GlobalData::language.isEmpty()) {
+    if (!globalData->language().isEmpty()) {
         tryApplySystemLanguage();
-        QString fileName = LanguageUtil::getInstance()->getFileName(GlobalData::language);
+        QString fileName = LanguageUtil::getInstance()->getFileName(globalData->language());
         if (fileName == "*") { // 简体中文，无需更改自定义组件的翻译
             setTranslator = true;
         } else if (!fileName.isEmpty() && translator->load(fileName, "./translations")) {
@@ -85,5 +85,5 @@ void LanguageUtil::tryApplySystemLanguage(QLocale locale)
 // 加载系统控件的翻译
 void LanguageUtil::tryApplySystemLanguage()
 {
-    tryApplySystemLanguage(getQLocaleLanguage(GlobalData::language));
+    tryApplySystemLanguage(getQLocaleLanguage(globalData->language()));
 }

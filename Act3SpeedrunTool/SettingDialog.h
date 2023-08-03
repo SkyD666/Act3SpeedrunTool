@@ -8,7 +8,7 @@ class SettingDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit SettingDialog(QWidget* parent = nullptr, DisplayInfoDialog* displayInfoDialog = nullptr);
+    explicit SettingDialog(QWidget* parent = nullptr);
     ~SettingDialog();
 
     QString pageName[6] = { tr("常规"), tr("信息展示"), tr("断网"), tr("爆头"), tr("计时器"), tr("语言") };
@@ -24,7 +24,7 @@ public:
 protected:
     void initGeneralSettings();
 
-    QString getSoundFile();
+    QString getSoundFile(QString dir = QString());
 
     int currentSubFunctionIndex = 0;
     DisplayInfoSubFunction currentSubFunction = DisplayInfoSubFunction::Headshot;
@@ -41,8 +41,6 @@ protected:
 
 private:
     Ui::SettingDialog ui;
-
-    DisplayInfoDialog* displayInfoDialog = nullptr;
 
     // 内容对齐
     QList<QPair<int, QString>> horiAlign = {
