@@ -25,6 +25,7 @@ set(PROJECT_SOURCES
         SettingDialog.h SettingDialog.cpp SettingDialog.ui
         DisplayInfoDialog.h DisplayInfoDialog.cpp DisplayInfoDialog.ui
         UpdateDialog.h UpdateDialog.cpp UpdateDialog.ui
+        DescriptionDialog.h DescriptionDialog.cpp DescriptionDialog.ui
         LogUtil.h LogUtil.cpp
         LanguageUtil.h LanguageUtil.cpp
         MemoryUtil.h MemoryUtil.cpp

@@ -239,6 +239,8 @@
     </widget>
     <addaction name="actionUpdate"/>
     <addaction name="separator"/>
+    <addaction name="actionDescription"/>
+    <addaction name="separator"/>
     <addaction name="actionLogDir"/>
     <addaction name="actionLog"/>
     <addaction name="separator"/>
@@ -278,8 +280,8 @@
       </property>
       <addaction name="actionEnableServer"/>
       <addaction name="separator"/>
-      <addaction name="actionCopyHostAddress"/>
-      <addaction name="actionOpenBrowser"/>
+      <addaction name="actionServerCopyHostAddress"/>
+      <addaction name="actionServerOpenBrowser"/>
      </widget>
      <addaction name="actionDisplayInfo"/>
      <addaction name="actionDisplayInfoTouchable"/>
@@ -363,7 +365,7 @@
     <string>帮助我们进行翻译...</string>
    </property>
   </action>
-  <action name="actionCopyHostAddress">
+  <action name="actionServerCopyHostAddress">
    <property name="icon">
     <iconset resource="resource.qrc">
      <normaloff>:/image/ic_link.ico</normaloff>:/image/ic_link.ico</iconset>
@@ -380,7 +382,7 @@
     <string>运行</string>
    </property>
   </action>
-  <action name="actionOpenBrowser">
+  <action name="actionServerOpenBrowser">
    <property name="icon">
     <iconset resource="resource.qrc">
      <normaloff>:/image/ic_network.ico</normaloff>:/image/ic_network.ico</iconset>
@@ -421,6 +423,11 @@
   <action name="actionUpdate">
    <property name="text">
     <string>检查更新...</string>
+   </property>
+  </action>
+  <action name="actionDescription">
+   <property name="text">
+    <string>工具说明...</string>
    </property>
   </action>
  </widget>

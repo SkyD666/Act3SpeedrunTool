@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>151</width>
-            <height>256</height>
+            <width>469</width>
+            <height>461</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -178,8 +178,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>271</width>
-                <height>483</height>
+                <width>451</width>
+                <height>479</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -425,46 +425,38 @@
                  <property name="title">
                   <string>文字对齐</string>
                  </property>
-                 <layout class="QVBoxLayout" name="verticalLayout_8">
-                  <item>
-                   <layout class="QHBoxLayout" name="_8">
-                    <item>
-                     <widget class="QLabel" name="label_13">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>水平</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="cbDisplayInfoTextHAlign"/>
-                    </item>
-                   </layout>
+                 <layout class="QGridLayout" name="gridLayout_4">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_13">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>水平</string>
+                    </property>
+                   </widget>
                   </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="_9">
-                    <item>
-                     <widget class="QLabel" name="label_14">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>垂直</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="cbDisplayInfoTextVAlign"/>
-                    </item>
-                   </layout>
+                  <item row="0" column="2">
+                   <widget class="QComboBox" name="cbDisplayInfoTextHAlign"/>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QComboBox" name="cbDisplayInfoTextVAlign"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_14">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>垂直</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -502,8 +494,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>87</width>
-                <height>232</height>
+                <width>465</width>
+                <height>432</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -685,7 +677,7 @@
             <x>0</x>
             <y>0</y>
             <width>455</width>
-            <height>569</height>
+            <height>591</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -739,93 +731,100 @@
              <property name="title">
               <string>音效</string>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_12">
-              <item>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="2" column="2">
+               <widget class="QToolButton" name="tbFirewallPlayStopSound">
+                <property name="icon">
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="leFirewallStartSoundPath"/>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="leFirewallStopSoundPath"/>
+              </item>
+              <item row="3" column="2">
+               <widget class="QToolButton" name="tbFirewallPlayErrorSound">
+                <property name="icon">
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
                <widget class="QLabel" name="label">
                 <property name="text">
                  <string>启动音效</string>
                 </property>
                </widget>
               </item>
-              <item>
-               <layout class="QHBoxLayout" name="_15">
-                <item>
-                 <widget class="QLineEdit" name="leFirewallStartSoundPath"/>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tbFirewallPlayStartSound">
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tbFirewallSelectStartSound">
-                  <property name="text">
-                   <string notr="true">...</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+              <item row="0" column="3">
+               <widget class="QToolButton" name="tbFirewallSelectStartSound">
+                <property name="text">
+                 <string notr="true">...</string>
+                </property>
+               </widget>
               </item>
-              <item>
+              <item row="0" column="2">
+               <widget class="QToolButton" name="tbFirewallPlayStartSound">
+                <property name="icon">
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QToolButton" name="tbFirewallSelectErrorSound">
+                <property name="text">
+                 <string notr="true">...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
                <widget class="QLabel" name="label_2">
                 <property name="text">
                  <string>停止音效</string>
                 </property>
                </widget>
               </item>
-              <item>
-               <layout class="QHBoxLayout" name="_16">
-                <item>
-                 <widget class="QLineEdit" name="leFirewallStopSoundPath"/>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tbFirewallPlayStopSound">
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tbFirewallSelectStopSound">
-                  <property name="text">
-                   <string notr="true">...</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
+              <item row="3" column="0">
                <widget class="QLabel" name="label_3">
                 <property name="text">
                  <string>操作失败音效</string>
                 </property>
                </widget>
               </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="leFirewallErrorSoundPath"/>
+              </item>
+              <item row="2" column="3">
+               <widget class="QToolButton" name="tbFirewallSelectStopSound">
+                <property name="text">
+                 <string notr="true">...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_12">
+             <property name="title">
+              <string>防火墙规则方向</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_27">
               <item>
-               <layout class="QHBoxLayout" name="_17">
-                <item>
-                 <widget class="QLineEdit" name="leFirewallErrorSoundPath"/>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tbFirewallPlayErrorSound">
-                  <property name="icon">
-                   <iconset resource="resource.qrc">
-                    <normaloff>:/image/ic_sound.ico</normaloff>:/image/ic_sound.ico</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tbFirewallSelectErrorSound">
-                  <property name="text">
-                   <string notr="true">...</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QComboBox" name="cbFirewallDirection"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_35">
+                <property name="text">
+                 <string>默认值为出站，设置将在下次启动防火墙时生效。</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -870,7 +869,7 @@
                   <item>
                    <widget class="QLabel" name="label_27">
                     <property name="text">
-                     <string>填写要断网程序的路径，留空表示断全部。设置将在下次启动防火墙后生效。</string>
+                     <string>填写要断网程序的路径，留空表示断全部。设置将在下次启动防火墙时生效。</string>
                     </property>
                     <property name="wordWrap">
                      <bool>true</bool>
@@ -937,8 +936,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>123</width>
-            <height>218</height>
+            <width>469</width>
+            <height>461</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -1031,8 +1030,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>154</width>
-            <height>527</height>
+            <width>469</width>
+            <height>461</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1220,8 +1219,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>90</width>
-            <height>474</height>
+            <width>469</width>
+            <height>461</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">

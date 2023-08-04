@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "DescriptionDialog.h"
 #include "FirewallUtil.h"
 #include "GlobalData.h"
 #include "HttpServerUtil.h"
@@ -348,13 +349,13 @@ void MainWindow::initMenu()
     // 启动服务器
     auto enableServerLambda = [=](bool checked) {
         globalData->setDisplayInfoServer(checked);
-        ui.actionCopyHostAddress->setEnabled(checked);
-        ui.actionOpenBrowser->setEnabled(checked);
+        ui.actionServerCopyHostAddress->setEnabled(checked);
+        ui.actionServerOpenBrowser->setEnabled(checked);
         if (checked) {
-            ui.actionCopyHostAddress->setText(tr("复制地址"));
+            ui.actionServerCopyHostAddress->setText(tr("复制地址"));
             HttpServerController::getInstance()->start();
         } else {
-            ui.actionCopyHostAddress->setText(tr("服务器未运行"));
+            ui.actionServerCopyHostAddress->setText(tr("服务器未运行"));
             HttpServerController::getInstance()->stop();
         }
     };
@@ -362,7 +363,7 @@ void MainWindow::initMenu()
     ui.actionEnableServer->setChecked(globalData->displayInfoServer());
     enableServerLambda(globalData->displayInfoServer());
 
-    connect(ui.actionCopyHostAddress, &QAction::triggered, this, [this]() {
+    connect(ui.actionServerCopyHostAddress, &QAction::triggered, this, [this]() {
         auto domain = HttpServerUtil::getHttpServerDomain();
         if (domain.isEmpty()) {
             QMessageBox::critical(this, QString(), tr("获取服务器地址失败！"));
@@ -372,7 +373,7 @@ void MainWindow::initMenu()
         }
     });
 
-    connect(ui.actionOpenBrowser, &QAction::triggered, this, [this]() {
+    connect(ui.actionServerOpenBrowser, &QAction::triggered, this, [this]() {
         auto domain = HttpServerUtil::getHttpServerDomain();
         if (domain.isEmpty()) {
             QMessageBox::critical(this, QString(), tr("获取服务器地址失败！"));
@@ -390,6 +391,10 @@ void MainWindow::initMenu()
 
     connect(ui.actionUpdate, &QAction::triggered, this, [this]() {
         (new UpdateDialog(nullptr, this))->exec();
+    });
+
+    connect(ui.actionDescription, &QAction::triggered, this, [this]() {
+        (new DescriptionDialog(this))->exec();
     });
 
     connect(ui.actionLogDir, &QAction::triggered, this, []() {

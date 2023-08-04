@@ -1,3 +1,5 @@
+#pragma once
+
 #include "DisplayInfoSubFunction.h"
 #include <QColor>
 #include <QMetaType>
@@ -5,8 +7,7 @@
 #include <QSettings>
 #include <QSize>
 #include <QString>
-
-#pragma once
+#include <icftypes.h>
 
 #define globalData (GlobalData::instance())
 
@@ -106,6 +107,9 @@ public:
     const QString& firewallAppPath() const;
     void setFirewallAppPath(const QString& newFirewallAppPath);
 
+    int firewallDirection() const;
+    void setFirewallDirection(int newFirewallDirection);
+
     int headshotUpdateInterval() const;
     void setHeadshotUpdateInterval(int newHeadshotUpdateInterval);
 
@@ -157,6 +161,7 @@ signals:
     void firewallErrorSoundChanged();
     void firewallPlaySoundChanged();
     void firewallAppPathChanged();
+    void firewallDirectionChanged();
 
     void headshotUpdateIntervalChanged();
 
@@ -197,6 +202,7 @@ private:
     QString mFirewallErrorSound = "./sound/error.wav";
     bool mFirewallPlaySound = true;
     QString mFirewallAppPath = "";
+    int mFirewallDirection = NET_FW_RULE_DIR_OUT;
 
     // 爆头
     int mHeadshotUpdateInterval = 100;
@@ -237,6 +243,7 @@ private:
     Q_PROPERTY(QString firewallErrorSound READ firewallErrorSound WRITE setFirewallErrorSound NOTIFY firewallErrorSoundChanged)
     Q_PROPERTY(bool firewallPlaySound READ firewallPlaySound WRITE setFirewallPlaySound NOTIFY firewallPlaySoundChanged)
     Q_PROPERTY(QString firewallAppPath READ firewallAppPath WRITE setFirewallAppPath NOTIFY firewallAppPathChanged)
+    Q_PROPERTY(int firewallDirection READ firewallDirection WRITE setFirewallDirection NOTIFY firewallDirectionChanged)
     Q_PROPERTY(int headshotUpdateInterval READ headshotUpdateInterval WRITE setHeadshotUpdateInterval NOTIFY headshotUpdateIntervalChanged)
     Q_PROPERTY(QString timerStartHotkey READ timerStartHotkey WRITE setTimerStartHotkey NOTIFY timerStartHotkeyChanged)
     Q_PROPERTY(QString timerPauseHotkey READ timerPauseHotkey WRITE setTimerPauseHotkey NOTIFY timerPauseHotkeyChanged)

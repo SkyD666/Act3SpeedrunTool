@@ -52,7 +52,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
     hr = pFwRules->Item(bstrRuleName, (INetFwRule**)&pFwRule);
     if (SUCCEEDED(hr)) {
         LogUtil::addLog("Found NetFwRule by pFwRules->Item()");
-        HRESULT h;
+        HRESULT h, h2;
         if (globalData->firewallAppPath().isEmpty()) {
             h = pFwRule->put_ApplicationName(NULL);
         } else {
@@ -62,11 +62,15 @@ INetFwRule* FirewallUtil::getNetFwRule()
                     .toStdWString()
                     .c_str()));
         }
-        if (SUCCEEDED(h)) {
-            return pFwRule;
-        } else {
+        h2 = pFwRule->put_Direction(static_cast<NET_FW_RULE_DIRECTION>(globalData->firewallDirection()));
+        if (!SUCCEEDED(h)) {
             LogUtil::addLog("put_ApplicationName failed!");
             qDebug() << h;
+        } else if (!SUCCEEDED(h2)) {
+            LogUtil::addLog("put_Direction failed!");
+            qDebug() << h;
+        } else {
+            return pFwRule;
         }
     }
 
@@ -96,7 +100,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
     pFwRule->put_Protocol(NET_FW_IP_PROTOCOL_TCP);
     //    pFwRule->put_LocalPorts(bstrRuleLPorts);
     pFwRule->put_Grouping(bstrRuleGroup);
-    pFwRule->put_Direction(NET_FW_RULE_DIR_OUT);
+    pFwRule->put_Direction(static_cast<NET_FW_RULE_DIRECTION>(globalData->firewallDirection()));
     //    pFwRule->put_Profiles(CurrentProfilesBitMask);
     pFwRule->put_Action(NET_FW_ACTION_BLOCK);
     pFwRule->put_Enabled(VARIANT_TRUE);

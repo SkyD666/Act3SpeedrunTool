@@ -119,6 +119,7 @@ void GlobalData::readSettings()
     setFirewallErrorSound(settings.value("FirewallErrorSound", mFirewallErrorSound).toString());
     setFirewallPlaySound(settings.value("FirewallPlaySound", mFirewallPlaySound).toBool());
     setFirewallAppPath(settings.value("FirewallAppPath", mFirewallAppPath).toString());
+    setFirewallDirection(settings.value("FirewallDirection", mFirewallDirection).toInt());
     settings.endGroup();
 
     settings.beginGroup("Headshot");
@@ -171,6 +172,7 @@ void GlobalData::writeSettings()
     settings.setValue("FirewallErrorSound", mFirewallErrorSound);
     settings.setValue("FirewallPlaySound", mFirewallPlaySound);
     settings.setValue("FirewallAppPath", mFirewallAppPath);
+    settings.setValue("FirewallDirection", mFirewallDirection);
     settings.endGroup();
 
     settings.beginGroup("Headshot");
@@ -488,6 +490,19 @@ void GlobalData::setFirewallAppPath(const QString& newFirewallAppPath)
         return;
     mFirewallAppPath = newFirewallAppPath;
     emit firewallAppPathChanged();
+}
+
+int GlobalData::firewallDirection() const
+{
+    return mFirewallDirection;
+}
+
+void GlobalData::setFirewallDirection(int newFirewallDirection)
+{
+    if (mFirewallDirection == newFirewallDirection)
+        return;
+    mFirewallDirection = newFirewallDirection;
+    emit firewallDirectionChanged();
 }
 
 int GlobalData::headshotUpdateInterval() const

@@ -182,6 +182,27 @@ void SettingDialog::initFirewallSettings()
     connect(ui.leFirewallAppPath, &QLineEdit::textChanged, this, [=](const QString& text) {
         globalData->setFirewallAppPath(text);
     });
+
+    // 防火墙方向
+    {
+        QList<QPair<int, QString>> firewallDirections = {
+            std::pair(NET_FW_RULE_DIR_IN, tr("入站")),
+            std::pair(NET_FW_RULE_DIR_OUT, tr("出站")),
+        };
+        int currentIndex = 0, i = 0;
+        for (auto& direction : firewallDirections) {
+            ui.cbFirewallDirection->addItem(direction.second, direction.first);
+            if (direction.first == globalData->firewallDirection()) {
+                currentIndex = i;
+            }
+            i++;
+        }
+        connect(ui.cbFirewallDirection, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, [=](int index) {
+                globalData->setFirewallDirection(ui.cbFirewallDirection->itemData(index).toInt());
+            });
+        ui.cbFirewallDirection->setCurrentIndex(currentIndex);
+    }
 }
 
 // 爆头设置
