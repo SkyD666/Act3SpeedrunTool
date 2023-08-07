@@ -32,7 +32,7 @@ HRESULT WFCOMInitialize(INetFwPolicy2** ppNetFwPolicy2)
     if (FAILED(hr)) {
         qDebug() << "CoCreateInstance for INetFwPolicy2 failed: "
                  << hr;
-        LogUtil::addLog("CoCreateInstance for INetFwPolicy2 failed: " + QString::number(hr));
+        logController->addLog("CoCreateInstance for INetFwPolicy2 failed: " + QString::number(hr));
         goto Cleanup;
     }
 
@@ -51,7 +51,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
 
     hr = pFwRules->Item(bstrRuleName, (INetFwRule**)&pFwRule);
     if (SUCCEEDED(hr)) {
-        LogUtil::addLog("Found NetFwRule by pFwRules->Item()");
+        logController->addLog("Found NetFwRule by pFwRules->Item()");
         HRESULT h, h2;
         if (globalData->firewallAppPath().isEmpty()) {
             h = pFwRule->put_ApplicationName(NULL);
@@ -64,10 +64,10 @@ INetFwRule* FirewallUtil::getNetFwRule()
         }
         h2 = pFwRule->put_Direction(static_cast<NET_FW_RULE_DIRECTION>(globalData->firewallDirection()));
         if (!SUCCEEDED(h)) {
-            LogUtil::addLog("put_ApplicationName failed!");
+            logController->addLog("put_ApplicationName failed!");
             qDebug() << h;
         } else if (!SUCCEEDED(h2)) {
-            LogUtil::addLog("put_Direction failed!");
+            logController->addLog("put_Direction failed!");
             qDebug() << h;
         } else {
             return pFwRule;
@@ -84,7 +84,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
     if (FAILED(hr)) {
         qDebug() << "CoCreateInstance for Firewall Rule failed: "
                  << hr;
-        LogUtil::addLog("CoCreateInstance for Firewall Rule failed: " + QString::number(hr));
+        logController->addLog("CoCreateInstance for Firewall Rule failed: " + QString::number(hr));
         goto Cleanup;
     }
 
@@ -110,7 +110,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
     if (FAILED(hr)) {
         qDebug() << "Firewall Rule Add failed: "
                  << hr;
-        LogUtil::addLog("Firewall Rule Add failed: " + QString::number(hr));
+        logController->addLog("Firewall Rule Add failed: " + QString::number(hr));
         goto Cleanup;
     }
 
@@ -130,15 +130,23 @@ bool FirewallUtil::setNetFwRuleEnabled(bool enabled)
         return true;
     INetFwRule* fwRule = getNetFwRule();
     if (!fwRule) {
-        LogUtil::addLog("getNetFwRule() return null!");
+        logController->addLog("getNetFwRule() return null!");
+        logController->addLog("Firewall operate failed!");
         return false;
     }
     if (FAILED(fwRule->put_Enabled(enabled ? VARIANT_TRUE : VARIANT_FALSE))) {
-        LogUtil::addLog(QString("setNetFwRuleEnabled fwRule->put_Enabled(")
+        logController->addLog(QString("setNetFwRuleEnabled fwRule->put_Enabled(")
             + (enabled ? "VARIANT_TRUE" : "VARIANT_FALSE") + ") failed!");
+        logController->addLog("Firewall operate failed!");
         return false;
     }
     isEnabled = enabled;
+
+    if (enabled) {
+        logController->addLog("Firewall successfully enabled!");
+    } else {
+        logController->addLog("Firewall successfully disabled!");
+    }
     return true;
 }
 
@@ -147,7 +155,7 @@ void FirewallUtil::init()
     if (inited)
         return;
 
-    LogUtil::addLog("Initializing the firewall...");
+    logController->addLog("Initializing the firewall...");
     hrComInit = S_OK;
     bstrRuleName = SysAllocString(L"AutoFirewall");
     //    bstrRuleLPorts = SysAllocString(L"80");
@@ -165,7 +173,7 @@ void FirewallUtil::init()
         if (FAILED(hrComInit)) {
             qDebug() << "CoInitializeEx failed: "
                      << hrComInit;
-            LogUtil::addLog("CoInitializeEx failed: " + QString::number(hrComInit));
+            logController->addLog("CoInitializeEx failed: " + QString::number(hrComInit));
             release();
             return;
         }
@@ -174,7 +182,7 @@ void FirewallUtil::init()
     // Retrieve INetFwPolicy2
     hr = WFCOMInitialize(&pNetFwPolicy2);
     if (FAILED(hr)) {
-        LogUtil::addLog("WFCOMInitialize failed!");
+        logController->addLog("WFCOMInitialize failed!");
         release();
         return;
     }
@@ -184,7 +192,7 @@ void FirewallUtil::init()
     if (FAILED(hr)) {
         qDebug() << "get_Rules failed: "
                  << hr;
-        LogUtil::addLog("get_Rules failed: " + QString::number(hr));
+        logController->addLog("get_Rules failed: " + QString::number(hr));
         release();
         return;
     }
@@ -194,7 +202,7 @@ void FirewallUtil::init()
     if (FAILED(hr)) {
         qDebug() << "get_CurrentProfileTypes failed: "
                  << hr;
-        LogUtil::addLog("get_CurrentProfileTypes failed: " + QString::number(hr));
+        logController->addLog("get_CurrentProfileTypes failed: " + QString::number(hr));
         release();
         return;
     }
@@ -212,12 +220,12 @@ void FirewallUtil::init()
         fwRule->get_Enabled(&enabled);
         isEnabled = (enabled == VARIANT_TRUE);
     } else {
-        LogUtil::addLog("auto fwRule = getNetFwRule(); fwRule is null");
+        logController->addLog("auto fwRule = getNetFwRule(); fwRule is null");
     }
 
     inited = true;
 
-    LogUtil::addLog("Initializing the firewall successfully");
+    logController->addLog("Initializing the firewall successfully");
 }
 
 void FirewallUtil::release()

@@ -2,6 +2,7 @@
 
 #include "DisplayInfoDialog.h"
 #include "ui_MainWindow.h"
+#include <QDateTime>
 #include <QHotkey>
 #include <QLabel>
 #include <QMainWindow>
@@ -51,6 +52,8 @@ protected:
 
     void zeroTimer();
 
+    void updateTimerString(qint64 currentDateTime = QDateTime::currentDateTime().toMSecsSinceEpoch());
+
     void initTimerStateMachine();
 
 signals:
@@ -89,7 +92,7 @@ private:
     QTimer* topMostTimer = nullptr;
 
     QTimer* timer = nullptr;
-    qint64 stoppedTime = 0L; // 上次暂停的时间
+    qint64 pausedTime = 0L; // 上次暂停的时间
     qint64 timerTime = 0L; // 计时器开始的时间
     QStateMachine timerStateMachine = QStateMachine(this); // 计时器状态
 

@@ -1,5 +1,6 @@
 #include "HttpServerUtil.h"
 #include "GlobalData.h"
+#include "LogUtil.h"
 
 #include <QApplication>
 #include <QDataStream>
@@ -12,6 +13,9 @@ Q_GLOBAL_STATIC(HttpServerController, controllerInstance)
 
 quint16 HttpServerUtil::currentHttpPort = 0;
 quint16 HttpServerUtil::currentWebsocketPort = 0;
+HttpServerUtil::TimerState HttpServerUtil::timerState = TimerState::Stopped;
+qint64 HttpServerUtil::startTimestamp = 0;
+qint64 HttpServerUtil::pausedTimestamp = 0;
 
 HttpServerUtil::HttpServerUtil()
 {
@@ -37,6 +41,10 @@ void HttpServerUtil::startHttp()
         auto htmlFile = new QFile("./html/DisplayInfo.html");
         responder.write(htmlFile, "text/html");
     });
+    httpServer->route("/reconnecting-websocket.min.js", [](QHttpServerResponder&& responder) {
+        auto jsFile = new QFile("./html/reconnecting-websocket.min.js");
+        responder.write(jsFile, "text/javascript");
+    });
     httpServer->route("/displayInfo.js", [](QHttpServerResponder&& responder) {
         auto jsFile = new QFile("./html/DisplayInfo.js");
         responder.write(jsFile, "text/javascript");
@@ -46,9 +54,13 @@ void HttpServerUtil::startHttp()
         responder.write(cssFile, "text/css");
     });
     currentHttpPort = httpServer->listen(QHostAddress::Any, globalData->serverHttpPort());
+    logController->addLog("Http server listened on: " + QString::number(currentHttpPort));
     if (webSocketServer->listen(QHostAddress::Any, globalData->serverWebsocketPort())) {
         currentWebsocketPort = globalData->serverWebsocketPort();
         connect(webSocketServer, &QWebSocketServer::newConnection, this, &HttpServerUtil::onNewConnection);
+        logController->addLog("WebSocket server listened on: " + QString::number(currentWebsocketPort));
+    } else {
+        logController->addLog("WebSocket server listen failed, port is " + QString::number(globalData->serverWebsocketPort()));
     }
 }
 
@@ -62,27 +74,29 @@ void HttpServerUtil::stopHttp()
 
 void HttpServerUtil::startTimer(bool isContinue, qint64 startTimestamp)
 {
-    this->startTimestamp = startTimestamp;
+    HttpServerUtil::startTimestamp = startTimestamp;
     timerState = TimerState(TimerState::Running | (isContinue ? 0 : TimerState::Zero));
-    sendNewData(getTimerStateJson(timerState, startTimestamp));
+    sendNewData(getTimerStateJson());
 }
 
-void HttpServerUtil::stopTimer()
+void HttpServerUtil::stopTimer(qint64 stoppedTime)
 {
     timerState = TimerState::Stopped;
-    sendNewData(getTimerStateJson(timerState, startTimestamp));
+    pausedTimestamp = stoppedTime;
+    sendNewData(getTimerStateJson());
 }
 
-void HttpServerUtil::pauseTimer()
+void HttpServerUtil::pauseTimer(qint64 pausedTimestamp)
 {
+    HttpServerUtil::pausedTimestamp = pausedTimestamp;
     timerState = TimerState::Paused;
-    sendNewData(getTimerStateJson(timerState, startTimestamp));
+    sendNewData(getTimerStateJson());
 }
 
 void HttpServerUtil::zeroTimer()
 {
     timerState = TimerState::Zero;
-    sendNewData(getTimerStateJson(timerState, startTimestamp));
+    sendNewData(getTimerStateJson());
 }
 
 void HttpServerUtil::sendNewData()
@@ -109,7 +123,7 @@ void HttpServerUtil::sendNewData(short headshotCount)
 void HttpServerUtil::sendNewData(QWebSocket* webSocket)
 {
     webSocket->sendTextMessage(getHeadshotJson(&data).toJson(QJsonDocument::Compact));
-    webSocket->sendTextMessage(getTimerStateJson(timerState, startTimestamp).toJson(QJsonDocument::Compact));
+    webSocket->sendTextMessage(getTimerStateJson().toJson(QJsonDocument::Compact));
 }
 
 QString HttpServerUtil::getHttpServerDomain()
@@ -137,6 +151,8 @@ void HttpServerUtil::onNewConnection()
     clients << pSocket;
 
     sendNewData(pSocket);
+
+    logController->addLog("Socket Connected: " + pSocket->peerName());
 }
 
 void HttpServerUtil::onCloseConnection()
@@ -148,6 +164,7 @@ void HttpServerUtil::socketDisconnected()
     QWebSocket* pClient = qobject_cast<QWebSocket*>(sender());
     if (pClient) {
         clients.removeAll(pClient);
+        logController->addLog("Socket Disconnected: " + pClient->peerName());
         pClient->deleteLater();
     }
 }
@@ -160,17 +177,21 @@ QJsonDocument HttpServerUtil::getHeadshotJson(DataPackage* data)
     return QJsonDocument(object);
 }
 
-QJsonDocument HttpServerUtil::getTimerStateJson(TimerState state, qint64 startTimestamp)
+QJsonDocument HttpServerUtil::getTimerStateJson(
+    TimerState state,
+    qint64 startTimestamp,
+    qint64 pausedTimestamp)
 {
     QJsonObject object {
         { "timerState", state },
-        { "startTimestamp", startTimestamp },
+        { "starttedTimestamp", startTimestamp },
+        { "pausedTimestamp", pausedTimestamp },
         { "serverTimestamp", QDateTime::currentDateTime().toMSecsSinceEpoch() },
     };
     return QJsonDocument(object);
 }
 
-HttpServerController* HttpServerController::getInstance()
+HttpServerController* HttpServerController::instance()
 {
     return controllerInstance;
 }
@@ -194,15 +215,15 @@ void HttpServerController::start()
     workerThread = new QThread;
     worker->moveToThread(workerThread);
     connect(workerThread, &QThread::finished, worker, &QObject::deleteLater);
-    connect(this, &HttpServerController::sendNewData, worker, QOverload<short>::of(&HttpServerUtil::sendNewData));
-    connect(this, &HttpServerController::startOrContinueTimer, worker, QOverload<bool, qint64>::of(&HttpServerUtil::startTimer));
-    connect(this, &HttpServerController::stopTimer, worker, &HttpServerUtil::stopTimer);
-    connect(this, &HttpServerController::pauseTimer, worker, &HttpServerUtil::pauseTimer);
-    connect(this, &HttpServerController::zeroTimer, worker, &HttpServerUtil::zeroTimer);
-    connect(this, &HttpServerController::stopHttp, worker, &HttpServerUtil::stopHttp);
-    connect(this, &HttpServerController::initHttpServerUtil, worker, &HttpServerUtil::startHttp);
+    connect(this, &HttpServerController::sendNewDataSignal, worker, QOverload<short>::of(&HttpServerUtil::sendNewData));
+    connect(this, &HttpServerController::startOrContinueTimerSignal, worker, QOverload<bool, qint64>::of(&HttpServerUtil::startTimer));
+    connect(this, &HttpServerController::stopTimerSignal, worker, &HttpServerUtil::stopTimer);
+    connect(this, &HttpServerController::pauseTimerSignal, worker, &HttpServerUtil::pauseTimer);
+    connect(this, &HttpServerController::zeroTimerSignal, worker, &HttpServerUtil::zeroTimer);
+    connect(this, &HttpServerController::stopHttpSignal, worker, &HttpServerUtil::stopHttp);
+    connect(this, &HttpServerController::initHttpServerUtilSignal, worker, &HttpServerUtil::startHttp);
     workerThread->start();
-    emit initHttpServerUtil();
+    emit initHttpServerUtilSignal(QPrivateSignal());
     started = true;
 }
 
@@ -212,8 +233,58 @@ void HttpServerController::stop()
     if (!started) {
         return;
     }
-    emit stopHttp();
+    emit stopHttpSignal(QPrivateSignal());
     workerThread->quit();
     workerThread->wait();
     started = false;
+}
+
+void HttpServerController::sendNewData(short headshotCount)
+{
+    emit sendNewDataSignal(headshotCount, QPrivateSignal());
+}
+
+void HttpServerController::startOrContinueTimer(bool isContinue, qint64 startTimestamp)
+{
+    if (!started) {
+        HttpServerUtil::timerState = HttpServerUtil::TimerState(HttpServerUtil::TimerState::Running
+            | (isContinue ? 0 : HttpServerUtil::TimerState::Zero));
+        HttpServerUtil::startTimestamp = startTimestamp;
+    }
+    emit startOrContinueTimerSignal(isContinue, startTimestamp, QPrivateSignal());
+}
+
+void HttpServerController::stopTimer(qint64 stoppedTime)
+{
+    if (!started) {
+        HttpServerUtil::timerState = HttpServerUtil::TimerState::Stopped;
+    }
+    emit stopTimerSignal(stoppedTime, QPrivateSignal());
+}
+
+void HttpServerController::pauseTimer(qint64 pausedTimestamp)
+{
+    if (!started) {
+        HttpServerUtil::timerState = HttpServerUtil::TimerState::Paused;
+        HttpServerUtil::pausedTimestamp = pausedTimestamp;
+    }
+    emit pauseTimerSignal(pausedTimestamp, QPrivateSignal());
+}
+
+void HttpServerController::zeroTimer()
+{
+    if (!started) {
+        HttpServerUtil::timerState = HttpServerUtil::TimerState::Zero;
+    }
+    emit zeroTimerSignal(QPrivateSignal());
+}
+
+void HttpServerController::stopHttp()
+{
+    emit stopHttpSignal(QPrivateSignal());
+}
+
+void HttpServerController::initHttpServerUtil()
+{
+    emit initHttpServerUtilSignal(QPrivateSignal());
 }

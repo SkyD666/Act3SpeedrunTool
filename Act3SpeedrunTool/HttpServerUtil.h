@@ -32,8 +32,8 @@ public:
     void stopHttp();
 
     void startTimer(bool isContinue, qint64 startTimestamp);
-    void stopTimer();
-    void pauseTimer();
+    void stopTimer(qint64 stoppedTime);
+    void pauseTimer(qint64 pausedTimestamp);
     void zeroTimer();
 
     void sendNewData();
@@ -55,7 +55,15 @@ protected:
 
     QJsonDocument getHeadshotJson(DataPackage* data);
 
-    QJsonDocument getTimerStateJson(TimerState state, qint64 startTimestamp);
+    QJsonDocument getTimerStateJson(
+        TimerState state = HttpServerUtil::timerState,
+        qint64 startTimestamp = HttpServerUtil::startTimestamp,
+        qint64 pausedTimestamp = HttpServerUtil::pausedTimestamp);
+
+public:
+    static TimerState timerState;
+    static qint64 startTimestamp;
+    static qint64 pausedTimestamp;
 
 private:
     bool started = false;
@@ -70,17 +78,13 @@ private:
     QList<QWebSocket*> clients;
 
     DataPackage data;
-
-    TimerState timerState = TimerState::Stopped;
-
-    qint64 startTimestamp = 0;
 };
 
 class HttpServerController : public QObject {
     Q_OBJECT
 
 public:
-    static HttpServerController* getInstance();
+    static HttpServerController* instance();
 
     HttpServerController();
     ~HttpServerController();
@@ -89,17 +93,25 @@ public:
 
     void stop();
 
-signals:
     void sendNewData(short headshotCount);
-
     void startOrContinueTimer(bool isContinue, qint64 startTimestamp);
-    void stopTimer();
-    void pauseTimer();
+    void stopTimer(qint64 stoppedTime);
+    void pauseTimer(qint64 pausedTimestamp);
     void zeroTimer();
-
     void stopHttp();
-
     void initHttpServerUtil();
+
+signals:
+    void sendNewDataSignal(short headshotCount, QPrivateSignal);
+
+    void startOrContinueTimerSignal(bool isContinue, qint64 startTimestamp, QPrivateSignal);
+    void stopTimerSignal(qint64 stoppedTime, QPrivateSignal);
+    void pauseTimerSignal(qint64 pausedTimestamp, QPrivateSignal);
+    void zeroTimerSignal(QPrivateSignal);
+
+    void stopHttpSignal(QPrivateSignal);
+
+    void initHttpServerUtilSignal(QPrivateSignal);
 
 private:
     QMutex mutex;

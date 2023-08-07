@@ -69,8 +69,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>406</width>
-            <height>248</height>
+            <width>122</width>
+            <height>400</height>
            </rect>
           </property>
           <attribute name="label">
@@ -136,7 +136,9 @@
            <item>
             <widget class="QLabel" name="label_3">
              <property name="text">
-              <string>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：三号行动”中使用。</string>
+              <string>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。
+
+由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：三号行动”中使用。</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -163,8 +165,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>86</width>
-            <height>256</height>
+            <width>98</width>
+            <height>208</height>
            </rect>
           </property>
           <attribute name="label">
@@ -201,8 +203,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>86</width>
-            <height>592</height>
+            <width>98</width>
+            <height>512</height>
            </rect>
           </property>
           <attribute name="label">
@@ -292,8 +294,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>86</width>
-            <height>224</height>
+            <width>98</width>
+            <height>208</height>
            </rect>
           </property>
           <attribute name="label">
@@ -330,8 +332,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>86</width>
-            <height>320</height>
+            <width>98</width>
+            <height>304</height>
            </rect>
           </property>
           <attribute name="label">
@@ -421,8 +423,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>86</width>
-            <height>901</height>
+            <width>98</width>
+            <height>773</height>
            </rect>
           </property>
           <attribute name="label">

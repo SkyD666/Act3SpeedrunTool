@@ -66,7 +66,6 @@ MainWindow::MainWindow(QWidget* parent)
         bool succeed = FirewallUtil::setNetFwRuleEnabled(checked);
         if (succeed) {
             if (checked) {
-                LogUtil::addLog("Firewall successfully enabled!");
                 ui.btnStartFirewall->setText(tr("已开启"));
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::green);
@@ -76,7 +75,6 @@ MainWindow::MainWindow(QWidget* parent)
                         nullptr, SND_FILENAME | SND_ASYNC);
                 }
             } else {
-                LogUtil::addLog("Firewall successfully disabled!");
                 ui.btnStartFirewall->setText(tr("已关闭"));
                 QPalette palette = labState->palette();
                 palette.setColor(QPalette::Window, Qt::red);
@@ -87,7 +85,6 @@ MainWindow::MainWindow(QWidget* parent)
                 }
             }
         } else {
-            LogUtil::addLog("Firewall operate failed!");
             if (globalData->firewallPlaySound()) {
                 PlaySound(globalData->firewallErrorSound().toStdWString().c_str(),
                     nullptr, SND_FILENAME | SND_ASYNC);
@@ -126,6 +123,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (!waitingToExit && globalData->minimizeToTray()) {
         setVisible(false);
         event->ignore();
+        logController->addLog("MainWindow minimized to tray");
         return;
     } else {
         if (displayInfoDialog) {
@@ -134,6 +132,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 
     if (event->isAccepted()) {
+        logController->addLog("Exiting...");
         qApp->exit();
     }
 }
@@ -353,10 +352,10 @@ void MainWindow::initMenu()
         ui.actionServerOpenBrowser->setEnabled(checked);
         if (checked) {
             ui.actionServerCopyHostAddress->setText(tr("复制地址"));
-            HttpServerController::getInstance()->start();
+            HttpServerController::instance()->start();
         } else {
             ui.actionServerCopyHostAddress->setText(tr("服务器未运行"));
-            HttpServerController::getInstance()->stop();
+            HttpServerController::instance()->stop();
         }
     };
     connect(ui.actionEnableServer, &QAction::toggled, this, enableServerLambda);
@@ -453,7 +452,7 @@ void MainWindow::showDisplayInfo()
                     rect.right - rect.left, rect.bottom - rect.top,
                     SWP_SHOWWINDOW);
             }
-            //            emit HttpServerController::getInstance()->sendNewData(QTime::currentTime().second());
+            //            HttpServerController::instance()->sendNewData(QTime::currentTime().second());
         }
     });
     topMostTimer->start(2000);
@@ -493,7 +492,7 @@ bool MainWindow::startReadHeadShot()
         ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[9]), &count, 2, 0);
         if (firstTime || count != headshotCount) {
             headshotCount = count;
-            emit HttpServerController::getInstance()->sendNewData(headshotCount);
+            HttpServerController::instance()->sendNewData(headshotCount);
             ui.labHeadShotCount->setText(QString::number(headshotCount));
             if (displayInfoDialogIsShowing && displayInfoDialog) {
                 displayInfoDialog->setHeadShotCount(headshotCount);
@@ -528,40 +527,28 @@ void MainWindow::startTimer(bool isContinue)
     if (!isContinue) {
         timerTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
     } else {
-        timerTime += (QDateTime::currentDateTime().toMSecsSinceEpoch() - stoppedTime);
-        stoppedTime = 0L;
+        timerTime += (QDateTime::currentDateTime().toMSecsSinceEpoch() - pausedTime);
+        pausedTime = 0L;
     }
     if (!timer) {
         timer = new QTimer(this);
     }
-    connect(timer, &QTimer::timeout, this, [=]() {
-        qint64 deltaTime = QDateTime::currentDateTime().toMSecsSinceEpoch() - timerTime;
-        int m = deltaTime / 1000 / 60;
-        int s = (deltaTime / 1000) % 60;
-        int ms = (deltaTime % 1000) / 10;
-        QString t = DisplayInfoDialog::timePattern
-                        .arg("26")
-                        .arg(m, 2, 10, QLatin1Char('0'))
-                        .arg(s, 2, 10, QLatin1Char('0'))
-                        .arg("16")
-                        .arg(ms, 2, 10, QLatin1Char('0'));
-        ui.labTimer->setText(t);
-        if (displayInfoDialogIsShowing && displayInfoDialog) {
-            displayInfoDialog->setTime(m, s, ms);
-        }
+    connect(timer, &QTimer::timeout, this, [this]() {
+        updateTimerString();
     });
     timer->setTimerType(Qt::PreciseTimer);
     timer->start(globalData->timerUpdateInterval());
-    emit HttpServerController::getInstance()->startOrContinueTimer(isContinue, timerTime);
+    HttpServerController::instance()->startOrContinueTimer(isContinue, timerTime);
 }
 
 void MainWindow::pauseTimer()
 {
     if (timer) {
         timer->stop();
-        stoppedTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        pausedTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        updateTimerString(pausedTime);
+        HttpServerController::instance()->pauseTimer(pausedTime);
     }
-    emit HttpServerController::getInstance()->pauseTimer();
 }
 
 void MainWindow::stopTimer()
@@ -570,10 +557,12 @@ void MainWindow::stopTimer()
         if (timer->isActive()) {
             timer->stop();
         }
+        qint64 stoppedTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        updateTimerString(stoppedTime);
+        HttpServerController::instance()->stopTimer(stoppedTime);
         timerTime = 0L;
-        stoppedTime = 0L;
+        pausedTime = 0L;
     }
-    emit HttpServerController::getInstance()->stopTimer();
 }
 
 void MainWindow::zeroTimer()
@@ -582,7 +571,25 @@ void MainWindow::zeroTimer()
         displayInfoDialog->setTime(0, 0, 0);
     }
     ui.labTimer->setText(DisplayInfoDialog::timePattern.arg("26", "00", "00", "16", "00"));
-    emit HttpServerController::getInstance()->zeroTimer();
+    HttpServerController::instance()->zeroTimer();
+}
+
+void MainWindow::updateTimerString(qint64 currentDateTime)
+{
+    qint64 deltaTime = currentDateTime - timerTime;
+    int m = deltaTime / 1000 / 60;
+    int s = (deltaTime / 1000) % 60;
+    int ms = (deltaTime % 1000) / 10;
+    QString t = DisplayInfoDialog::timePattern
+                    .arg("26")
+                    .arg(m, 2, 10, QLatin1Char('0'))
+                    .arg(s, 2, 10, QLatin1Char('0'))
+                    .arg("16")
+                    .arg(ms, 2, 10, QLatin1Char('0'));
+    ui.labTimer->setText(t);
+    if (displayInfoDialogIsShowing && displayInfoDialog) {
+        displayInfoDialog->setTime(m, s, ms);
+    }
 }
 
 void MainWindow::initTimerStateMachine()
@@ -712,6 +719,7 @@ void MainWindow::initSystemTray()
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::MiddleClick:
             ui.actionShow->trigger();
+            logController->addLog("Tray clicked");
             break;
         case QSystemTrayIcon::Unknown:
             break;

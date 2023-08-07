@@ -1,8 +1,13 @@
+#include <QFile>
+#include <QMutex>
 #include <QString>
+#include <QThread>
 
 #pragma once
 
-class LogUtil {
+class LogUtil : public QObject {
+    Q_OBJECT
+
 public:
     LogUtil();
 
@@ -10,9 +15,45 @@ public:
 
     static QString getLogFilePath();
 
-    static void addLog(const QString newLog);
+    void initLog();
+
+    void closeLog();
+
+    void addLog(const QString newLog);
 
 private:
+    QFile* logFile = nullptr;
     static bool firstTime;
     static QString logFileName;
 };
+
+class LogController : public QObject {
+    Q_OBJECT
+
+public:
+    static LogController* instance();
+
+    LogController();
+    ~LogController();
+
+    void addLog(const QString newLog);
+
+signals:
+    void initLog();
+    void closeLog();
+    void addLogSignal(const QString newLog);
+
+private:
+    QMutex mutex;
+
+    bool isOpened = false;
+
+    LogUtil* worker = nullptr;
+
+    QThread* workerThread = nullptr;
+
+    void open();
+    void innerCloseLog();
+};
+
+#define logController (LogController::instance())

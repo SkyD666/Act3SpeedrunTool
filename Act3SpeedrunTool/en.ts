@@ -18,34 +18,34 @@
     <message>
         <location line="+15"/>
         <location line="+94"/>
-        <location line="+258"/>
+        <location line="+260"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-11"/>
-        <location line="+14"/>
+        <location line="+16"/>
         <location line="+23"/>
         <source>基本原理</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-346"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-38"/>
+        <location line="-348"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-40"/>
         <source>通过 Windows 防火墙阻止进程联网。</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+32"/>
-        <location line="+132"/>
+        <location line="+134"/>
         <location line="+129"/>
         <location line="+91"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+11"/>
-        <location line="+13"/>
+        <location line="+15"/>
         <location line="+11"/>
         <location line="+11"/>
         <source>常见问题</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-346"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-44"/>
+        <location line="-348"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-46"/>
         <source>1. 启动/停止热键能否相同？
 答：可以相同。
 
@@ -58,17 +58,20 @@
     </message>
     <message>
         <location line="+35"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+23"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+25"/>
         <source>爆头数</source>
         <translation type="unfinished">Headshot</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：三号行动”中使用。</source>
+        <source>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。
+
+由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：三号行动”中使用。</source>
+        <oldsource>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：三号行动”中使用。</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+34"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-8"/>
         <source>注意事项</source>
         <translation type="unfinished"></translation>
@@ -150,12 +153,14 @@
         <translation type="unfinished">Multi-platform display</translation>
     </message>
     <message>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-34"/>
-        <source>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：���号行动”中使用。</source>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-36"/>
+        <source>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。
+
+由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至���三号行动”中使用。</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>1. 每次结束任务后是否需要重启计数器？
 答：不需要。计数器每隔一个“刷新间隔”便会去读取内存的数据，当重新开始任务后，内存中的数据还是爆头数，因此会自动显示最新数据。
 
@@ -233,8 +238,8 @@ AdstarGod Firewall, easy to use
     <message>
         <location line="+59"/>
         <location line="+65"/>
-        <location filename="MainWindow.cpp" line="+110"/>
-        <location line="+525"/>
+        <location filename="MainWindow.cpp" line="+107"/>
+        <location line="+535"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -361,7 +366,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+30"/>
-        <location filename="MainWindow.cpp" line="-318"/>
+        <location filename="MainWindow.cpp" line="-326"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+4"/>
         <source>复制地址</source>
         <translation>Copy link</translation>
@@ -410,23 +415,23 @@ AdstarGod Firewall, easy to use
         <translation>Help us translate...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="-294"/>
-        <location line="+19"/>
+        <location filename="MainWindow.cpp" line="-293"/>
+        <location line="+17"/>
         <source>已关闭</source>
         <translation>Stopped</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="-9"/>
         <source>已开启</source>
         <translation>Running</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>点击关闭</source>
         <translation>Stop counting</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+256"/>
         <source>服务器未运行</source>
         <translation>Server is not running</translation>
     </message>
@@ -447,7 +452,7 @@ AdstarGod Firewall, easy to use
         <translation>Alipay QR code for receiving payments</translation>
     </message>
     <message>
-        <location line="+239"/>
+        <location line="+247"/>
         <source>点击归零</source>
         <translation>Click to Zero</translation>
     </message>
@@ -462,7 +467,7 @@ AdstarGod Firewall, easy to use
         <translation>Click to continue</translation>
     </message>
     <message>
-        <location line="-455"/>
+        <location line="-463"/>
         <source>注册启用防火墙热键失败！</source>
         <oldsource>注册防火墙启动热键失败！</oldsource>
         <translation>Failed to register enable firewall hotkeys!</translation>
@@ -509,7 +514,7 @@ AdstarGod Firewall, easy to use
         <translation>Stopped</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="+102"/>
+        <location filename="MainWindow.h" line="+105"/>
         <source>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;A GTAOL doomsday scenario speedrun tool that supports quick startup of the firewall and automatic counting of headshots, and manual timing. This tool only reads the memory and does not write the memory.&lt;/p&gt;</translation>
