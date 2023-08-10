@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui.setupUi(this);
 
     connect(qApp, &QCoreApplication::aboutToQuit, this, [=]() {
+        HttpServerController::instance()->stop();
+        qInfo("Exiting...");
         globalData->destory();
     });
 
@@ -132,7 +134,6 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 
     if (event->isAccepted()) {
-        qInfo("Exiting...");
         qApp->exit();
     }
 }

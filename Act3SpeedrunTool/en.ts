@@ -259,8 +259,8 @@ AdstarGod Firewall, easy to use
     <message>
         <location line="+59"/>
         <location line="+65"/>
-        <location filename="MainWindow.cpp" line="+107"/>
-        <location line="+535"/>
+        <location filename="MainWindow.cpp" line="+109"/>
+        <location line="+534"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -436,7 +436,7 @@ AdstarGod Firewall, easy to use
         <translation>Help us translate...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="-293"/>
+        <location filename="MainWindow.cpp" line="-292"/>
         <location line="+17"/>
         <source>已关闭</source>
         <translation>Stopped</translation>
@@ -452,7 +452,7 @@ AdstarGod Firewall, easy to use
         <translation>Stop counting</translation>
     </message>
     <message>
-        <location line="+256"/>
+        <location line="+255"/>
         <source>服务器未运行</source>
         <translation>Server is not running</translation>
     </message>
