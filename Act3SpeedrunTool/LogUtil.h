@@ -2,8 +2,11 @@
 #include <QMutex>
 #include <QString>
 #include <QThread>
+#include <QtLogging>
 
 #pragma once
+
+void myMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 
 class LogUtil : public QObject {
     Q_OBJECT
@@ -19,9 +22,10 @@ public:
 
     void closeLog();
 
-    void addLog(const QString newLog);
+    void addLog(const QString& msg);
 
 private:
+    QMutex mutex;
     QFile* logFile = nullptr;
     static bool firstTime;
     static QString logFileName;
@@ -36,12 +40,10 @@ public:
     LogController();
     ~LogController();
 
-    void addLog(const QString newLog);
-
 signals:
     void initLog();
     void closeLog();
-    void addLogSignal(const QString newLog);
+    void addLogSignal(const QString& msg);
 
 private:
     QMutex mutex;

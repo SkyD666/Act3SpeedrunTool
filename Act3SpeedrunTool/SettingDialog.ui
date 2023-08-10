@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>461</height>
+            <width>151</width>
+            <height>256</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -178,7 +178,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>451</width>
+                <width>271</width>
                 <height>479</height>
                </rect>
               </property>
@@ -494,8 +494,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>465</width>
-                <height>432</height>
+                <width>98</width>
+                <height>232</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -824,6 +824,9 @@
                 <property name="text">
                  <string>默认值为出站，设置将在下次启动防火墙时生效。</string>
                 </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
                </widget>
               </item>
              </layout>
@@ -936,8 +939,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>461</height>
+            <width>123</width>
+            <height>218</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -1030,8 +1033,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>461</height>
+            <width>154</width>
+            <height>527</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1219,8 +1222,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>461</height>
+            <width>98</width>
+            <height>474</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">

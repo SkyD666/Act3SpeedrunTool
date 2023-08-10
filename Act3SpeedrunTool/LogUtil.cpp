@@ -3,6 +3,8 @@
 #include <QDateTime>
 #include <QDir>
 
+#define QT_MESSAGELOGCONTEXT
+
 Q_GLOBAL_STATIC(LogController, logControllerInstance)
 
 QString LogUtil::logFileName = "Log - " + QDateTime::currentDateTime().toString("yyyy-MM-dd_hhmmss") + ".log";
@@ -48,10 +50,18 @@ void LogUtil::closeLog()
     }
 }
 
-void LogUtil::addLog(const QString newLog)
+void LogUtil::addLog(const QString& msg)
 {
+    QMutexLocker locker(&mutex);
     QTextStream textStream(logFile);
-    textStream << QDateTime::currentDateTime().toString("[yyyy-MM-dd hh:mm:ss] ") << newLog << "\n";
+
+    textStream << msg;
+    textStream.flush();
+
+#ifdef QT_DEBUG // 只在Debug模式下在控制台输出
+    QTextStream consoleOut(stdout);
+    consoleOut << msg;
+#endif
 }
 
 LogController* LogController::instance()
@@ -67,11 +77,6 @@ LogController::LogController()
 LogController::~LogController()
 {
     innerCloseLog();
-}
-
-void LogController::addLog(const QString newLog)
-{
-    emit addLogSignal(newLog);
 }
 
 void LogController::open()
@@ -103,4 +108,9 @@ void LogController::innerCloseLog()
     workerThread->wait();
     workerThread->deleteLater();
     isOpened = false;
+}
+
+void myMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+{
+    emit logController->addLogSignal(qFormatLogMessage(type, context, msg));
 }

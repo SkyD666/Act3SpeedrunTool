@@ -123,7 +123,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (!waitingToExit && globalData->minimizeToTray()) {
         setVisible(false);
         event->ignore();
-        logController->addLog("MainWindow minimized to tray");
+        qInfo("MainWindow minimized to tray");
         return;
     } else {
         if (displayInfoDialog) {
@@ -132,7 +132,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 
     if (event->isAccepted()) {
-        logController->addLog("Exiting...");
+        qInfo("Exiting...");
         qApp->exit();
     }
 }
@@ -719,7 +719,7 @@ void MainWindow::initSystemTray()
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::MiddleClick:
             ui.actionShow->trigger();
-            logController->addLog("Tray clicked");
+            qInfo("Tray clicked");
             break;
         case QSystemTrayIcon::Unknown:
             break;

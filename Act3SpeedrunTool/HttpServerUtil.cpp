@@ -54,13 +54,13 @@ void HttpServerUtil::startHttp()
         responder.write(cssFile, "text/css");
     });
     currentHttpPort = httpServer->listen(QHostAddress::Any, globalData->serverHttpPort());
-    logController->addLog("Http server listened on: " + QString::number(currentHttpPort));
+    qInfo("Http server listened on: %d", currentHttpPort);
     if (webSocketServer->listen(QHostAddress::Any, globalData->serverWebsocketPort())) {
         currentWebsocketPort = globalData->serverWebsocketPort();
         connect(webSocketServer, &QWebSocketServer::newConnection, this, &HttpServerUtil::onNewConnection);
-        logController->addLog("WebSocket server listened on: " + QString::number(currentWebsocketPort));
+        qInfo("WebSocket server listened on: %d", currentWebsocketPort);
     } else {
-        logController->addLog("WebSocket server listen failed, port is " + QString::number(globalData->serverWebsocketPort()));
+        qFatal("WebSocket server listen failed, port is %d", globalData->serverWebsocketPort());
     }
 }
 
@@ -70,6 +70,11 @@ void HttpServerUtil::stopHttp()
 
     httpServer->deleteLater();
     webSocketServer->deleteLater();
+
+    qInfo("Http server stopped");
+    qInfo("WebSocket server stopped");
+
+    QThread::currentThread()->quit();
 }
 
 void HttpServerUtil::startTimer(bool isContinue, qint64 startTimestamp)
@@ -152,7 +157,7 @@ void HttpServerUtil::onNewConnection()
 
     sendNewData(pSocket);
 
-    logController->addLog("Socket Connected: " + pSocket->peerName());
+    qInfo() << "Socket connected:" << pSocket->peerAddress().toString();
 }
 
 void HttpServerUtil::onCloseConnection()
@@ -164,7 +169,7 @@ void HttpServerUtil::socketDisconnected()
     QWebSocket* pClient = qobject_cast<QWebSocket*>(sender());
     if (pClient) {
         clients.removeAll(pClient);
-        logController->addLog("Socket Disconnected: " + pClient->peerName());
+        qInfo() << "Socket disconnected:" << pClient->peerAddress().toString();
         pClient->deleteLater();
     }
 }
@@ -234,7 +239,6 @@ void HttpServerController::stop()
         return;
     }
     emit stopHttpSignal(QPrivateSignal());
-    workerThread->quit();
     workerThread->wait();
     started = false;
 }

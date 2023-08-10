@@ -1,7 +1,6 @@
 #include "SettingDialog.h"
 #include "GlobalData.h"
 #include "LanguageUtil.h"
-#include "MainWindow.h"
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QFont>

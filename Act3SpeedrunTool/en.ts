@@ -7,13 +7,13 @@
         <location filename="DescriptionDialog.ui" line="+14"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+305"/>
         <source>工具说明</source>
-        <translation type="unfinished"></translation>
+        <translation>FAQ</translation>
     </message>
     <message>
         <location line="+10"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+13"/>
         <source>断网</source>
-        <translation type="unfinished">Firewall</translation>
+        <translation>Firewall</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -23,13 +23,13 @@
         <location line="+16"/>
         <location line="+23"/>
         <source>基本原理</source>
-        <translation type="unfinished"></translation>
+        <translation>Principle</translation>
     </message>
     <message>
         <location line="-348"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-40"/>
         <source>通过 Windows 防火墙阻止进程联网。</source>
-        <translation type="unfinished"></translation>
+        <translation>Block process from accessing the internet using Windows Firewall.</translation>
     </message>
     <message>
         <location line="+32"/>
@@ -41,7 +41,7 @@
         <location line="+11"/>
         <location line="+11"/>
         <source>常见问题</source>
-        <translation type="unfinished"></translation>
+        <translation>FAQ</translation>
     </message>
     <message>
         <location line="-348"/>
@@ -54,13 +54,20 @@
 
 3. 防火墙启动后，发生了电脑死机/工具闪退/工具被强制杀死等情况，发现无法联网怎么办？
 答：手动打开 Windows 防火墙页面，删除所有名称为“AutoFirewall”的规则。</source>
-        <translation type="unfinished"></translation>
+        <translation>1. Can the enable/disable hotkeys be the same?
+Answer: Yes, they can be the same.
+
+2. How do I set the firewall&apos;s network disconnection process when using an network agent?
+Answer: Please refer to the instructions at the bottom of the &quot;Settings - Firewall&quot; page.
+
+3. After enabling the firewall, if issues like computer crashes/tool crashes/tool being forcibly terminated occur, and I find that I can&apos;t access the internet, what should I do?
+Answer: Manually open the Windows Firewall page and delete all rules with the name &quot;AutoFirewall&quot;.</translation>
     </message>
     <message>
         <location line="+35"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+25"/>
         <source>爆头数</source>
-        <translation type="unfinished">Headshot</translation>
+        <translation>Headshot</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -68,19 +75,21 @@
 
 由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：三号行动”中使用。</source>
         <oldsource>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至：三号行动”中使用。</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>In the GTA 5 process, integer values are used to store headshot counts. Therefore, it&apos;s possible to retrieve headshot data by reading the memory of the GTA 5 process.
+
+Since the memory addresses where headshot counts are stored might vary between different missions or may not be specifically recorded at all, this feature can only be used in the &quot;The Doomsday Scenario&quot; mission.</translation>
     </message>
     <message>
         <location line="+34"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-8"/>
         <source>注意事项</source>
-        <translation type="unfinished"></translation>
+        <translation>Important note</translation>
     </message>
     <message>
         <location line="+6"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>由于每次大更新后，GTA5 进程的内存布局可能会发生变化，因此在大更新后，此功能可能会失效，请及时更新最新版本。</source>
-        <translation type="unfinished"></translation>
+        <translation>Due to potential changes in the memory structure of the GTA 5 process after major updates, this feature might become ineffective. It is advised to update to the latest version promptly after each major update.</translation>
     </message>
     <message>
         <location line="+38"/>
@@ -89,31 +98,35 @@
 
 2. 为什么在任务外爆头数会出现奇怪的数字？
 答：在任务外，原来存放爆头数的那部分内存空间会被存放其他数据，因此在任务外，爆头数显示的数据没有意义。</source>
-        <translation type="unfinished"></translation>
+        <translation>1. Is it necessary to restart the counter after completing each mission?
+Answer: No, it&apos;s not necessary. The counter reads data from memory every &quot;Refresh data interval&quot;. When a new mission starts, the memory data still represents headshot counts, so it will automatically display the most up-to-date data.
+
+2. Why do I see strange numbers for headshot counts outside of missions?
+Answer: Outside of missions, the memory space previously used to store headshot counts could be utilized for other data. As a result, the headshot count displayed outside of missions holds no meaningful data.</translation>
     </message>
     <message>
         <location line="+47"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+11"/>
         <source>计时基本原理</source>
-        <translation type="unfinished"></translation>
+        <translation>Timing principle</translation>
     </message>
     <message>
         <location line="+6"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>启动时记录当前时间，每隔一个“刷新间隔”便会计算当前时间与开始时间的差值，差值即为计时时间。</source>
-        <translation type="unfinished"></translation>
+        <translation>When the timer is started, the current time is recorded. Every &quot;Refresh data interval&quot;, the difference between the current time and the start time is calculated, and this difference becomes the elapsed time.</translation>
     </message>
     <message>
         <location line="+32"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+3"/>
         <source>停止归零策略基本原理</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop and reset strategy principle</translation>
     </message>
     <message>
         <location line="+6"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>使用状态机实现，状态机维护了当前计时器的状态。指定不同的停止归零策略代表连通/断开状态机的部分有向边。</source>
-        <translation type="unfinished"></translation>
+        <translation>Implemented using a state machine, which maintains the current state of the timer. Specifying different stop and reset strategies involves establishing or disconnecting partial directed edges on the state machine.</translation>
     </message>
     <message>
         <location line="+38"/>
@@ -123,13 +136,17 @@
 
 2. 为什么启动/停止计时的热键可以相同，而暂停/恢复的热键不能与前两者相同？
 答：若相同，则不能表示想要完成的动作。</source>
-        <translation type="unfinished"></translation>
+        <translation>1. Can the hotkeys for starting/stopping the timer be the same?
+Answer: Yes, they can be the same.
+
+2. Why is it possible to use the same hotkeys for starting/stopping the timer, while the hotkeys for pausing/resuming cannot be the same as the previous ones?
+Answer: If they are the same, they wouldn&apos;t distinguish the intended actions to be taken.</translation>
     </message>
     <message>
         <location line="+53"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+7"/>
         <source>在本机启动了一个 HTTP 服务器，通过 WebSocket 实时向其他终端传输最新数据。您可以通过浏览器或其他方式来显示数据。</source>
-        <translation type="unfinished"></translation>
+        <translation>A local HTTP server has been established, utilizing WebSocket to transmit real-time updates to other clients. Data visualization can be achieved through a web browser or other methods.</translation>
     </message>
     <message>
         <location line="+38"/>
@@ -138,19 +155,23 @@
 
 2. 不喜欢默认的网页显示布局，能否自行编写浏览器前端页面/客户端来显示数据？
 答：可以。您可以开启自己的 WebSocket 客户端，用来接收实时数据，然后通过自己喜欢的方式显示数据。</source>
-        <translation type="unfinished"></translation>
+        <translation>1. Can teammates access data from this tool directly over the network without using the software?
+Answer: In theory, it&apos;s possible but not recommended. If your computer is within a local network environment, you can configure port forwarding on your router to allow teammates to access your machine using the public IP address and a designated port. However, this approach is not advised due to potential network delay issue. It might take some time for the latest local data to be transmitted to your teammates over the network, leading to a suboptimal experience. Additionally, this approach could introduce security risks.
+
+2. If I&apos;m not fond of the default webpage layout, can I create my own browser frontend or client to display the data?
+Answer: Yes, you can. You can develop your own WebSocket client to receive real-time data and display it in a way that suits your preferences.</translation>
     </message>
     <message>
         <location line="-188"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>计时器</source>
-        <translation type="unfinished">Timer</translation>
+        <translation>Timer</translation>
     </message>
     <message>
         <location line="+129"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+11"/>
         <source>多端显示</source>
-        <translation type="unfinished">Multi-platform display</translation>
+        <translation>Multi-platform display</translation>
     </message>
     <message>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-36"/>
@@ -320,7 +341,7 @@ AdstarGod Firewall, easy to use
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+1"/>
         <source>工具说明...</source>
         <oldsource>说明...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>FAQ...</translation>
     </message>
     <message>
         <location line="-130"/>
@@ -551,7 +572,7 @@ AdstarGod Firewall, easy to use
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="+21"/>
+        <location filename="main.cpp" line="+27"/>
         <source>末日三速通工具</source>
         <translation>Act3 Speedrun Tool</translation>
     </message>
@@ -596,7 +617,7 @@ AdstarGod Firewall, easy to use
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1119"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1120"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
@@ -608,22 +629,22 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+593"/>
-        <location line="+354"/>
+        <location line="+357"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
         <location line="+24"/>
         <source>启动</source>
         <translation>Enable</translation>
     </message>
     <message>
-        <location line="-339"/>
-        <location line="+354"/>
+        <location line="-342"/>
+        <location line="+357"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
         <location line="+24"/>
         <source>停止</source>
         <translation>Disable</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-339"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
         <source>音效</source>
         <translation>Sound</translation>
@@ -632,10 +653,10 @@ AdstarGod Firewall, easy to use
         <location line="+93"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+5"/>
         <source>默认值为出站，设置将在下次启动防火墙时生效。</source>
-        <translation type="unfinished"></translation>
+        <translation>The default value is outbound. The settings will take effect the next time the firewall is started.</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+13"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>断网范围</source>
         <translation>Firewall scope</translation>
@@ -657,7 +678,7 @@ AdstarGod Firewall, easy to use
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>填写要断网程序的路径，留空表示断全部。设置将在下次启动防火墙时生效。</source>
         <oldsource>填写要断网程序的路径，留空表示断全部。设置将在下次启动防火墙后生效。</oldsource>
-        <translation type="unfinished">Enter the path of the program you want to disconnect, leave it blank to disconnect all. The settings will take effect after the next firewall startup.</translation>
+        <translation>Enter the path of the program you want to disconnect, leave it blank to disconnect all. The settings will take effect after the next firewall startup.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -691,13 +712,13 @@ The path to the game network agent executable EXE file is for example:
 C:\Program Files (x86)\nn\nn.exe</translation>
     </message>
     <message>
-        <location line="-73"/>
+        <location line="-76"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-6"/>
         <source>防火墙规则方向</source>
-        <translation type="unfinished"></translation>
+        <translation>Firewall rule direction</translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+167"/>
         <location line="+157"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+16"/>
         <location line="+6"/>
@@ -725,7 +746,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Refresh data interval</translation>
     </message>
     <message>
-        <location line="-632"/>
+        <location line="-635"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-29"/>
         <source>窗口</source>
         <translation>Window</translation>
@@ -887,7 +908,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location line="+354"/>
+        <location line="+357"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
         <source>停止策略</source>
         <translation>Stop strategy</translation>
@@ -923,7 +944,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="SettingDialog.cpp" line="+82"/>
+        <location filename="SettingDialog.cpp" line="+81"/>
         <source>选择文件</source>
         <translation>Choice a sound</translation>
     </message>
@@ -945,12 +966,12 @@ C:\Program Files (x86)\nn\nn.exe</translation>
     <message>
         <location line="+13"/>
         <source>入站</source>
-        <translation type="unfinished"></translation>
+        <translation>Inbound</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>出站</source>
-        <translation type="unfinished"></translation>
+        <translation>Outbound</translation>
     </message>
     <message>
         <location filename="SettingDialog.h" line="+0"/>
