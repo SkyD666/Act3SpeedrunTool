@@ -17,5 +17,6 @@
         <file>image/ic_computer.ico</file>
         <file>image/ic_drum.gif</file>
         <file>image/ic_sound.ico</file>
+        <file>image/ic_help.ico</file>
     </qresource>
 </RCC>

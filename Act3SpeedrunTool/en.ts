@@ -5,12 +5,12 @@
     <name>DescriptionDialog</name>
     <message>
         <location filename="DescriptionDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+305"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+309"/>
         <source>工具说明</source>
         <translation>FAQ</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+14"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+13"/>
         <source>断网</source>
         <translation>Firewall</translation>
@@ -230,7 +230,7 @@ Answer: Yes, you can. You can develop your own WebSocket client to receive real-
     <name>MainWindow</name>
     <message>
         <location filename="MainWindow.ui" line="+22"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+349"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+352"/>
         <source>断网</source>
         <translation>Firewall</translation>
     </message>
@@ -337,14 +337,14 @@ AdstarGod Firewall, easy to use
         <translation>Check for update...</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+1"/>
         <source>工具说明...</source>
         <oldsource>说明...</oldsource>
         <translation>FAQ...</translation>
     </message>
     <message>
-        <location line="-130"/>
+        <location line="-134"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-21"/>
         <source>关于 Qt...</source>
         <translation>About Qt...</translation>
@@ -617,7 +617,7 @@ AdstarGod Firewall, easy to use
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1120"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1134"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
@@ -628,23 +628,23 @@ AdstarGod Firewall, easy to use
         <translation>windowsvista style does not support dark mode, while other styles support dark mode following the system</translation>
     </message>
     <message>
-        <location line="+593"/>
-        <location line="+357"/>
+        <location line="+618"/>
+        <location line="+367"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
         <location line="+24"/>
         <source>启动</source>
         <translation>Enable</translation>
     </message>
     <message>
-        <location line="-342"/>
-        <location line="+357"/>
+        <location line="-352"/>
+        <location line="+367"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
         <location line="+24"/>
         <source>停止</source>
         <translation>Disable</translation>
     </message>
     <message>
-        <location line="-339"/>
+        <location line="-349"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
         <source>音效</source>
         <translation>Sound</translation>
@@ -718,7 +718,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Firewall rule direction</translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+177"/>
         <location line="+157"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+16"/>
         <location line="+6"/>
@@ -746,7 +746,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Refresh data interval</translation>
     </message>
     <message>
-        <location line="-635"/>
+        <location line="-645"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-29"/>
         <source>窗口</source>
         <translation>Window</translation>
@@ -776,9 +776,9 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Height</translation>
     </message>
     <message>
-        <location line="-266"/>
+        <location line="-285"/>
         <location line="+106"/>
-        <location line="+187"/>
+        <location line="+206"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-12"/>
         <location line="+4"/>
         <location line="+9"/>
@@ -792,7 +792,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location line="-460"/>
+        <location line="-485"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-7"/>
         <source>内容</source>
         <translation>Content</translation>
@@ -823,7 +823,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Select function</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+31"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>注：该页设置仅针对所选的功能</source>
         <oldsource>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;注：该页设置仅针对所选的功能&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
@@ -854,19 +854,19 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Text shadow</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+106"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+4"/>
         <source>文字对齐</source>
         <translation>Text alignment</translation>
     </message>
     <message>
-        <location line="+261"/>
+        <location line="+274"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+12"/>
         <source>断网热键</source>
         <translation>Firewall hotkey</translation>
     </message>
     <message>
-        <location line="-347"/>
+        <location line="-366"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-15"/>
         <source>模糊半径</source>
         <translation>Blur radius</translation>
@@ -878,7 +878,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Offset</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+77"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+3"/>
         <source>水平</source>
         <translation>Horizontal</translation>
@@ -890,7 +890,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Vertical</translation>
     </message>
     <message>
-        <location line="+303"/>
+        <location line="+316"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+14"/>
         <source>启动音效</source>
         <translation>Start</translation>
@@ -908,7 +908,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location line="+357"/>
+        <location line="+367"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
         <source>停止策略</source>
         <translation>Stop strategy</translation>

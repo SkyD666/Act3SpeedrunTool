@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>569</width>
-    <height>485</height>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,7 +46,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>151</width>
-            <height>256</height>
+            <width>469</width>
+            <height>488</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -121,7 +121,7 @@
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>40</height>
+               <height>1</height>
               </size>
              </property>
             </spacer>
@@ -177,9 +177,9 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>0</y>
-                <width>271</width>
-                <height>479</height>
+                <y>-27</y>
+                <width>451</width>
+                <height>486</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -218,6 +218,12 @@
                </item>
                <item>
                 <widget class="QLabel" name="label_23">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="font">
                   <font>
                    <pointsize>9</pointsize>
@@ -422,6 +428,12 @@
                </item>
                <item>
                 <widget class="QGroupBox" name="groupBox_5">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="title">
                   <string>文字对齐</string>
                  </property>
@@ -461,6 +473,19 @@
                  </layout>
                 </widget>
                </item>
+               <item>
+                <spacer name="spacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>1</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
               </layout>
              </widget>
             </widget>
@@ -494,8 +519,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>232</height>
+                <width>465</width>
+                <height>459</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -637,7 +662,7 @@
                  <property name="sizeHint" stdset="0">
                   <size>
                    <width>20</width>
-                   <height>40</height>
+                   <height>1</height>
                   </size>
                  </property>
                 </spacer>
@@ -675,9 +700,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-110</y>
             <width>455</width>
-            <height>591</height>
+            <height>598</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -909,6 +934,16 @@ C:\Program Files (x86)\nn\nn.exe</string>
              </layout>
             </widget>
            </item>
+           <item>
+            <spacer name="spacer_7">
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>1</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </widget>
         </widget>
@@ -939,8 +974,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>123</width>
-            <height>218</height>
+            <width>469</width>
+            <height>488</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -998,7 +1033,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>40</height>
+               <height>1</height>
               </size>
              </property>
             </spacer>
@@ -1033,8 +1068,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>154</width>
-            <height>527</height>
+            <width>469</width>
+            <height>488</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -1187,7 +1222,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>40</height>
+               <height>1</height>
               </size>
              </property>
             </spacer>
@@ -1222,8 +1257,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>474</height>
+            <width>469</width>
+            <height>488</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">
@@ -1248,7 +1283,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>388</height>
+               <height>1</height>
               </size>
              </property>
             </spacer>

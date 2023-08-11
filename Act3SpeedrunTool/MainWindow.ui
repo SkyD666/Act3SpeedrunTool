@@ -426,6 +426,10 @@
    </property>
   </action>
   <action name="actionDescription">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/image/ic_help.ico</normaloff>:/image/ic_help.ico</iconset>
+   </property>
    <property name="text">
     <string>工具说明...</string>
    </property>

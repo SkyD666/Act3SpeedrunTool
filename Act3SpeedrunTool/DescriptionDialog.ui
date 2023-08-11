@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>工具说明</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/image/ic_help.ico</normaloff>:/image/ic_help.ico</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -69,8 +73,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>122</width>
-            <height>400</height>
+            <width>406</width>
+            <height>248</height>
            </rect>
           </property>
           <attribute name="label">
@@ -468,6 +472,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
