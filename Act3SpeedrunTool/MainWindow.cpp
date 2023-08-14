@@ -456,7 +456,7 @@ void MainWindow::showDisplayInfo()
             //            HttpServerController::instance()->sendNewData(QTime::currentTime().second());
         }
     });
-    topMostTimer->start(2000);
+    topMostTimer->start(3000);
 }
 
 void MainWindow::hideDisplayInfo()
@@ -474,7 +474,7 @@ bool MainWindow::startReadHeadShot()
         headShotTimer = new QTimer(this);
         gtaHandle = MemoryUtil::getProcessHandle(&pid);
         if (!gtaHandle) {
-            QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败，请启动或重启游戏后再进行尝试！"));
+            QMessageBox::critical(nullptr, QString(), tr("获取窗口句柄失败，未检测到 GTA5，请启动或重启游戏后再进行尝试！"));
             return false;
         }
     }

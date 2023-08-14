@@ -46,7 +46,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>488</height>
+            <width>151</width>
+            <height>217</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -177,7 +177,7 @@
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-27</y>
+                <y>0</y>
                 <width>451</width>
                 <height>486</height>
                </rect>
@@ -519,8 +519,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>465</width>
-                <height>459</height>
+                <width>98</width>
+                <height>232</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -700,7 +700,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-110</y>
+            <y>0</y>
             <width>455</width>
             <height>598</height>
            </rect>
@@ -879,6 +879,9 @@
               </item>
               <item>
                <widget class="QTabWidget" name="tabWidget_2">
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
                 <widget class="QWidget" name="tabWidget_2Page2">
                  <attribute name="title">
                   <string>说明</string>
@@ -918,7 +921,7 @@
 GTA5.exe 的完整路径例如：
 F:\Epic Games\GTAV\GTA5.exe
 
-其他用户可以直接填写加速器可执行 EXE 文件的路径。
+其他加速器用户可以直接填写加速器可执行 EXE 文件的路径。
 加速器可执行 EXE 文件的路径例如：
 C:\Program Files (x86)\nn\nn.exe</string>
                     </property>
@@ -936,6 +939,9 @@ C:\Program Files (x86)\nn\nn.exe</string>
            </item>
            <item>
             <spacer name="spacer_7">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
@@ -974,8 +980,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>488</height>
+            <width>123</width>
+            <height>179</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -1068,7 +1074,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
+            <width>154</width>
             <height>488</height>
            </rect>
           </property>
@@ -1257,8 +1263,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>488</height>
+            <width>98</width>
+            <height>87</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">

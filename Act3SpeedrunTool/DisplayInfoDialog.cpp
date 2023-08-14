@@ -23,7 +23,8 @@ DisplayInfoDialog::DisplayInfoDialog(QWidget* parent)
     setDisplay();
     setTextAlignment();
     setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    setGeometry(QRect(globalData->displayInfoPos(), globalData->displayInfoSize()));
+    qreal devicePixelRatio = screen()->devicePixelRatio();
+    setGeometry(QRect(globalData->displayInfoPos() / devicePixelRatio, globalData->displayInfoSize() / devicePixelRatio));
 
     setDialogBackground();
     setFont();
@@ -262,10 +263,13 @@ void DisplayInfoDialog::initGlobalDataConnects()
 
     // ==========================
     connect(globalData, &GlobalData::displayInfoPosChanged, this, [this]() {
-        move(globalData->displayInfoPos());
+        move(globalData->displayInfoPos() / screen()->devicePixelRatio());
     });
     connect(globalData, &GlobalData::displayInfoSizeChanged, this, [this]() {
-        setGeometry(QRect(globalData->displayInfoPos(), globalData->displayInfoSize()));
+        qreal devicePixelRatio = screen()->devicePixelRatio();
+        setGeometry(QRect(
+            globalData->displayInfoPos() / devicePixelRatio,
+            globalData->displayInfoSize() / devicePixelRatio));
     });
     connect(globalData, &GlobalData::displayInfoBackgroundChanged, this, [this]() {
         setDialogBackground();
@@ -282,7 +286,9 @@ void DisplayInfoDialog::mousePressEvent(QMouseEvent* event)
 void DisplayInfoDialog::mouseReleaseEvent(QMouseEvent* event)
 {
     setCursor(Qt::OpenHandCursor);
-    globalData->setDisplayInfoPos({ x(), y() });
+    qreal devicePixelRatio = screen()->devicePixelRatio();
+    globalData->setDisplayInfoPos({ static_cast<int>(x() * devicePixelRatio),
+        static_cast<int>(y() * devicePixelRatio) });
     QDialog::mouseReleaseEvent(event);
 }
 

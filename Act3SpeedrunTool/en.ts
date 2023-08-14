@@ -525,9 +525,9 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+190"/>
-        <source>获取窗口句柄失败，请启动或重启游戏后再进行尝试！</source>
-        <oldsource>获取窗口句柄失败！</oldsource>
-        <translation>Failed to get the game window handle, please start or restart the game and try again!</translation>
+        <source>获取窗口句柄失败，未检测到 GTA5，请启动或重启游戏后再进行尝试！</source>
+        <oldsource>获取窗口句柄失败，请启动或重启游戏后再进行尝试！</oldsource>
+        <translation>Failed to get the game window handle, GTA 5 not detected. Please start or restart the game and try again!</translation>
     </message>
     <message>
         <location line="+43"/>
@@ -617,7 +617,7 @@ AdstarGod Firewall, easy to use
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1134"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1135"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
@@ -629,22 +629,22 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+618"/>
-        <location line="+367"/>
+        <location line="+373"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
         <location line="+24"/>
         <source>启动</source>
         <translation>Enable</translation>
     </message>
     <message>
-        <location line="-352"/>
-        <location line="+367"/>
+        <location line="-358"/>
+        <location line="+373"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
         <location line="+24"/>
         <source>停止</source>
         <translation>Disable</translation>
     </message>
     <message>
-        <location line="-349"/>
+        <location line="-355"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
         <source>音效</source>
         <translation>Sound</translation>
@@ -662,7 +662,7 @@ AdstarGod Firewall, easy to use
         <translation>Firewall scope</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+24"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+3"/>
         <source>说明</source>
         <translation>Tips</translation>
@@ -687,38 +687,13 @@ AdstarGod Firewall, easy to use
         <translation>Game network agent</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-8"/>
-        <source>使用 UU 加速器的用户请填写 GTA5.exe 的完整路径，然后在 UU 内使用“路由模式”进行加速。
-GTA5.exe 的完整路径例如：
-F:\Epic Games\GTAV\GTA5.exe
-
-其他用户可以直接填写加速器可执行 EXE 文件的路径。
-加速器可执行 EXE 文件的路径例如：
-C:\Program Files (x86)\nn\nn.exe</source>
-        <oldsource>使用 UU 加速器的用户请填写 GTA5.exe 的完整路径，然后在 UU 内使用”路由模式“进行加速。
-GTA5.exe 的完整路径例如：
-F:\Epic Games\GTAV\GTA5.exe
-
-其他用户可以直接填写加速器可执行 EXE 文件的路径。
-加速器可执行 EXE 文件的路径例如：
-C:\Program Files (x86)\nn\nn.exe</oldsource>
-        <translation>If you are using UU network agent, please fill in the full path of GTA5.exe, and then use the &quot;Route Mode&quot; in UU.
-The full path of GTA5.exe is for example:
-F:\Epic Games\GTAV\GTA5.exe
-
-Other users can directly fill in the path of the game network agent executable EXE file.
-The path to the game network agent executable EXE file is for example:
-C:\Program Files (x86)\nn\nn.exe</translation>
-    </message>
-    <message>
-        <location line="-76"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-6"/>
+        <location line="-73"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-14"/>
         <source>防火墙规则方向</source>
         <translation>Firewall rule direction</translation>
     </message>
     <message>
-        <location line="+177"/>
+        <location line="+183"/>
         <location line="+157"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+16"/>
         <location line="+6"/>
@@ -746,7 +721,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Refresh data interval</translation>
     </message>
     <message>
-        <location line="-645"/>
+        <location line="-651"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-29"/>
         <source>窗口</source>
         <translation>Window</translation>
@@ -908,8 +883,20 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location line="+367"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
+        <location line="+99"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+7"/>
+        <source>使用 UU 加速器的用户请填写 GTA5.exe 的完整路径，然后在 UU 内使用“路由模式”进行加速。
+GTA5.exe 的完整路径例如：
+F:\Epic Games\GTAV\GTA5.exe
+
+其他加速器用户可以直接填写加速器可执行 EXE 文件的路径。
+加速器可执行 EXE 文件的路径例如：
+C:\Program Files (x86)\nn\nn.exe</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+274"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+17"/>
         <source>停止策略</source>
         <translation>Stop strategy</translation>
     </message>

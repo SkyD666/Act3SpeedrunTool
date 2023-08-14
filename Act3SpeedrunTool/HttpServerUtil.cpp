@@ -35,7 +35,9 @@ void HttpServerUtil::startHttp()
     webSocketServer = new QWebSocketServer("Act3 Speedrun Tool", QWebSocketServer::NonSecureMode, this);
     httpServer->route("/favicon.ico", [](QHttpServerResponder&& responder) {
         auto favicon = new QFile("./html/favicon.ico");
-        responder.write(favicon, "image/x-icon");
+        responder.write(favicon,
+            { qMakePair("Content-Type", "image/x-icon"),
+                qMakePair("Cache-Control", "max-age=7200") });
     });
     httpServer->route("/displayInfo", [](QHttpServerResponder&& responder) {
         auto htmlFile = new QFile("./html/DisplayInfo.html");
