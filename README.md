@@ -39,7 +39,8 @@
 2. Support **fast disconnection** of specific programs (hotkey).
 3. Support manual **timing** (hotkey).
 4. Support displaying the headshot count/timer **on the screen** (only applicable to windowed or borderless mode).
-5. ......
+5. Support **real-time information display on multiple devices**.
+6. ......
 
 ## 🤩 Screenshots
 

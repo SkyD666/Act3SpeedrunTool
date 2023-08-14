@@ -889,10 +889,23 @@ AdstarGod Firewall, easy to use
 GTA5.exe 的完整路径例如：
 F:\Epic Games\GTAV\GTA5.exe
 
-其他加速器用户可以直接填写加速器可执行 EXE 文件的路径。
+其他加速器用户可直接填写加速器可执行 EXE 文件的路径。
 加速器可执行 EXE 文件的路径例如：
 C:\Program Files (x86)\nn\nn.exe</source>
-        <translation></translation>
+        <oldsource>使用 UU 加速器的用户请填写 GTA5.exe 的完整路径，然后在 UU 内使用“路由模式”进行加速。
+GTA5.exe 的完整路径例如：
+F:\Epic Games\GTAV\GTA5.exe
+
+其他加速器用户可以直接填写加速器可执行 EXE 文件的路径。
+加速器可执行 EXE 文件的路径例如：
+C:\Program Files (x86)\nn\nn.exe</oldsource>
+        <translation>If you are using UU network agent, please fill in the full path of GTA5.exe, and then use the &quot;Route Mode&quot; in UU.
+The full path of GTA5.exe is for example:
+F:\Epic Games\GTAV\GTA5.exe
+
+Other network agent users can directly fill in the path of the game network agent executable EXE file.
+The path to the game network agent executable EXE file is for example:
+C:\Program Files (x86)\nn\nn.exe</translation>
     </message>
     <message>
         <location line="+274"/>

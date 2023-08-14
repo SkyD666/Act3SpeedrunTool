@@ -178,7 +178,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>451</width>
+                <width>271</width>
                 <height>486</height>
                </rect>
               </property>
@@ -921,7 +921,7 @@
 GTA5.exe 的完整路径例如：
 F:\Epic Games\GTAV\GTA5.exe
 
-其他加速器用户可以直接填写加速器可执行 EXE 文件的路径。
+其他加速器用户可直接填写加速器可执行 EXE 文件的路径。
 加速器可执行 EXE 文件的路径例如：
 C:\Program Files (x86)\nn\nn.exe</string>
                     </property>
