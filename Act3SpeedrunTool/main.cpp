@@ -11,7 +11,7 @@
 int main(int argc, char* argv[])
 {
     // 设置日志输出格式
-    qSetMessagePattern("[%{time yyyy-MM-dd hh:mm:ss} %{if-debug}D%{endif}%{if-info}I%{endif}%{if-warning}W%{endif}%{if-critical}C%{endif}%{if-fatal}F%{endif}] %{message}\n");
+    qSetMessagePattern("[%{time yyyy-MM-dd hh:mm:ss} %{if-debug}D%{endif}%{if-info}I%{endif}%{if-warning}W%{endif}%{if-critical}C%{endif}%{if-fatal}F%{endif}] [%{pid}] %{message}\n");
     // 日志
     qInstallMessageHandler(myMessageHandler);
 
