@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     QApplication::setWindowIcon(QIcon("://image/ic_icon.png"));
     QApplication::setOrganizationName("SkyD666");
     QApplication::setApplicationName(QObject::tr("末日三速通工具"));
-    QApplication::setApplicationVersion("5.0");
+    QApplication::setApplicationVersion("6.0");
 
     qApp->setStyle(globalData->styleName());
 

@@ -46,7 +46,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pageGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -519,7 +519,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
+                <width>87</width>
                 <height>232</height>
                </rect>
               </property>
@@ -701,8 +701,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>455</width>
-            <height>598</height>
+            <width>204</width>
+            <height>742</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1239,6 +1239,81 @@ C:\Program Files (x86)\nn\nn.exe</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="pageSocial">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QScrollArea" name="scrollArea_8">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_8">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>469</width>
+            <height>488</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <item>
+            <widget class="QGroupBox" name="groupBox_13">
+             <property name="title">
+              <string>Discord</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="cbDiscordShowRp">
+                <property name="text">
+                 <string>展示 Rich Presence</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QToolButton" name="tbDiscordRpHelp">
+                <property name="icon">
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/image/ic_question.ico</normaloff>:/image/ic_question.ico</iconset>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>1</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="pageLanguage">
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <property name="leftMargin">
@@ -1263,7 +1338,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
+            <width>90</width>
             <height>87</height>
            </rect>
           </property>

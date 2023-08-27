@@ -135,6 +135,10 @@ void GlobalData::readSettings()
     setTimerUpdateInterval(settings.value("TimerUpdateInterval", mTimerUpdateInterval).toInt());
     settings.endGroup();
 
+    settings.beginGroup("Social");
+    setDiscordShowRichPresence(settings.value("DiscordShowRichPresence", mDiscordShowRichPresence).toBool());
+    settings.endGroup();
+
     settings.beginGroup("Language");
     setLanguage(settings.value("Language", mLanguage).toString());
     settings.endGroup();
@@ -185,6 +189,10 @@ void GlobalData::writeSettings()
     settings.setValue("TimerStopHotkey", mTimerStopHotkey);
     settings.setValue("TimerStopStrategy", TimerStopStrategyUtil::toString(mTimerStopStrategy));
     settings.setValue("TimerUpdateInterval", mTimerUpdateInterval);
+    settings.endGroup();
+
+    settings.beginGroup("Social");
+    settings.setValue("DiscordShowRichPresence", mDiscordShowRichPresence);
     settings.endGroup();
 
     settings.beginGroup("Language");
@@ -625,4 +633,17 @@ void GlobalData::setServerWebsocketPort(int newServerWebsocketPort)
         return;
     mServerWebsocketPort = newServerWebsocketPort;
     emit serverWebsocketPortChanged();
+}
+
+bool GlobalData::discordShowRichPresence() const
+{
+    return mDiscordShowRichPresence;
+}
+
+void GlobalData::setDiscordShowRichPresence(bool newDiscordShowRichPresence)
+{
+    if (mDiscordShowRichPresence == newDiscordShowRichPresence)
+        return;
+    mDiscordShowRichPresence = newDiscordShowRichPresence;
+    emit discordShowRichPresenceChanged();
 }

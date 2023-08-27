@@ -31,6 +31,7 @@ set(PROJECT_SOURCES
         MemoryUtil.h MemoryUtil.cpp
         HttpServerUtil.h HttpServerUtil.cpp
         DisplayInfoSubFunction.h DisplayInfoSubFunction.cpp
+        DiscordUtil.h DiscordUtil.cpp
         resource.qrc
 )
 
@@ -97,3 +98,7 @@ if (WIN32)
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/WinMM.Lib
     )
 endif()
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../DiscordGameSDK ${CMAKE_CURRENT_BINARY_DIR}/DiscordGameSDK)
+include_directories(../DiscordGameSDK)
+target_link_libraries(Act3SpeedrunTool PRIVATE DiscordGameSDK)

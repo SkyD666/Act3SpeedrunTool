@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "DescriptionDialog.h"
+#include "DiscordUtil.h"
 #include "FirewallUtil.h"
 #include "GlobalData.h"
 #include "HttpServerUtil.h"
@@ -37,6 +38,8 @@ MainWindow::MainWindow(QWidget* parent)
     });
 
     initSystemTray();
+
+    discordUtil->initDiscord();
 
     FirewallUtil::init();
 
@@ -498,6 +501,7 @@ bool MainWindow::startReadHeadShot()
             if (displayInfoDialogIsShowing && displayInfoDialog) {
                 displayInfoDialog->setHeadShotCount(headshotCount);
             }
+            discordUtil->setHeadshotCount(headshotCount);
         }
         firstTime = false;
     });
@@ -573,6 +577,7 @@ void MainWindow::zeroTimer()
     }
     ui.labTimer->setText(DisplayInfoDialog::timePattern.arg("26", "00", "00", "16", "00"));
     HttpServerController::instance()->zeroTimer();
+    discordUtil->setSpeedrunTime(0, 0);
 }
 
 void MainWindow::updateTimerString(qint64 currentDateTime)
@@ -591,6 +596,7 @@ void MainWindow::updateTimerString(qint64 currentDateTime)
     if (displayInfoDialogIsShowing && displayInfoDialog) {
         displayInfoDialog->setTime(m, s, ms);
     }
+    discordUtil->setSpeedrunTime(m, s);
 }
 
 void MainWindow::initTimerStateMachine()
@@ -740,4 +746,5 @@ void MainWindow::closeSystemTray()
     delete systemTrayMenu;
     systemTray = nullptr;
     systemTrayMenu = nullptr;
+    setVisible(true);
 }

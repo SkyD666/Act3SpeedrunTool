@@ -39,6 +39,7 @@ public:
 
     LogController();
     ~LogController();
+    static bool appIsQuiting;
 
 signals:
     void initLog();

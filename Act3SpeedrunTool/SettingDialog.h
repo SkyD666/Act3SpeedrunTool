@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DisplayInfoDialog.h"
+#include "DisplayInfoSubFunction.h"
 #include "ui_SettingDialog.h"
 #include <QDialog>
 
@@ -11,13 +11,14 @@ public:
     explicit SettingDialog(QWidget* parent = nullptr);
     ~SettingDialog();
 
-    QString pageName[6] = { tr("常规"), tr("信息展示"), tr("断网"), tr("爆头"), tr("计时器"), tr("语言") };
-    QString pageIcon[6] = {
+    QString pageName[7] = { tr("常规"), tr("信息展示"), tr("断网"), tr("爆头"), tr("计时器"), tr("社交"), tr("语言") };
+    QString pageIcon[7] = {
         "://image/ic_setting.ico",
         "://image/ic_lighton.ico",
         "://image/ic_network.ico",
         "://image/ic_spy.ico",
         "://image/ic_clock.ico",
+        "://image/ic_users.ico",
         "://image/ic_language.ico",
     };
 
@@ -36,6 +37,8 @@ protected:
     void initTimerSettings();
 
     void initDisplayInfoSettings();
+
+    void initSocialSettings();
 
     void setDisplayInfoCententSettings(DisplayInfoSubFunction f);
 

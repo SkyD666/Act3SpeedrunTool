@@ -2,12 +2,14 @@
 #include "GlobalData.h"
 #include "LanguageUtil.h"
 #include <QColorDialog>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QFont>
 #include <QFontComboBox>
 #include <QPair>
 #include <QScreen>
 #include <QStyleFactory>
+#include <QTimer>
 #include <windows.h>
 
 SettingDialog::SettingDialog(QWidget* parent)
@@ -31,6 +33,7 @@ SettingDialog::SettingDialog(QWidget* parent)
     initFirewallSettings();
     initHeadshotSettings();
     initTimerSettings();
+    initSocialSettings();
 
     for (auto l : LanguageUtil::getInstance()->languages) {
         ui.cbLanguage->addItem(LanguageUtil::getDisplayName(l.name), l.name);
@@ -460,6 +463,22 @@ void SettingDialog::initDisplayInfoSettings()
         });
     setDisplayInfoCententSettings(currentSubFunction);
     ui.cbDisplayInfoFunction->setCurrentIndex(currentSubFunctionIndex);
+}
+
+void SettingDialog::initSocialSettings()
+{
+    ui.cbDiscordShowRp->setChecked(globalData->discordShowRichPresence());
+    connect(ui.cbDiscordShowRp, &QCheckBox::stateChanged, this, [=](int state) {
+        ui.cbDiscordShowRp->setEnabled(false);
+        QTimer::singleShot(1000, this, [this]() {
+            ui.cbDiscordShowRp->setEnabled(true);
+        });
+        globalData->setDiscordShowRichPresence(state == Qt::Checked);
+    });
+
+    connect(ui.tbDiscordRpHelp, &QAbstractButton::clicked, this, [=](int state) {
+        QDesktopServices::openUrl(QUrl("https://discord.com/developers/docs/rich-presence/how-to"));
+    });
 }
 
 void SettingDialog::setDisplayInfoCententSettings(DisplayInfoSubFunction f)

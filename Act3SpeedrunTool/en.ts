@@ -259,8 +259,8 @@ AdstarGod Firewall, easy to use
     <message>
         <location line="+59"/>
         <location line="+65"/>
-        <location filename="MainWindow.cpp" line="+109"/>
-        <location line="+534"/>
+        <location filename="MainWindow.cpp" line="+112"/>
+        <location line="+537"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -387,7 +387,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+30"/>
-        <location filename="MainWindow.cpp" line="-326"/>
+        <location filename="MainWindow.cpp" line="-329"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+4"/>
         <source>复制地址</source>
         <translation>Copy link</translation>
@@ -473,7 +473,7 @@ AdstarGod Firewall, easy to use
         <translation>Alipay QR code for receiving payments</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+250"/>
         <source>点击归零</source>
         <translation>Click to Zero</translation>
     </message>
@@ -488,7 +488,7 @@ AdstarGod Firewall, easy to use
         <translation>Click to continue</translation>
     </message>
     <message>
-        <location line="-463"/>
+        <location line="-466"/>
         <source>注册启用防火墙热键失败！</source>
         <oldsource>注册防火墙启动热键失败！</oldsource>
         <translation>Failed to register enable firewall hotkeys!</translation>
@@ -530,7 +530,7 @@ AdstarGod Firewall, easy to use
         <translation>Failed to get the game window handle, GTA 5 not detected. Please start or restart the game and try again!</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>已停止记录</source>
         <translation>Stopped</translation>
     </message>
@@ -617,7 +617,7 @@ AdstarGod Firewall, easy to use
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1135"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1188"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
@@ -927,7 +927,19 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Note: The timer will be reset to zero after going from &quot;Pause&quot; to &quot;Stop&quot; no matter which strategy is selected</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+61"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
+        <source>Discord</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
+        <source>展示 Rich Presence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+72"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>切换语言后需重启才可生效</source>
         <translation>Application needs to be restarted after switching languages</translation>
@@ -944,7 +956,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="SettingDialog.cpp" line="+81"/>
+        <location filename="SettingDialog.cpp" line="+84"/>
         <source>选择文件</source>
         <translation>Choice a sound</translation>
     </message>
@@ -994,7 +1006,12 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>General</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+0"/>
+        <source>社交</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>左对齐</source>
         <translation>Left alignment</translation>
     </message>

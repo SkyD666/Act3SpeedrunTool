@@ -139,6 +139,9 @@ public:
     int serverWebsocketPort() const;
     void setServerWebsocketPort(int newServerWebsocketPort);
 
+    bool discordShowRichPresence() const;
+    void setDiscordShowRichPresence(bool newDiscordShowRichPresence);
+
 signals:
     void minimizeToTrayChanged();
     void styleNameChanged();
@@ -175,6 +178,8 @@ signals:
 
     void serverHttpPortChanged();
     void serverWebsocketPortChanged();
+
+    void discordShowRichPresenceChanged();
 
 private:
     bool mMinimizeToTray = false;
@@ -222,6 +227,9 @@ private:
     int mServerHttpPort = 9975;
     int mServerWebsocketPort = 9976;
 
+    // 社交
+    bool mDiscordShowRichPresence = false;
+
 private:
     Q_PROPERTY(bool minimizeToTray READ minimizeToTray WRITE setMinimizeToTray NOTIFY minimizeToTrayChanged)
     Q_PROPERTY(QString styleName READ styleName WRITE setStyleName NOTIFY styleNameChanged)
@@ -254,4 +262,5 @@ private:
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(int serverHttpPort READ serverHttpPort WRITE setServerHttpPort NOTIFY serverHttpPortChanged)
     Q_PROPERTY(int serverWebsocketPort READ serverWebsocketPort WRITE setServerWebsocketPort NOTIFY serverWebsocketPortChanged)
+    Q_PROPERTY(bool discordShowRichPresence READ discordShowRichPresence WRITE setDiscordShowRichPresence NOTIFY discordShowRichPresenceChanged)
 };

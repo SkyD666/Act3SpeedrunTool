@@ -9,6 +9,7 @@ Q_GLOBAL_STATIC(LogController, logControllerInstance)
 
 QString LogUtil::logFileName = "Log - " + QDateTime::currentDateTime().toString("yyyy-MM-dd_hhmmss") + ".log";
 bool LogUtil::firstTime = true;
+bool LogController::appIsQuiting = false;
 
 LogUtil::LogUtil()
 {
@@ -71,6 +72,9 @@ LogController* LogController::instance()
 
 LogController::LogController()
 {
+    connect(qApp, &QCoreApplication::aboutToQuit, this, [=]() {
+        appIsQuiting = true;
+    });
     open();
 }
 
@@ -112,5 +116,7 @@ void LogController::innerCloseLog()
 
 void myMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-    emit logController->addLogSignal(qFormatLogMessage(type, context, msg));
+    if (!LogController::appIsQuiting) {
+        emit logController->addLogSignal(qFormatLogMessage(type, context, msg));
+    }
 }
