@@ -215,27 +215,17 @@ Answer: Yes, you can. You can develop your own WebSocket client to receive real-
         <source>跟随系统</source>
         <translation>Follow System</translation>
     </message>
-    <message>
-        <location line="+2"/>
-        <source>简体中文</source>
-        <translation>Simplified Chinese</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>英文</source>
-        <translation>English</translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <location filename="MainWindow.ui" line="+22"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+352"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+429"/>
         <source>断网</source>
         <translation>Firewall</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+144"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <source>播放提示音</source>
         <translation>Play sound</translation>
@@ -251,16 +241,22 @@ AdstarGod Firewall, easy to use
 😋</translation>
     </message>
     <message>
-        <location line="+39"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+6"/>
+        <location line="-42"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-3"/>
+        <source>Windows 防火墙未启用，无法使用断网功能！</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+85"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+9"/>
         <source>爆头数</source>
         <translation>Headshot</translation>
     </message>
     <message>
         <location line="+59"/>
         <location line="+65"/>
-        <location filename="MainWindow.cpp" line="+112"/>
-        <location line="+537"/>
+        <location filename="MainWindow.cpp" line="+72"/>
+        <location line="+596"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -314,7 +310,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+135"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-20"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-24"/>
         <source>爱发电...</source>
         <translation>Ai Fa Dian...</translation>
     </message>
@@ -350,8 +346,26 @@ AdstarGod Firewall, easy to use
         <translation>About Qt...</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-324"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+22"/>
+        <source>警告</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+2"/>
+        <source>打开系统设置</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+1"/>
+        <source>刷新</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+297"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-24"/>
         <source>关于本软件...</source>
         <translation>About...</translation>
     </message>
@@ -387,7 +401,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+30"/>
-        <location filename="MainWindow.cpp" line="-329"/>
+        <location filename="MainWindow.cpp" line="-388"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+4"/>
         <source>复制地址</source>
         <translation>Copy link</translation>
@@ -436,7 +450,7 @@ AdstarGod Firewall, easy to use
         <translation>Help us translate...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="-292"/>
+        <location filename="MainWindow.cpp" line="+107"/>
         <location line="+17"/>
         <source>已关闭</source>
         <translation>Stopped</translation>
@@ -447,7 +461,7 @@ AdstarGod Firewall, easy to use
         <translation>Running</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="-367"/>
         <source>点击关闭</source>
         <translation>Stop counting</translation>
     </message>
@@ -473,7 +487,7 @@ AdstarGod Firewall, easy to use
         <translation>Alipay QR code for receiving payments</translation>
     </message>
     <message>
-        <location line="+250"/>
+        <location line="+309"/>
         <source>点击归零</source>
         <translation>Click to Zero</translation>
     </message>
@@ -488,7 +502,7 @@ AdstarGod Firewall, easy to use
         <translation>Click to continue</translation>
     </message>
     <message>
-        <location line="-466"/>
+        <location line="-525"/>
         <source>注册启用防火墙热键失败！</source>
         <oldsource>注册防火墙启动热键失败！</oldsource>
         <translation>Failed to register enable firewall hotkeys!</translation>
@@ -524,7 +538,7 @@ AdstarGod Firewall, easy to use
         <translation>Failed to register the pause timer hotkey!</translation>
     </message>
     <message>
-        <location line="+190"/>
+        <location line="+249"/>
         <source>获取窗口句柄失败，未检测到 GTA5，请启动或重启游戏后再进行尝试！</source>
         <oldsource>获取窗口句柄失败，请启动或重启游戏后再进行尝试！</oldsource>
         <translation>Failed to get the game window handle, GTA 5 not detected. Please start or restart the game and try again!</translation>
@@ -535,9 +549,9 @@ AdstarGod Firewall, easy to use
         <translation>Stopped</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="+105"/>
-        <source>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</source>
-        <oldsource>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</oldsource>
+        <location filename="MainWindow.h" line="+107"/>
+        <source>&lt;p&gt;一个 GTAOL 末日降至：三号行动任务速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本工具仅读取内存，不会修改任何内存。&lt;/p&gt;</source>
+        <oldsource>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;A GTAOL doomsday scenario speedrun tool that supports quick startup of the firewall and automatic counting of headshots, and manual timing. This tool only reads the memory and does not write the memory.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -547,19 +561,23 @@ AdstarGod Firewall, easy to use
         <translation>Author: %1</translation>
     </message>
     <message>
+        <location line="+2"/>
+        <source>加入 Telegram 群组一起划水~</source>
+        <translation>Join Telegram group~</translation>
+    </message>
+    <message>
         <location line="+1"/>
         <source>加入 Discord 一起划水~</source>
-        <translation>Join Discord~</translation>
+        <translation>Join Discord server~</translation>
     </message>
     <message>
         <location filename="MainWindow.ui" line="-131"/>
-        <location filename="MainWindow.h" line="+1"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+22"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+26"/>
         <source>赞助作者</source>
         <translation>Sponsor</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="+1"/>
+        <location filename="MainWindow.h" line="+2"/>
         <source>特别感谢 &lt;b&gt;ACT3 帮会&lt;/b&gt;对本工具的宣传和支持。特别感谢 &lt;b&gt;CZ9946 和 Adstargod&lt;/b&gt; 两位大佬，他们对本工具的研发提供了大量的帮助！</source>
         <translation>Special thanks to the &lt;b&gt;World Save Act Elite&lt;/b&gt; for promoting and supporting this tool. Special thanks to &lt;b&gt;CZ9946 and Adstargod&lt;/b&gt;, who provided a lot of help in the development of this tool!</translation>
     </message>
@@ -617,7 +635,7 @@ AdstarGod Firewall, easy to use
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1188"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1201"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
@@ -629,23 +647,23 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+618"/>
-        <location line="+373"/>
+        <location line="+377"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+24"/>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>启动</source>
         <translation>Enable</translation>
     </message>
     <message>
-        <location line="-358"/>
-        <location line="+373"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
-        <location line="+24"/>
+        <location line="-362"/>
+        <location line="+377"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-24"/>
+        <location line="+25"/>
         <source>停止</source>
         <translation>Disable</translation>
     </message>
     <message>
-        <location line="-355"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-23"/>
+        <location line="-359"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-24"/>
         <source>音效</source>
         <translation>Sound</translation>
     </message>
@@ -662,20 +680,14 @@ AdstarGod Firewall, easy to use
         <translation>Firewall scope</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+3"/>
+        <location line="+28"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+4"/>
         <source>说明</source>
         <translation>Tips</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-2"/>
-        <source>若您想断整个系统的网络，则留空；若您只想断 GTA 的网络，请选择 GTA5.exe 文件；若您想断加速器的网络，请选择加速器的应用程序文件。</source>
-        <translation>Leave it blank if you want to disconnect the entire system&apos;s network, select the GTA5.exe file if you only want to disconnect GTA&apos;s network, or select the game network agent&apos;s application file if you want to disconnect the game network agent&apos;s network.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
+        <location line="+16"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-1"/>
         <source>填写要断网程序的路径，留空表示断全部。设置将在下次启动防火墙时生效。</source>
         <oldsource>填写要断网程序的路径，留空表示断全部。设置将在下次启动防火墙后生效。</oldsource>
         <translation>Enter the path of the program you want to disconnect, leave it blank to disconnect all. The settings will take effect after the next firewall startup.</translation>
@@ -687,15 +699,15 @@ AdstarGod Firewall, easy to use
         <translation>Game network agent</translation>
     </message>
     <message>
-        <location line="-73"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-14"/>
+        <location line="-77"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-15"/>
         <source>防火墙规则方向</source>
         <translation>Firewall rule direction</translation>
     </message>
     <message>
-        <location line="+183"/>
+        <location line="+187"/>
         <location line="+157"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+16"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+17"/>
         <location line="+6"/>
         <source>建议设置为50-200之间，配置低的用户请适当增大数值</source>
         <translation>Suggested setting is between 50 to 200. Users with lower computer performance should consider increasing the value accordingly</translation>
@@ -721,8 +733,8 @@ AdstarGod Firewall, easy to use
         <translation>Refresh data interval</translation>
     </message>
     <message>
-        <location line="-651"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-29"/>
+        <location line="-655"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="-30"/>
         <source>窗口</source>
         <translation>Window</translation>
     </message>
@@ -883,8 +895,20 @@ AdstarGod Firewall, easy to use
         <translation>Operation failed</translation>
     </message>
     <message>
-        <location line="+99"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+7"/>
+        <location line="+50"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+4"/>
+        <source>若您不了解断网原理，请留空！</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
+        <source>若您想断整个系统的网络，则留空（建议）；若您只想断 GTA 的网络，请选择 GTA5.exe 文件；若您想断加速器的网络，请选择加速器的应用程序文件。</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+3"/>
         <source>使用 UU 加速器的用户请填写 GTA5.exe 的完整路径，然后在 UU 内使用“路由模式”进行加速。
 GTA5.exe 的完整路径例如：
 F:\Epic Games\GTAV\GTA5.exe
@@ -930,16 +954,22 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <location line="+61"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation>Discord</translation>
     </message>
     <message>
         <location line="+6"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
-        <source>展示 Rich Presence</source>
-        <translation type="unfinished"></translation>
+        <source>注：Discord 会优先显示最先启动的游戏，因此请先启用该项设置再启动 GTA5</source>
+        <translation>Note: Discord will prioritize displaying the game that was launched first. Therefore, please enable this setting before launching GTA 5</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+12"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
+        <source>展示 Rich Presence</source>
+        <translation>Show Rich Presence</translation>
+    </message>
+    <message>
+        <location line="+74"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>切换语言后需重启才可生效</source>
         <translation>Application needs to be restarted after switching languages</translation>
@@ -956,7 +986,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="SettingDialog.cpp" line="+84"/>
+        <location filename="SettingDialog.cpp" line="+85"/>
         <source>选择文件</source>
         <translation>Choice a sound</translation>
     </message>
@@ -1008,7 +1038,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
     <message>
         <location line="+0"/>
         <source>社交</source>
-        <translation type="unfinished"></translation>
+        <translation>Social</translation>
     </message>
     <message>
         <location line="+36"/>

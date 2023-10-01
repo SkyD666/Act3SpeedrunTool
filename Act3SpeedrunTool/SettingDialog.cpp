@@ -44,6 +44,7 @@ SettingDialog::SettingDialog(QWidget* parent)
     connect(ui.cbLanguage, &QComboBox::activated, this, [=]() {
         globalData->setLanguage(ui.cbLanguage->currentData().toString());
         LanguageUtil::applyLanguage();
+        ui.retranslateUi(this);
     });
 
     initDisplayInfoSettings();

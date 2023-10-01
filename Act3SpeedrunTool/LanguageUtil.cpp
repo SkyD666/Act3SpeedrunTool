@@ -4,8 +4,8 @@
 
 Q_GLOBAL_STATIC(LanguageUtil, instance)
 
-QTranslator* LanguageUtil::translator = new QTranslator();
-QTranslator* LanguageUtil::systemTranslator = new QTranslator();
+QTranslator* LanguageUtil::translator = nullptr;
+QTranslator* LanguageUtil::systemTranslator = nullptr;
 
 LanguageUtil::LanguageUtil()
 {
@@ -31,9 +31,9 @@ QString LanguageUtil::getDisplayName(const QString name)
     if (name == "default") {
         return tr("跟随系统");
     } else if (name == "zh") {
-        return tr("简体中文");
+        return "简体中文";
     } else if (name == "en") {
-        return tr("英文");
+        return "English";
     }
     return "";
 }
@@ -52,6 +52,17 @@ QLocale::Language LanguageUtil::getQLocaleLanguage(const QString name)
 
 void LanguageUtil::applyLanguage()
 {
+    if (translator) {
+        QCoreApplication::removeTranslator(translator);
+        translator->deleteLater();
+    }
+    translator = new QTranslator();
+    if (systemTranslator) {
+        QCoreApplication::removeTranslator(systemTranslator);
+        systemTranslator->deleteLater();
+    }
+    systemTranslator = new QTranslator();
+
     bool setTranslator = false;
     if (!globalData->language().isEmpty()) {
         tryApplySystemLanguage();

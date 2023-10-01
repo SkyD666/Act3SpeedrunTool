@@ -15,6 +15,48 @@ FirewallUtil::FirewallUtil()
 {
 }
 
+bool FirewallUtil::firewallIsEnabled()
+{
+    bool enabled = false;
+
+    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
+    if (FAILED(hr)) {
+        qCritical() << "CoInitializeEx failed: " << hr;
+        return false;
+    }
+
+    INetFwPolicy2* pNetFwPolicy2 = NULL;
+    hr = CoCreateInstance(
+        __uuidof(NetFwPolicy2),
+        NULL,
+        CLSCTX_INPROC_SERVER,
+        __uuidof(INetFwPolicy2),
+        (void**)&pNetFwPolicy2);
+
+    if (FAILED(hr)) {
+        qCritical() << "CoCreateInstance failed: " << hr;
+        CoUninitialize();
+        return false;
+    }
+
+    VARIANT_BOOL bFirewallEnabled;
+    long fwCurrentProfileTypes;
+    pNetFwPolicy2->get_CurrentProfileTypes(&fwCurrentProfileTypes);
+    hr = pNetFwPolicy2->get_FirewallEnabled((NET_FW_PROFILE_TYPE2_)fwCurrentProfileTypes, &bFirewallEnabled);
+
+    if (SUCCEEDED(hr)) {
+        enabled = bFirewallEnabled == VARIANT_TRUE;
+    } else {
+        enabled = false;
+        qCritical() << "Failed to get firewall status: " << hr;
+    }
+
+    pNetFwPolicy2->Release();
+    CoUninitialize();
+
+    return enabled;
+}
+
 // Instantiate INetFwPolicy2
 HRESULT WFCOMInitialize(INetFwPolicy2** ppNetFwPolicy2)
 {
@@ -28,7 +70,7 @@ HRESULT WFCOMInitialize(INetFwPolicy2** ppNetFwPolicy2)
         (void**)ppNetFwPolicy2);
 
     if (FAILED(hr)) {
-        qFatal("CoCreateInstance for INetFwPolicy2 failed: %ld", hr);
+        qCritical("CoCreateInstance for INetFwPolicy2 failed: %ld", hr);
         goto Cleanup;
     }
 
@@ -60,9 +102,9 @@ INetFwRule* FirewallUtil::getNetFwRule()
         }
         h2 = pFwRule->put_Direction(static_cast<NET_FW_RULE_DIRECTION>(globalData->firewallDirection()));
         if (!SUCCEEDED(h)) {
-            qFatal("put_ApplicationName failed! (%ld)", h);
+            qCritical("put_ApplicationName failed! (%ld)", h);
         } else if (!SUCCEEDED(h2)) {
-            qFatal("put_Direction failed! (%ld)", h);
+            qCritical("put_Direction failed! (%ld)", h);
         } else {
             return pFwRule;
         }
@@ -76,7 +118,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
         __uuidof(INetFwRule),
         (void**)&pFwRule);
     if (FAILED(hr)) {
-        qFatal("CoCreateInstance for Firewall Rule failed: %ld", hr);
+        qCritical("CoCreateInstance for Firewall Rule failed: %ld", hr);
         goto Cleanup;
     }
 
@@ -100,7 +142,7 @@ INetFwRule* FirewallUtil::getNetFwRule()
     // Add the Firewall Rule
     hr = pFwRules->Add(pFwRule);
     if (FAILED(hr)) {
-        qFatal("Firewall Rule Add failed: %ld", hr);
+        qCritical("Firewall Rule Add failed: %ld", hr);
         goto Cleanup;
     }
 
@@ -120,14 +162,14 @@ bool FirewallUtil::setNetFwRuleEnabled(bool enabled)
         return true;
     INetFwRule* fwRule = getNetFwRule();
     if (!fwRule) {
-        qFatal("getNetFwRule() return null!");
-        qFatal("Firewall operate failed!");
+        qCritical("getNetFwRule() return null!");
+        qCritical("Firewall operate failed!");
         return false;
     }
     if (FAILED(fwRule->put_Enabled(enabled ? VARIANT_TRUE : VARIANT_FALSE))) {
-        qFatal("setNetFwRuleEnabled fwRule->put_Enabled(%s) failed!",
+        qCritical("setNetFwRuleEnabled fwRule->put_Enabled(%s) failed!",
             (enabled ? "VARIANT_TRUE" : "VARIANT_FALSE"));
-        qFatal("Firewall operate failed!");
+        qCritical("Firewall operate failed!");
         return false;
     }
     isEnabled = enabled;
@@ -161,7 +203,7 @@ void FirewallUtil::init()
     // we'll just use the existing mode.
     if (hrComInit != RPC_E_CHANGED_MODE) {
         if (FAILED(hrComInit)) {
-            qFatal("CoInitializeEx failed: %ld", hrComInit);
+            qCritical("CoInitializeEx failed: %ld", hrComInit);
             release();
             return;
         }
@@ -170,7 +212,7 @@ void FirewallUtil::init()
     // Retrieve INetFwPolicy2
     hr = WFCOMInitialize(&pNetFwPolicy2);
     if (FAILED(hr)) {
-        qFatal("WFCOMInitialize failed!");
+        qCritical("WFCOMInitialize failed!");
         release();
         return;
     }
@@ -178,7 +220,7 @@ void FirewallUtil::init()
     // Retrieve INetFwRules
     hr = pNetFwPolicy2->get_Rules(&pFwRules);
     if (FAILED(hr)) {
-        qFatal("get_Rules failed: %ld", hr);
+        qCritical("get_Rules failed: %ld", hr);
         release();
         return;
     }
@@ -186,7 +228,7 @@ void FirewallUtil::init()
     // Retrieve Current Profiles bitmask
     hr = pNetFwPolicy2->get_CurrentProfileTypes(&CurrentProfilesBitMask);
     if (FAILED(hr)) {
-        qFatal("get_CurrentProfileTypes failed: %ld", hr);
+        qCritical("get_CurrentProfileTypes failed: %ld", hr);
         release();
         return;
     }

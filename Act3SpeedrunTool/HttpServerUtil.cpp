@@ -62,7 +62,7 @@ void HttpServerUtil::startHttp()
         connect(webSocketServer, &QWebSocketServer::newConnection, this, &HttpServerUtil::onNewConnection);
         qInfo("WebSocket server listened on: %d", currentWebsocketPort);
     } else {
-        qFatal("WebSocket server listen failed, port is %d", globalData->serverWebsocketPort());
+        qCritical("WebSocket server listen failed, port is %d", globalData->serverWebsocketPort());
     }
 }
 

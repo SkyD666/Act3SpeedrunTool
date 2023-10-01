@@ -21,7 +21,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabFirewall">
       <attribute name="title">
@@ -73,8 +73,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>406</width>
-            <height>248</height>
+            <width>122</width>
+            <height>400</height>
            </rect>
           </property>
           <attribute name="label">
@@ -427,8 +427,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>773</height>
+            <width>392</width>
+            <height>261</height>
            </rect>
           </property>
           <attribute name="label">

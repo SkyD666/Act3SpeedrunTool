@@ -58,47 +58,7 @@ MainWindow::MainWindow(QWidget* parent)
     labState->setPalette(palette);
     ui.statusbar->addPermanentWidget(labState);
 
-    ui.cbSound->setChecked(globalData->firewallPlaySound());
-    connect(ui.cbSound, &QCheckBox::stateChanged, this, [](int state) {
-        globalData->setFirewallPlaySound(state);
-    });
-
-    ui.btnStartFirewall->setText(tr("已关闭"));
-    connect(ui.btnStartFirewall, &QAbstractButton::toggled, this, [this](bool checked) {
-        if (checked == FirewallUtil::getIsEnabled()) {
-            return;
-        }
-        bool succeed = FirewallUtil::setNetFwRuleEnabled(checked);
-        if (succeed) {
-            if (checked) {
-                ui.btnStartFirewall->setText(tr("已开启"));
-                QPalette palette = labState->palette();
-                palette.setColor(QPalette::Window, Qt::green);
-                labState->setPalette(palette);
-                if (globalData->firewallPlaySound()) {
-                    PlaySound(globalData->firewallStartSound().toStdWString().c_str(),
-                        nullptr, SND_FILENAME | SND_ASYNC);
-                }
-            } else {
-                ui.btnStartFirewall->setText(tr("已关闭"));
-                QPalette palette = labState->palette();
-                palette.setColor(QPalette::Window, Qt::red);
-                labState->setPalette(palette);
-                if (globalData->firewallPlaySound()) {
-                    PlaySound(globalData->firewallStopSound().toStdWString().c_str(),
-                        nullptr, SND_FILENAME | SND_ASYNC);
-                }
-            }
-        } else {
-            if (globalData->firewallPlaySound()) {
-                PlaySound(globalData->firewallErrorSound().toStdWString().c_str(),
-                    nullptr, SND_FILENAME | SND_ASYNC);
-            }
-            ui.btnStartFirewall->setChecked(!checked);
-        }
-    });
-
-    ui.btnStartFirewall->setFocus();
+    initFirewall();
 
     connect(ui.btnStartHeadShot, &QAbstractButton::toggled, this, [this](bool checked) {
         if (checked) {
@@ -439,6 +399,65 @@ void MainWindow::initMenu()
     connect(ui.actionAbout, &QAction::triggered, this, [this]() {
         QMessageBox::about(this, QString(), license);
     });
+}
+
+void MainWindow::initFirewall()
+{
+    connect(ui.pbFirewallRefreshState, &QAbstractButton::clicked, this, [=]() {
+        bool firewallIsEnabled = FirewallUtil::firewallIsEnabled();
+        ui.btnStartFirewall->setEnabled(firewallIsEnabled);
+        ui.btnStartFirewall->setDisabled(!firewallIsEnabled);
+        ui.btnStartFirewall->setCheckable(firewallIsEnabled);
+        ui.groupBoxFirewallState->setVisible(!firewallIsEnabled);
+    });
+
+    connect(ui.pbFirewallOpenSysWindow, &QAbstractButton::clicked, this, [=]() {
+        ShellExecute(NULL, L"open", L"control.exe", L"firewall.cpl", NULL, SW_SHOWNORMAL);
+    });
+
+    ui.pbFirewallRefreshState->click();
+
+    ui.cbSound->setChecked(globalData->firewallPlaySound());
+    connect(ui.cbSound, &QCheckBox::stateChanged, this, [](int state) {
+        globalData->setFirewallPlaySound(state);
+    });
+
+    ui.btnStartFirewall->setText(tr("已关闭"));
+    connect(ui.btnStartFirewall, &QAbstractButton::toggled, this, [this](bool checked) {
+        if (checked == FirewallUtil::getIsEnabled()) {
+            return;
+        }
+        bool succeed = FirewallUtil::setNetFwRuleEnabled(checked);
+        if (succeed) {
+            if (checked) {
+                ui.btnStartFirewall->setText(tr("已开启"));
+                QPalette palette = labState->palette();
+                palette.setColor(QPalette::Window, Qt::green);
+                labState->setPalette(palette);
+                if (globalData->firewallPlaySound()) {
+                    PlaySound(globalData->firewallStartSound().toStdWString().c_str(),
+                        nullptr, SND_FILENAME | SND_ASYNC);
+                }
+            } else {
+                ui.btnStartFirewall->setText(tr("已关闭"));
+                QPalette palette = labState->palette();
+                palette.setColor(QPalette::Window, Qt::red);
+                labState->setPalette(palette);
+                if (globalData->firewallPlaySound()) {
+                    PlaySound(globalData->firewallStopSound().toStdWString().c_str(),
+                        nullptr, SND_FILENAME | SND_ASYNC);
+                }
+            }
+        } else {
+            if (globalData->firewallPlaySound()) {
+                PlaySound(globalData->firewallErrorSound().toStdWString().c_str(),
+                    nullptr, SND_FILENAME | SND_ASYNC);
+            }
+            ui.btnStartFirewall->setChecked(!checked);
+        }
+    });
+
+    ui.btnStartFirewall->setFocus();
 }
 
 void MainWindow::showDisplayInfo()

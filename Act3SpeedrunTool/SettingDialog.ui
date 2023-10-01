@@ -46,7 +46,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>151</width>
-            <height>217</height>
+            <width>469</width>
+            <height>488</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -178,7 +178,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>271</width>
+                <width>451</width>
                 <height>486</height>
                </rect>
               </property>
@@ -519,8 +519,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>87</width>
-                <height>232</height>
+                <width>465</width>
+                <height>459</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -701,8 +701,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>204</width>
-            <height>742</height>
+            <width>455</width>
+            <height>598</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -866,7 +866,11 @@
               <item>
                <layout class="QHBoxLayout" name="_18">
                 <item>
-                 <widget class="QLineEdit" name="leFirewallAppPath"/>
+                 <widget class="QLineEdit" name="leFirewallAppPath">
+                  <property name="placeholderText">
+                   <string>若您不了解断网原理，请留空！</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QToolButton" name="tbSelectFirewallApp">
@@ -890,7 +894,7 @@
                   <item>
                    <widget class="QLabel" name="label_28">
                     <property name="text">
-                     <string>若您想断整个系统的网络，则留空；若您只想断 GTA 的网络，请选择 GTA5.exe 文件；若您想断加速器的网络，请选择加速器的应用程序文件。</string>
+                     <string>若您想断整个系统的网络，则留空（建议）；若您只想断 GTA 的网络，请选择 GTA5.exe 文件；若您想断加速器的网络，请选择加速器的应用程序文件。</string>
                     </property>
                     <property name="wordWrap">
                      <bool>true</bool>
@@ -1274,23 +1278,37 @@ C:\Program Files (x86)\nn\nn.exe</string>
               <string>Discord</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="cbDiscordShowRp">
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_36">
                 <property name="text">
-                 <string>展示 Rich Presence</string>
+                 <string>注：Discord 会优先显示最先启动的游戏，因此请先启用该项设置再启动 GTA5</string>
                 </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QToolButton" name="tbDiscordRpHelp">
-                <property name="icon">
-                 <iconset resource="resource.qrc">
-                  <normaloff>:/image/ic_question.ico</normaloff>:/image/ic_question.ico</iconset>
-                </property>
-                <property name="autoRaise">
+                <property name="wordWrap">
                  <bool>true</bool>
                 </property>
                </widget>
+              </item>
+              <item row="0" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QCheckBox" name="cbDiscordShowRp">
+                  <property name="text">
+                   <string>展示 Rich Presence</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="tbDiscordRpHelp">
+                  <property name="icon">
+                   <iconset resource="resource.qrc">
+                    <normaloff>:/image/ic_question.ico</normaloff>:/image/ic_question.ico</iconset>
+                  </property>
+                  <property name="autoRaise">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -1338,8 +1356,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>90</width>
-            <height>87</height>
+            <width>469</width>
+            <height>488</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">
