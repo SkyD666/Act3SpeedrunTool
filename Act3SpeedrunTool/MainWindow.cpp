@@ -503,6 +503,10 @@ bool MainWindow::startReadHeadShot()
     int offsets[10] = { 0x30, 0x8, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x108, 0x3668 };
     static bool firstTime = true;
     connect(headShotTimer, &QTimer::timeout, this, [=]() {
+        if (gtaHandle) {
+            // 关闭上次的 OpenProcess
+            CloseHandle(gtaHandle);
+        }
         gtaHandle = MemoryUtil::getProcessHandle(&pid); // 必须每次获取数据时都刷新，否则re后获取不到爆头数
         static DWORD64 ptr;
         static short count = 0;

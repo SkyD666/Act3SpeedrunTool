@@ -91,9 +91,41 @@ void UpdateDialog::sendCheckRequest(
     manager->get(QNetworkRequest(QUrl("https://api.github.com/repos/SkyD666/Act3SpeedrunTool/releases/latest")));
 }
 
-bool UpdateDialog::isNewVersion(QString version)
+bool UpdateDialog::isNewVersion(QString remoteVersion)
 {
-    return QApplication::applicationVersion() != version;
+    bool hasNewVersion = false;
+    try {
+        if (remoteVersion.front().toLower() == 'v') {
+            remoteVersion.removeFirst();
+        }
+        QString version = QApplication::applicationVersion();
+        if (version.front().toLower() == 'v') {
+            version.removeFirst();
+        }
+        auto remoteVersions = remoteVersion.split("-");
+        auto remoteSubVersions = remoteVersions[0].split(".");
+
+        auto versions = version.split("-");
+        auto subVersions = versions[0].split(".");
+
+        for (int i = 0; i < qMin(remoteSubVersions.size(), subVersions.size()); i++) {
+            if (subVersions[i].toInt() < remoteSubVersions[i].toInt()) {
+                hasNewVersion = true;
+                break;
+            } else if (subVersions[i].toInt() > remoteSubVersions[i].toInt()) {
+                hasNewVersion = false;
+                break;
+            }
+        }
+    } catch (const std::exception& ex) {
+        qCritical() << "check isNewVersion failed" << ex.what();
+    } catch (const std::string& ex) {
+        qCritical() << "check isNewVersion failed" << ex;
+    } catch (...) {
+        qCritical() << "check isNewVersion failed";
+    }
+
+    return hasNewVersion;
 }
 
 GitHubRelease* UpdateDialog::getData(QByteArray raw)

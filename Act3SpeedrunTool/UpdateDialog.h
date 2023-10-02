@@ -21,7 +21,7 @@ class UpdateDialog : public QDialog {
 public:
     explicit UpdateDialog(GitHubRelease* release = nullptr, QWidget* parent = nullptr);
 
-    static bool isNewVersion(QString version);
+    static bool isNewVersion(QString remoteVersion);
 
     static void sendCheckRequest(
         QObject* parent,

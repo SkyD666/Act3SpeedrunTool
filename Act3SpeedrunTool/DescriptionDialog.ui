@@ -21,7 +21,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabFirewall">
       <attribute name="title">
@@ -207,8 +207,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>512</height>
+            <width>392</width>
+            <height>240</height>
            </rect>
           </property>
           <attribute name="label">
@@ -222,7 +222,10 @@
 答：不需要。计数器每隔一个“刷新间隔”便会去读取内存的数据，当重新开始任务后，内存中的数据还是爆头数，因此会自动显示最新数据。
 
 2. 为什么在任务外爆头数会出现奇怪的数字？
-答：在任务外，原来存放爆头数的那部分内存空间会被存放其他数据，因此在任务外，爆头数显示的数据没有意义。</string>
+答：在任务外，原来存放爆头数的那部分内存空间会被存放其他数据，因此在任务外，爆头数显示的数据没有意义。
+
+3. 能否统计“名钻赌场豪劫-气势汹汹”任务的爆头数？
+答：可以，不过在出赌场建筑后会有一段时间显示爆头数为 0，在踩点后会爆头数值恢复正常。</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -427,8 +430,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>392</width>
-            <height>261</height>
+            <width>98</width>
+            <height>773</height>
            </rect>
           </property>
           <attribute name="label">

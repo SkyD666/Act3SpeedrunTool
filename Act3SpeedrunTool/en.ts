@@ -5,47 +5,36 @@
     <name>DescriptionDialog</name>
     <message>
         <location filename="DescriptionDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+309"/>
         <source>工具说明</source>
         <translation>FAQ</translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+13"/>
         <source>断网</source>
         <translation>Firewall</translation>
     </message>
     <message>
         <location line="+15"/>
         <location line="+94"/>
-        <location line="+260"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-11"/>
-        <location line="+16"/>
-        <location line="+23"/>
+        <location line="+263"/>
         <source>基本原理</source>
         <translation>Principle</translation>
     </message>
     <message>
-        <location line="-348"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-40"/>
+        <location line="-351"/>
         <source>通过 Windows 防火墙阻止进程联网。</source>
         <translation>Block process from accessing the internet using Windows Firewall.</translation>
     </message>
     <message>
         <location line="+32"/>
         <location line="+134"/>
-        <location line="+129"/>
+        <location line="+132"/>
         <location line="+91"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+11"/>
         <source>常见问题</source>
         <translation>FAQ</translation>
     </message>
     <message>
-        <location line="-348"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-46"/>
+        <location line="-351"/>
         <source>1. 启动/停止热键能否相同？
 答：可以相同。
 
@@ -65,7 +54,6 @@ Answer: Manually open the Windows Firewall page and delete all rules with the na
     </message>
     <message>
         <location line="+35"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+25"/>
         <source>爆头数</source>
         <translation>Headshot</translation>
     </message>
@@ -81,13 +69,11 @@ Since the memory addresses where headshot counts are stored might vary between d
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-8"/>
         <source>注意事项</source>
         <translation>Important note</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>由于每次大更新后，GTA5 进程的内存布局可能会发生变化，因此在大更新后，此功能可能会失效，请及时更新最新版本。</source>
         <translation>Due to potential changes in the memory structure of the GTA 5 process after major updates, this feature might become ineffective. It is advised to update to the latest version promptly after each major update.</translation>
     </message>
@@ -97,40 +83,43 @@ Since the memory addresses where headshot counts are stored might vary between d
 答：不需要。计数器每隔一个“刷新间隔”便会去读取内存的数据，当重新开始任务后，内存中的数据还是爆头数，因此会自动显示最新数据。
 
 2. 为什么在任务外爆头数会出现奇怪的数字？
-答：在任务外，原来存放爆头数的那部分内存空间会被存放其他数据，因此在任务外，爆头数显示的数据没有意义。</source>
-        <translation>1. Is it necessary to restart the counter after completing each mission?
+答：在任务外，原来存放爆头数的那部分内存空间会被存放其他数据，因此在任务外，爆头数显示的数据没有意义。
+
+3. 能否统计“名钻赌场豪杰-气势汹汹”任务的爆头数？
+答：可以，不过在出赌场建筑后会有一段时间显示爆头数为 0，在踩点后会爆头数值恢复正常。</source>
+        <oldsource>1. 每次结束任务后是否需要重启计数器？
+答：不需要。计数器每隔一个“刷新间隔”便会去读取内存的数据，当重新开始任务后，内存中的数据还是爆头数，因此会自动显示最新数据。
+
+2. 为什么在任务外爆头数会出现奇怪的数字？
+答：在任务外，原来存放爆头数的那部分内存空间会被存放其他数据，因此在任务外，爆头数显示的数据没有意义。</oldsource>
+        <translation type="unfinished">1. Is it necessary to restart the counter after completing each mission?
 Answer: No, it&apos;s not necessary. The counter reads data from memory every &quot;Refresh data interval&quot;. When a new mission starts, the memory data still represents headshot counts, so it will automatically display the most up-to-date data.
 
 2. Why do I see strange numbers for headshot counts outside of missions?
 Answer: Outside of missions, the memory space previously used to store headshot counts could be utilized for other data. As a result, the headshot count displayed outside of missions holds no meaningful data.</translation>
     </message>
     <message>
-        <location line="+47"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+11"/>
+        <location line="+50"/>
         <source>计时基本原理</source>
         <translation>Timing principle</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>启动时记录当前时间，每隔一个“刷新间隔”便会计算当前时间与开始时间的差值，差值即为计时时间。</source>
         <translation>When the timer is started, the current time is recorded. Every &quot;Refresh data interval&quot;, the difference between the current time and the start time is calculated, and this difference becomes the elapsed time.</translation>
     </message>
     <message>
         <location line="+32"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+3"/>
         <source>停止归零策略基本原理</source>
         <translation>Stop and reset strategy principle</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>使用状态机实现，状态机维护了当前计时器的状态。指定不同的停止归零策略代表连通/断开状态机的部分有向边。</source>
         <translation>Implemented using a state machine, which maintains the current state of the timer. Specifying different stop and reset strategies involves establishing or disconnecting partial directed edges on the state machine.</translation>
     </message>
     <message>
         <location line="+38"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+2"/>
         <source>1. 启动/停止计时的热键能否相同？
 答：可以。
 
@@ -144,7 +133,6 @@ Answer: If they are the same, they wouldn&apos;t distinguish the intended action
     </message>
     <message>
         <location line="+53"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+7"/>
         <source>在本机启动了一个 HTTP 服务器，通过 WebSocket 实时向其他终端传输最新数据。您可以通过浏览器或其他方式来显示数据。</source>
         <translation>A local HTTP server has been established, utilizing WebSocket to transmit real-time updates to other clients. Data visualization can be achieved through a web browser or other methods.</translation>
     </message>
@@ -163,40 +151,13 @@ Answer: Yes, you can. You can develop your own WebSocket client to receive real-
     </message>
     <message>
         <location line="-188"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-1"/>
         <source>计时器</source>
         <translation>Timer</translation>
     </message>
     <message>
         <location line="+129"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="+11"/>
         <source>多端显示</source>
         <translation>Multi-platform display</translation>
-    </message>
-    <message>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_DescriptionDialog.h" line="-36"/>
-        <source>GTA5 进程内使用整数来存储爆头数，因此只需读取 GTA5 进程的内存即可得到爆头数据。
-
-由于不同任务中记录爆头数的内存地址可能不同，或者根本没有专门记录爆头数，因此该功能只能在“末日将至���三号行动”中使用。</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>1. 每次结束任务后是否需要重启计数器？
-答：不需要。计数器每隔一个“刷新间隔”便会去读取内存的数据，当重新开始任务后，内存中的数据还是爆头数，因此会自动显示最新数据。
-
-2. 为什么���任务外爆头数会出现奇怪的数字？
-答：在任务外，原来存放爆头数的那部分内存空间会被存放其他数据，因此在任务外，爆头数显示的数据没有意义。</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>1. 队友能否不开启本软件，通过网络直接访问本机（本工具）数据？
-答：理论上可以，但不推荐。若您的计算机处于内网环境，您可以在路由器上配置端口映射，让队友使用公网 IP 和设定的端口访���本机。但不建议这样做，因为网络传输有一定的延迟，本地最新的数据传输到队友端可能需要一段时间，队友体验不佳。此外，这样做还可能会带来安全风险。
-
-2. 不喜欢默认的网页显示布局，能否自行编写浏览器前端页面/客户端来显示数据？
-答：可以。您可以开启自己的 WebSocket 客户端，用来接收实时数据，然后通过自己喜欢的方式显示数据。</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -256,7 +217,7 @@ AdstarGod Firewall, easy to use
         <location line="+59"/>
         <location line="+65"/>
         <location filename="MainWindow.cpp" line="+72"/>
-        <location line="+596"/>
+        <location line="+600"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -401,7 +362,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+30"/>
-        <location filename="MainWindow.cpp" line="-388"/>
+        <location filename="MainWindow.cpp" line="-392"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+4"/>
         <source>复制地址</source>
         <translation>Copy link</translation>
@@ -487,7 +448,7 @@ AdstarGod Firewall, easy to use
         <translation>Alipay QR code for receiving payments</translation>
     </message>
     <message>
-        <location line="+309"/>
+        <location line="+313"/>
         <source>点击归零</source>
         <translation>Click to Zero</translation>
     </message>
@@ -502,7 +463,7 @@ AdstarGod Firewall, easy to use
         <translation>Click to continue</translation>
     </message>
     <message>
-        <location line="-525"/>
+        <location line="-529"/>
         <source>注册启用防火墙热键失败！</source>
         <oldsource>注册防火墙启动热键失败！</oldsource>
         <translation>Failed to register enable firewall hotkeys!</translation>
@@ -544,7 +505,7 @@ AdstarGod Firewall, easy to use
         <translation>Failed to get the game window handle, GTA 5 not detected. Please start or restart the game and try again!</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+48"/>
         <source>已停止记录</source>
         <translation>Stopped</translation>
     </message>
@@ -1112,7 +1073,7 @@ Error message: %2</translation>
         <translation>Checking for update, please wait...</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+105"/>
         <source>发现新版本：%1</source>
         <translation>New version: %1</translation>
     </message>
