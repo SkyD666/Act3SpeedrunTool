@@ -511,7 +511,7 @@ bool MainWindow::startReadHeadShot()
         static DWORD64 ptr;
         static short count = 0;
         ReadProcessMemory(gtaHandle,
-            (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x294E098),
+            (LPCVOID)((DWORD64)MemoryUtil::getProcessModuleHandle(pid, L"GTA5.exe") + 0x2F8CD30),
             &ptr, sizeof(DWORD64), 0);
         for (int i = 0; i < sizeof(offsets) / sizeof(offsets[0]) - 1; i++) {
             ReadProcessMemory(gtaHandle, (LPCVOID)(ptr + offsets[i]), &ptr, sizeof(DWORD64), 0);
