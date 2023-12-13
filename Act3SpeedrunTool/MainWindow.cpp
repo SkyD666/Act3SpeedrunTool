@@ -394,6 +394,10 @@ void MainWindow::initMenu()
         QDesktopServices::openUrl(QUrl("https://discord.gg/pEWEjeJTa3"));
     });
 
+    connect(ui.actionAcknowledgment, &QAction::triggered, this, [this]() {
+        QMessageBox::information(this, tr("致谢"), acknowledgment);
+    });
+
     connect(ui.actionAboutQt, &QAction::triggered, this, []() { qApp->aboutQt(); });
 
     connect(ui.actionAbout, &QAction::triggered, this, [this]() {

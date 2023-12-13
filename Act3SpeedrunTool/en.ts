@@ -237,7 +237,7 @@ Answer: Yes, you can. You can develop your own WebSocket client to receive real-
     <name>MainWindow</name>
     <message>
         <location filename="MainWindow.ui" line="+22"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+465"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+471"/>
         <source>断网</source>
         <translation>Firewall</translation>
     </message>
@@ -273,7 +273,7 @@ AdstarGod Firewall, easy to use
         <location line="+103"/>
         <location line="+65"/>
         <location filename="MainWindow.cpp" line="+72"/>
-        <location line="+600"/>
+        <location line="+604"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -302,7 +302,7 @@ AdstarGod Firewall, easy to use
         <translation>&amp;Help</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+2"/>
         <source>工具(&amp;T)</source>
         <translation>&amp;Tool</translation>
@@ -327,7 +327,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+135"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-25"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-26"/>
         <source>爱发电...</source>
         <translation>Ai Fa Dian...</translation>
     </message>
@@ -357,14 +357,20 @@ AdstarGod Firewall, easy to use
         <translation>FAQ...</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-21"/>
+        <location line="+5"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+1"/>
+        <source>致谢...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-139"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-22"/>
         <source>关于 Qt...</source>
         <translation>About Qt...</translation>
     </message>
     <message>
-        <location line="-368"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+22"/>
+        <location line="-369"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+23"/>
         <source>警告</source>
         <translation>Warning</translation>
     </message>
@@ -388,8 +394,8 @@ AdstarGod Firewall, easy to use
         <translation>Online version:</translation>
     </message>
     <message>
-        <location line="+210"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-30"/>
+        <location line="+211"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-31"/>
         <source>关于本软件...</source>
         <translation>About...</translation>
     </message>
@@ -425,7 +431,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+30"/>
-        <location filename="MainWindow.cpp" line="-392"/>
+        <location filename="MainWindow.cpp" line="-396"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+4"/>
         <source>复制地址</source>
         <translation>Copy link</translation>
@@ -474,7 +480,7 @@ AdstarGod Firewall, easy to use
         <translation>Help us translate...</translation>
     </message>
     <message>
-        <location filename="MainWindow.cpp" line="+107"/>
+        <location filename="MainWindow.cpp" line="+111"/>
         <location line="+17"/>
         <source>已关闭</source>
         <translation>Stopped</translation>
@@ -485,7 +491,7 @@ AdstarGod Firewall, easy to use
         <translation>Running</translation>
     </message>
     <message>
-        <location line="-367"/>
+        <location line="-371"/>
         <source>点击关闭</source>
         <translation>Stop counting</translation>
     </message>
@@ -511,7 +517,12 @@ AdstarGod Firewall, easy to use
         <translation>Alipay QR code for receiving payments</translation>
     </message>
     <message>
-        <location line="+313"/>
+        <location line="+9"/>
+        <source>致谢</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+308"/>
         <source>点击归零</source>
         <translation>Click to Zero</translation>
     </message>
@@ -526,7 +537,7 @@ AdstarGod Firewall, easy to use
         <translation>Click to continue</translation>
     </message>
     <message>
-        <location line="-529"/>
+        <location line="-533"/>
         <source>注册启用防火墙热键失败！</source>
         <oldsource>注册防火墙启动热键失败！</oldsource>
         <translation>Failed to register enable firewall hotkeys!</translation>
@@ -562,7 +573,7 @@ AdstarGod Firewall, easy to use
         <translation>Failed to register the pause timer hotkey!</translation>
     </message>
     <message>
-        <location line="+249"/>
+        <location line="+253"/>
         <source>获取窗口句柄失败，未检测到 GTA5，请启动或重启游戏后再进行尝试！</source>
         <oldsource>获取窗口句柄失败，请启动或重启游戏后再进行尝试！</oldsource>
         <translation>Failed to get the game window handle, GTA 5 not detected. Please start or restart the game and try again!</translation>
@@ -573,7 +584,20 @@ AdstarGod Firewall, easy to use
         <translation>Stopped</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="+107"/>
+        <location filename="MainWindow.h" line="+105"/>
+        <source>感谢所有提供寻址协助的朋友：
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>感谢所有提供赞助的朋友：
+%1，以及位未知昵称的朋友。</source>
+        <oldsource>感谢所有提供赞助的朋友。</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>&lt;p&gt;一个 GTAOL 末日降至：三号行动任务速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本工具仅读取内存，不会修改任何内存。&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;一个 GTAOL 末日三速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本软件仅读取内存，不会修改任何内存。&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;A GTAOL doomsday scenario speedrun tool that supports quick startup of the firewall and automatic counting of headshots, and manual timing. This tool only reads the memory and does not write the memory.&lt;/p&gt;</translation>
@@ -595,8 +619,8 @@ AdstarGod Firewall, easy to use
         <translation>Join Discord server~</translation>
     </message>
     <message>
-        <location filename="MainWindow.ui" line="-131"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+27"/>
+        <location filename="MainWindow.ui" line="-132"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+28"/>
         <source>赞助作者</source>
         <translation>Sponsor</translation>
     </message>

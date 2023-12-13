@@ -102,6 +102,10 @@ private:
 
     HANDLE gtaHandle = NULL;
 
+    QString acknowledgment = tr("感谢所有提供寻址协助的朋友：\n%1")
+                                 .arg("CZ9946, Adstargod, limerenxey")
+        + "\n\n" + tr("感谢所有提供赞助的朋友：\n%1，以及位未知昵称的朋友。");
+
     QString license = "<h3>" + QApplication::applicationDisplayName()
         + " v" + QApplication::applicationVersion() + "</h3>"
         + tr("<p>一个 GTAOL 末日降至：三号行动任务速通工具，支持快速启动防火墙、自动统计爆头数、手动计时。本工具仅读取内存，不会修改任何内存。</p>")
