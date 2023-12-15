@@ -139,6 +139,10 @@ void GlobalData::readSettings()
     setDiscordShowRichPresence(settings.value("DiscordShowRichPresence", mDiscordShowRichPresence).toBool());
     settings.endGroup();
 
+    settings.beginGroup("CloseGame");
+    setCloseGameImmediatelyHotkey(settings.value("CloseGameImmediatelyHotkey", mCloseGameImmediatelyHotkey).toString());
+    settings.endGroup();
+
     settings.beginGroup("Language");
     setLanguage(settings.value("Language", mLanguage).toString());
     settings.endGroup();
@@ -193,6 +197,10 @@ void GlobalData::writeSettings()
 
     settings.beginGroup("Social");
     settings.setValue("DiscordShowRichPresence", mDiscordShowRichPresence);
+    settings.endGroup();
+
+    settings.beginGroup("CloseGame");
+    settings.setValue("CloseGameImmediatelyHotkey", mCloseGameImmediatelyHotkey);
     settings.endGroup();
 
     settings.beginGroup("Language");
@@ -646,4 +654,17 @@ void GlobalData::setDiscordShowRichPresence(bool newDiscordShowRichPresence)
         return;
     mDiscordShowRichPresence = newDiscordShowRichPresence;
     emit discordShowRichPresenceChanged();
+}
+
+const QString& GlobalData::closeGameImmediatelyHotkey() const
+{
+    return mCloseGameImmediatelyHotkey;
+}
+
+void GlobalData::setCloseGameImmediatelyHotkey(const QString& newCloseGameImmediatelyHotkey)
+{
+    if (mCloseGameImmediatelyHotkey == newCloseGameImmediatelyHotkey)
+        return;
+    mCloseGameImmediatelyHotkey = newCloseGameImmediatelyHotkey;
+    emit closeGameImmediatelyHotkeyChanged();
 }

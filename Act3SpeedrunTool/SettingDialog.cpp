@@ -33,6 +33,7 @@ SettingDialog::SettingDialog(QWidget* parent)
     initFirewallSettings();
     initHeadshotSettings();
     initTimerSettings();
+    initCloseGameImmediatelySettings();
     initSocialSettings();
 
     for (auto l : LanguageUtil::getInstance()->languages) {
@@ -464,6 +465,26 @@ void SettingDialog::initDisplayInfoSettings()
         });
     setDisplayInfoCententSettings(currentSubFunction);
     ui.cbDisplayInfoFunction->setCurrentIndex(currentSubFunctionIndex);
+}
+
+void SettingDialog::initCloseGameImmediatelySettings()
+{
+    ui.keySeqCloseGameImmediately->setKeySequence(QKeySequence(globalData->closeGameImmediatelyHotkey()));
+    connect(ui.keySeqCloseGameImmediately, &QKeySequenceEdit::editingFinished, this, [=]() {
+        if (ui.keySeqCloseGameImmediately->keySequence().count() > 1) {
+            QKeyCombination value = ui.keySeqCloseGameImmediately->keySequence()[0];
+            QKeySequence shortcut(value);
+            ui.keySeqCloseGameImmediately->setKeySequence(shortcut);
+            globalData->setCloseGameImmediatelyHotkey(shortcut.toString());
+        } else {
+            globalData->setCloseGameImmediatelyHotkey(ui.keySeqCloseGameImmediately->keySequence().toString());
+        }
+    });
+
+    connect(ui.tbClearCloseGameImmediatelyHotkeyEdit, &QAbstractButton::clicked, this, [=]() {
+        ui.keySeqCloseGameImmediately->clear();
+        globalData->setCloseGameImmediatelyHotkey("");
+    });
 }
 
 void SettingDialog::initSocialSettings()

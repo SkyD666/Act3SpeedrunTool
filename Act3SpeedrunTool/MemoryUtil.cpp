@@ -11,11 +11,11 @@ HWND MemoryUtil::getWindowHwnd()
     return FindWindow(NULL, L"Grand Theft Auto V");
 }
 
-HANDLE MemoryUtil::getProcessHandle(DWORD* pid)
+HANDLE MemoryUtil::getProcessHandle(DWORD* pid, DWORD dwDesiredAccess)
 {
     HWND hWindow = getWindowHwnd(); // 获取窗口句柄
     GetWindowThreadProcessId(hWindow, pid); // 获取进程id
-    return OpenProcess(PROCESS_ALL_ACCESS, FALSE, *pid); // 打开进程
+    return OpenProcess(dwDesiredAccess, FALSE, *pid); // 打开进程
 }
 
 HMODULE MemoryUtil::getProcessModuleHandle(DWORD pid, const TCHAR* moduleName)

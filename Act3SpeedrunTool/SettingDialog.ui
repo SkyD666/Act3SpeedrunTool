@@ -46,7 +46,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pageGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -72,8 +72,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>488</height>
+            <width>151</width>
+            <height>217</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -178,7 +178,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>451</width>
+                <width>271</width>
                 <height>486</height>
                </rect>
               </property>
@@ -519,8 +519,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>465</width>
-                <height>459</height>
+                <width>98</width>
+                <height>232</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -984,8 +984,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>123</width>
-            <height>179</height>
+            <width>469</width>
+            <height>488</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -1078,7 +1078,7 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>154</width>
+            <width>469</width>
             <height>488</height>
            </rect>
           </property>
@@ -1243,6 +1243,81 @@ C:\Program Files (x86)\nn\nn.exe</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="pageCloseGameImmediately">
+      <layout class="QVBoxLayout" name="verticalLayout_29">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QScrollArea" name="scrollArea_9">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_9">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>469</width>
+            <height>488</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_28">
+           <item>
+            <widget class="QGroupBox" name="groupBox_14">
+             <property name="title">
+              <string>结束游戏热键</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_6">
+              <item row="0" column="1">
+               <widget class="QKeySequenceEdit" name="keySeqCloseGameImmediately"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_37">
+                <property name="text">
+                 <string>执行</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QToolButton" name="tbClearCloseGameImmediatelyHotkeyEdit">
+                <property name="icon">
+                 <iconset resource="resource.qrc">
+                  <normaloff>:/image/ic_cancel.ico</normaloff>:/image/ic_cancel.ico</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>1</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="pageSocial">
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="leftMargin">
@@ -1356,8 +1431,8 @@ C:\Program Files (x86)\nn\nn.exe</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>469</width>
-            <height>488</height>
+            <width>98</width>
+            <height>87</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">

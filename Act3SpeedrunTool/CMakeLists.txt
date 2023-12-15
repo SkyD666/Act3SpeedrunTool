@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
         HttpServerUtil.h HttpServerUtil.cpp
         DisplayInfoSubFunction.h DisplayInfoSubFunction.cpp
         DiscordUtil.h DiscordUtil.cpp
+        TimeUtil.h TimeUtil.cpp
         resource.qrc
 )
 

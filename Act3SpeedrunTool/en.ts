@@ -237,7 +237,7 @@ Answer: Yes, you can. You can develop your own WebSocket client to receive real-
     <name>MainWindow</name>
     <message>
         <location filename="MainWindow.ui" line="+22"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+471"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+496"/>
         <source>断网</source>
         <translation>Firewall</translation>
     </message>
@@ -272,8 +272,8 @@ AdstarGod Firewall, easy to use
     <message>
         <location line="+103"/>
         <location line="+65"/>
-        <location filename="MainWindow.cpp" line="+72"/>
-        <location line="+604"/>
+        <location filename="MainWindow.cpp" line="+73"/>
+        <location line="+631"/>
         <location line="+22"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <location line="+2"/>
@@ -294,6 +294,18 @@ AdstarGod Firewall, easy to use
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
         <source>点击暂停</source>
         <translation>Click to pause</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+3"/>
+        <source>结束游戏 (测试)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-1"/>
+        <source>立即结束游戏</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
@@ -327,7 +339,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+135"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-26"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-28"/>
         <source>爱发电...</source>
         <translation>Ai Fa Dian...</translation>
     </message>
@@ -369,7 +381,7 @@ AdstarGod Firewall, easy to use
         <translation>About Qt...</translation>
     </message>
     <message>
-        <location line="-369"/>
+        <location line="-401"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+23"/>
         <source>警告</source>
         <translation>Warning</translation>
@@ -394,7 +406,7 @@ AdstarGod Firewall, easy to use
         <translation>Online version:</translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+243"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="-31"/>
         <source>关于本软件...</source>
         <translation>About...</translation>
@@ -431,7 +443,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location line="+30"/>
-        <location filename="MainWindow.cpp" line="-396"/>
+        <location filename="MainWindow.cpp" line="-407"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+4"/>
         <source>复制地址</source>
         <translation>Copy link</translation>
@@ -491,12 +503,12 @@ AdstarGod Firewall, easy to use
         <translation>Running</translation>
     </message>
     <message>
-        <location line="-371"/>
+        <location line="-387"/>
         <source>点击关闭</source>
         <translation>Stop counting</translation>
     </message>
     <message>
-        <location line="+255"/>
+        <location line="+271"/>
         <source>服务器未运行</source>
         <translation>Server is not running</translation>
     </message>
@@ -522,7 +534,7 @@ AdstarGod Firewall, easy to use
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+319"/>
         <source>点击归零</source>
         <translation>Click to Zero</translation>
     </message>
@@ -537,7 +549,7 @@ AdstarGod Firewall, easy to use
         <translation>Click to continue</translation>
     </message>
     <message>
-        <location line="-533"/>
+        <location line="-556"/>
         <source>注册启用防火墙热键失败！</source>
         <oldsource>注册防火墙启动热键失败！</oldsource>
         <translation>Failed to register enable firewall hotkeys!</translation>
@@ -573,7 +585,12 @@ AdstarGod Firewall, easy to use
         <translation>Failed to register the pause timer hotkey!</translation>
     </message>
     <message>
-        <location line="+253"/>
+        <location line="+13"/>
+        <source>注册快速结束游戏热键失败！</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+263"/>
         <source>获取窗口句柄失败，未检测到 GTA5，请启动或重启游戏后再进行尝试！</source>
         <oldsource>获取窗口句柄失败，请启动或重启游戏后再进行尝试！</oldsource>
         <translation>Failed to get the game window handle, GTA 5 not detected. Please start or restart the game and try again!</translation>
@@ -584,7 +601,7 @@ AdstarGod Firewall, easy to use
         <translation>Stopped</translation>
     </message>
     <message>
-        <location filename="MainWindow.h" line="+105"/>
+        <location filename="MainWindow.h" line="+111"/>
         <source>感谢所有提供寻址协助的朋友：
 %1</source>
         <translation type="unfinished"></translation>
@@ -620,7 +637,7 @@ AdstarGod Firewall, easy to use
     </message>
     <message>
         <location filename="MainWindow.ui" line="-132"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+28"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_MainWindow.h" line="+30"/>
         <source>赞助作者</source>
         <translation>Sponsor</translation>
     </message>
@@ -683,7 +700,7 @@ AdstarGod Firewall, easy to use
     <name>SettingDialog</name>
     <message>
         <location filename="SettingDialog.ui" line="+14"/>
-        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1201"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1257"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
@@ -1001,6 +1018,18 @@ C:\Program Files (x86)\nn\nn.exe</translation>
     <message>
         <location line="+61"/>
         <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
+        <source>结束游戏热键</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
+        <source>执行</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+66"/>
+        <location filename="../build-MinSizeRel/Act3SpeedrunTool_autogen/include/ui_SettingDialog.h" line="+1"/>
         <source>Discord</source>
         <translation>Discord</translation>
     </message>
@@ -1034,7 +1063,7 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="SettingDialog.cpp" line="+85"/>
+        <location filename="SettingDialog.cpp" line="+86"/>
         <source>选择文件</source>
         <translation>Choice a sound</translation>
     </message>
@@ -1089,7 +1118,12 @@ C:\Program Files (x86)\nn\nn.exe</translation>
         <translation>Social</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+0"/>
+        <source>结束游戏</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>左对齐</source>
         <translation>Left alignment</translation>
     </message>

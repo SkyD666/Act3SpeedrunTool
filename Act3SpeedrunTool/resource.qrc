@@ -20,5 +20,6 @@
         <file>image/ic_help.ico</file>
         <file>image/ic_users.ico</file>
         <file>image/ic_question.ico</file>
+        <file>image/ic_plug.ico</file>
     </qresource>
 </RCC>

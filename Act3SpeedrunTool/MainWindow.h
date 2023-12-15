@@ -38,6 +38,8 @@ protected:
 
     void initFirewall();
 
+    void initCloseGameImmediately();
+
     void showDisplayInfo();
 
     void hideDisplayInfo();
@@ -57,6 +59,8 @@ protected:
     void updateTimerString(qint64 currentDateTime = QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     void initTimerStateMachine();
+
+    void closeGameImmediately();
 
 signals:
     void toTimerStoppedAndZeroState();
@@ -84,6 +88,8 @@ private:
     QHotkey* startTimerHotkey = nullptr;
     QHotkey* pauseTimerHotkey = nullptr;
     QHotkey* stopTimerHotkey = nullptr;
+
+    QHotkey* closeGameImmediatelyHotkey = nullptr;
 
     QLabel* labCurrentHotkey;
 

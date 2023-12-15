@@ -7,7 +7,7 @@ public:
 
     static HWND getWindowHwnd();
 
-    static HANDLE getProcessHandle(DWORD* pid);
+    static HANDLE getProcessHandle(DWORD* pid, DWORD dwDesiredAccess = PROCESS_ALL_ACCESS);
 
     static HMODULE getProcessModuleHandle(DWORD pid, CONST TCHAR* moduleName);
 };

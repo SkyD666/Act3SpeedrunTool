@@ -142,6 +142,9 @@ public:
     bool discordShowRichPresence() const;
     void setDiscordShowRichPresence(bool newDiscordShowRichPresence);
 
+    const QString& closeGameImmediatelyHotkey() const;
+    void setCloseGameImmediatelyHotkey(const QString& newCloseGameImmediatelyHotkey);
+
 signals:
     void minimizeToTrayChanged();
     void styleNameChanged();
@@ -180,6 +183,8 @@ signals:
     void serverWebsocketPortChanged();
 
     void discordShowRichPresenceChanged();
+
+    void closeGameImmediatelyHotkeyChanged();
 
 private:
     bool mMinimizeToTray = false;
@@ -230,6 +235,9 @@ private:
     // 社交
     bool mDiscordShowRichPresence = false;
 
+    // 卡前置
+    QString mCloseGameImmediatelyHotkey = "Ctrl+`";
+
 private:
     Q_PROPERTY(bool minimizeToTray READ minimizeToTray WRITE setMinimizeToTray NOTIFY minimizeToTrayChanged)
     Q_PROPERTY(QString styleName READ styleName WRITE setStyleName NOTIFY styleNameChanged)
@@ -263,4 +271,5 @@ private:
     Q_PROPERTY(int serverHttpPort READ serverHttpPort WRITE setServerHttpPort NOTIFY serverHttpPortChanged)
     Q_PROPERTY(int serverWebsocketPort READ serverWebsocketPort WRITE setServerWebsocketPort NOTIFY serverWebsocketPortChanged)
     Q_PROPERTY(bool discordShowRichPresence READ discordShowRichPresence WRITE setDiscordShowRichPresence NOTIFY discordShowRichPresenceChanged)
+    Q_PROPERTY(QString closeGameImmediatelyHotkey READ closeGameImmediatelyHotkey WRITE setCloseGameImmediatelyHotkey NOTIFY closeGameImmediatelyHotkeyChanged)
 };

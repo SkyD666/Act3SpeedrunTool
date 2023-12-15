@@ -7,6 +7,7 @@
 #include "LogUtil.h"
 #include "MemoryUtil.h"
 #include "SettingDialog.h"
+#include "TimeUtil.h"
 #include "UpdateDialog.h"
 #include <MMSystem.h>
 #include <QBoxLayout>
@@ -22,7 +23,7 @@
 #include <QState>
 #include <QUrl>
 
-const QString MainWindow::hotkeyStatePattern = "F: %1, %2  T: %3, %4, %5";
+const QString MainWindow::hotkeyStatePattern = "F: %1, %2  T: %3, %4, %5  X: %6";
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -74,6 +75,8 @@ MainWindow::MainWindow(QWidget* parent)
     });
 
     initTimerStateMachine();
+
+    initCloseGameImmediately();
 
     initGlobalDataConnects();
 }
@@ -147,6 +150,7 @@ void MainWindow::removeAllHotkeys()
     removeHotkey(startTimerHotkey);
     removeHotkey(pauseTimerHotkey);
     removeHotkey(stopTimerHotkey);
+    removeHotkey(closeGameImmediatelyHotkey);
 }
 
 void MainWindow::removeHotkey(QHotkey*& h)
@@ -166,7 +170,8 @@ void MainWindow::setHotkey()
         globalData->firewallStopHotkey(),
         globalData->timerStartHotkey(),
         globalData->timerPauseHotkey(),
-        globalData->timerStopHotkey()));
+        globalData->timerStopHotkey(),
+        globalData->closeGameImmediatelyHotkey()));
 
     // 防火墙
     if (!globalData->firewallStartHotkey().isEmpty() && !globalData->firewallStopHotkey().isEmpty()) {
@@ -249,6 +254,18 @@ void MainWindow::setHotkey()
             } else {
                 QMessageBox::critical(this, QString(), tr("注册暂停计时器热键失败！"));
             }
+        }
+    }
+
+    // 快速结束游戏
+    if (!globalData->closeGameImmediatelyHotkey().isEmpty()) {
+        closeGameImmediatelyHotkey = new QHotkey(QKeySequence(globalData->closeGameImmediatelyHotkey()), true, qApp);
+        if (closeGameImmediatelyHotkey->isRegistered()) {
+            connect(closeGameImmediatelyHotkey, &QHotkey::activated, qApp, [this]() {
+                closeGameImmediately();
+            });
+        } else {
+            QMessageBox::critical(this, QString(), tr("注册快速结束游戏热键失败！"));
         }
     }
 }
@@ -462,6 +479,17 @@ void MainWindow::initFirewall()
     });
 
     ui.btnStartFirewall->setFocus();
+}
+
+void MainWindow::initCloseGameImmediately()
+{
+    ui.labCloseGameImmediatelyHotkey->setText(globalData->closeGameImmediatelyHotkey());
+    connect(globalData, &GlobalData::closeGameImmediatelyHotkeyChanged, this, [this]() {
+        ui.labCloseGameImmediatelyHotkey->setText(globalData->closeGameImmediatelyHotkey());
+    });
+    connect(ui.btnCloseGameImmediately, &QAbstractButton::toggled, this, [this]() {
+        closeGameImmediately();
+    });
 }
 
 void MainWindow::showDisplayInfo()
@@ -723,6 +751,34 @@ void MainWindow::initTimerStateMachine()
 
     timerStateMachine.setInitialState(stoppedAndZeroState);
     timerStateMachine.start();
+}
+
+void MainWindow::closeGameImmediately()
+{
+    DWORD p;
+    const auto game = MemoryUtil::getProcessHandle(&p, PROCESS_TERMINATE);
+    TerminateProcess(game, 1);
+    CloseHandle(game);
+    //    QThread* workerThread = new QThread(this);
+    //    connect(workerThread, &QThread::started, workerThread, []() {
+
+    //    });
+    //    connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
+    //    workerThread->start();
+
+    //    PlaySound(globalData->firewallStartSound().toStdWString().c_str(),
+    //        nullptr, SND_FILENAME | SND_ASYNC);
+    //    keybd_event('S', MapVirtualKey('S', 0), 0, 0);
+    //    TimeUtil::nanosleep(20);
+    //    keybd_event('D', MapVirtualKey('D', 0), 0, 0);
+    //    TimeUtil::nanosleep(20);
+    //    keybd_event(VK_SPACE, MapVirtualKey(VK_SPACE, 0), 0, 0);
+    //    TimeUtil::nanosleep(20);
+    //    keybd_event(VK_SPACE, MapVirtualKey(VK_SPACE, 0), KEYEVENTF_KEYUP, 0);
+    //    TimeUtil::nanosleep(100);
+    //    keybd_event('S', MapVirtualKey('S', 0), KEYEVENTF_KEYUP, 0);
+    //    TimeUtil::nanosleep(100);
+    //    keybd_event('D', MapVirtualKey('D', 0), KEYEVENTF_KEYUP, 0);
 }
 
 void MainWindow::initSystemTray()
