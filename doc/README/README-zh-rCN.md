@@ -1,3 +1,5 @@
+# 本仓库**已归档**，**新版**请见：https://github.com/GTA5Oracle/EliteSpeedrunTool
+
 <div align="center">
     <div>
         <img src="../../image/ico.png" style="height: 160px"/>

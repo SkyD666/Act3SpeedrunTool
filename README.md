@@ -1,3 +1,5 @@
+# This repository has been **archived**, see the **new version** at: https://github.com/GTA5Oracle/EliteSpeedrunTool
+
 <div align="center">
     <div>
         <img src="image/ico.png" style="height: 160px"/>
@@ -30,7 +32,6 @@
         <b><a href="doc/README/README-zh-rCN.md">中文</a></b>
     </p>
 </div>
-
 
 
 ## 🎉 Features
